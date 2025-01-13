@@ -1,6 +1,5 @@
 "use client"
 
-import useProfileStore from "@/lib/store/profile.modal";
 import {ImageWithContent} from "@/components/custom/image-with-comtent";
 
 const categories = [

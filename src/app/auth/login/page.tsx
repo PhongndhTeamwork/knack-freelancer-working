@@ -2,7 +2,6 @@
 
 import {Button} from "@/components/ui/button"
 import {Card, CardContent} from "@/components/ui/card"
-import {Checkbox} from "@/components/ui/checkbox"
 import {Input} from "@/components/ui/input"
 import {Eye, EyeOff} from 'lucide-react'
 import Link from "next/link"

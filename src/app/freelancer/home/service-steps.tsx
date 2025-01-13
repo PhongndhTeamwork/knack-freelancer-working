@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Sparkles } from 'lucide-react'
 import {Button} from "@/components/ui/button";
 
