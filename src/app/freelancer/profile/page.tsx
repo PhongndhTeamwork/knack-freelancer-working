@@ -1,4 +1,4 @@
-import {FreelancerProgress} from "@/components/constitution/freelancer-progress";
+import {FreelancerProgress} from "@/app/freelancer/profile/freelancer-progress";
 import {ProfileInfo} from "@/app/freelancer/profile/profile-info";
 import {WorkSection} from "@/app/freelancer/profile/work-section";
 

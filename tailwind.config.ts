@@ -78,9 +78,9 @@ export default {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out'
   		},
-		screens: {
-			'14inch': '1600px', // Custom breakpoint for 14-inch screens
-		},
+  		screens: {
+  			'14inch': '1600px'
+  		}
   	}
   },
   plugins: [require("tailwindcss-animate")],

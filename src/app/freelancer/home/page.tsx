@@ -6,7 +6,7 @@ import {RelatedJobs} from "@/components/constitution/job-category";
 import {BannerCarousel} from "@/app/freelancer/home/carousel-banner";
 import {ServiceSteps} from "@/app/freelancer/home/service-steps";
 import {CustomerFeedback} from "@/app/freelancer/home/customer-feedback";
-import {FreelancerProgress} from "@/components/constitution/freelancer-progress";
+import {FreelancerProgress} from "@/app/freelancer/profile/freelancer-progress";
 
 
 const HomePage = () => {
