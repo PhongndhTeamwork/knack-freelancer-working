@@ -3,8 +3,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import {Heart, AlertCircle, MapPin, HandMetalIcon} from 'lucide-react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import {useRouter} from "next/navigation";
 
 export const ProfileCompletionProgress =() => {
+    const router = useRouter();
+
     return (
         <div className="mx-auto space-y-4">
             <div className="grid gap-10 md:grid-cols-[300px,1fr] lg:grid-cols-3">
@@ -18,7 +21,9 @@ export const ProfileCompletionProgress =() => {
                             <span>Bạn chưa hoàn thiện Hồ sơ cá nhân và Portfolio</span>
                         </div>
                         <div className="flex items-center gap-3">
-                            <div>
+                            <div onClick={() => {
+                                router.push("/freelancer/profile/update")
+                            }} className="cursor-pointer">
                                 {/*<span className="text-sm font-medium">40%</span>*/}
                                 <CircularProgressbar className="w-11 h-11" styles={buildStyles({
                                     pathColor: "#D86603",
