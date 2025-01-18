@@ -23,7 +23,7 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {NavigationItem} from "@/lib/types/nanigation-item.type";
 
 import useProfileStore from "@/lib/store/profile.modal";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
 
 type Props = {
@@ -35,9 +35,12 @@ export const Header = ({logoLink, components}: Props) => {
     // const router = useRouter();
     const [isScrolled, setIsScrolled] = useState(false);
     const {profile} = useProfileStore();
-    const [clickAvatar, setClickAvatar] = useState(false);
     const path = usePathname();
     const router = useRouter();
+
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLUListElement | null>(null);
+    const avatarRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -46,6 +49,23 @@ export const Header = ({logoLink, components}: Props) => {
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
+
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const handleClickOutside = (event: MouseEvent) => {
+        if (dropdownRef.current && !dropdownRef?.current?.contains(event?.target as Node) && !avatarRef?.current?.contains(event?.target as Node)) {
+            setIsOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside, true);
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true);
+        };
+    }, []);
 
     return (
         <header className={cn(
@@ -65,7 +85,7 @@ export const Header = ({logoLink, components}: Props) => {
                     <div className="gap-2 flex text-[16px]">
                         {components.map((c, index) => (
                             <div key={index}
-                                 className={cn("rounded-md px-3 py-1", path.includes(c.href) ? "bg-[#333333] text-white" : "cursor-pointer hover:bg-gray-200")}
+                                 className={cn("rounded-md px-3 py-1 cursor-pointer select-none", path.includes(c.href) ? "bg-[#333333] text-white hover:bg-black active:bg-[#333333]" : "hover:bg-gray-200")}
                                  onClick={() => {
                                      router.push(c.href)
                                  }}>
@@ -79,31 +99,31 @@ export const Header = ({logoLink, components}: Props) => {
                     <div className="flex items-center space-x-8">
                         <div className="hidden md:flex items-center space-x-2">
                             <div className="flex items-center relative">
-                                <Avatar className="border border-gray-300 w-10 h-10 cursor-pointer" onClick={() => {
-                                    setClickAvatar(!clickAvatar)
-                                }}>
+                                <Avatar ref={avatarRef} className="border border-gray-300 w-10 h-10 cursor-pointer" onClick={toggleDropdown}>
                                     <AvatarImage src={profile.avatar} alt="User 1"
                                                  className="w-full h-full"/>
                                     <AvatarFallback
                                         className="text-[20px]">{profile.username?.substring(0, 1) || "P"}</AvatarFallback>
                                 </Avatar>
                                 <p className="ml-3 text-[16px] font-bold">{profile.username}</p>
-                                {clickAvatar && <div
-                                    className="absolute bg-white border border-gray-400 w-32 top-12 right-1/2 rounded-xl">
-                                    <ul className="w-full rounded-xl">
+                                {isOpen && <div
+                                    className="absolute bg-white border border-gray-300 w-32 top-12 right-1/2 rounded-md">
+                                    <ul ref={dropdownRef} className="w-full rounded-xl">
                                         <li className="px-2 py-2 w-full cursor-pointer hover:bg-gray-100 rounded-t-xl"
                                             onClick={() => {
-                                                setClickAvatar(false);
+                                                router.push("/freelancer/profile")
+                                                setIsOpen(false);
                                             }}>Profile
                                         </li>
                                         <li className="px-2 py-2 w-full cursor-pointer hover:bg-gray-100"
                                             onClick={() => {
-                                                setClickAvatar(false);
+                                                router.push("/freelancer/portfolio/template")
+                                                setIsOpen(false);
                                             }}>Portfolio
                                         </li>
                                         <li className="px-2 py-2 w-full cursor-pointer hover:bg-gray-100 rounded-b-xl"
                                             onClick={() => {
-                                                setClickAvatar(false);
+                                                setIsOpen(false);
                                             }}>Logout
                                         </li>
                                     </ul>
@@ -121,7 +141,6 @@ export const Header = ({logoLink, components}: Props) => {
                             <SheetContent side="right">
                                 <div className="flex flex-col space-y-4 mt-4">
                                     <Input type="search" placeholder="Tìm kiếm..."/>
-
                                     <div className="flex flex-col space-y-2">
                                         <div className="hidden md:flex items-center space-x-2">
                                             <div className="flex items-center">

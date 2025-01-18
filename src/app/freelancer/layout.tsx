@@ -23,7 +23,7 @@ const components: NavigationItem[] = [
         title: "Hồ sơ cá nhân"
     },
     {
-        href: "/freelancer/portfolio",
+        href: "/freelancer/portfolio/template",
         title: "Quản lý portfolio"
     },
 ]

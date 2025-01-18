@@ -54,7 +54,7 @@ export const ProfileMenu = ({onChangeNavbar, activeBar}: Props) => {
                         >
                             <div className="space-y-1">
                                 <h2 className="text-sm font-medium leading-none">{item.title}</h2>
-                                <p className="text-sm text-muted-foreground">{item.description}</p>
+                                <p className={cn("text-sm", activeBar !== item.id ? " text-muted-foreground" : "text-[#D8D8D8]" )}>{item.description}</p>
                             </div>
                         </div>
                     ))}

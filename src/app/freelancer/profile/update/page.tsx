@@ -29,7 +29,6 @@ export default function Component() {
                 { activeBar ===4 && <Achievement/> }
                 { activeBar ===5 && <Work/> }
                 { activeBar ===6 && <PricingDisplayForm/> }
-   -
                 <div className="flex justify-end gap-4 mt-6">
                     <Button variant="dark" size="sm">Lưu thay đổi</Button>
                     <Button variant="dark-outline" size="sm">Hủy</Button>
