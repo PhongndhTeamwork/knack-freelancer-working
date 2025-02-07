@@ -1,10 +1,10 @@
-import Slider from "react-slick";
+import Slider, {Settings} from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {Illustration} from "@/components/custom/illustration";
 
 export const BannerCarousel = () => {
-    const settings = {
+    const settings : Settings = {
         dots: true,
         infinite: true,
         speed: 500,
@@ -13,9 +13,10 @@ export const BannerCarousel = () => {
         autoplay: true,
         autoplaySpeed: 5000,
     };
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const SlickSlider = Slider as any;
     return (
-        <Slider {...settings}>
+        <SlickSlider {...settings}>
             <div>
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                     {/* Left Column - Text Content */}
@@ -91,7 +92,7 @@ export const BannerCarousel = () => {
                     </div>
                 </div>
             </div>
-        </Slider>
+        </SlickSlider>
     );
 };
 
