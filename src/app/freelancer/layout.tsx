@@ -42,6 +42,8 @@ const HomeLayout = ({children}: Props) => {
         if (!token) return;
         fetchProfile(token)
     }, [fetchProfile, token]);
+
+
     return (
         <div>
             <div className="flex justify-center">

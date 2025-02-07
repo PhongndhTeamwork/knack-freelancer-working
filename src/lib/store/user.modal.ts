@@ -10,7 +10,6 @@ type AuthState = {
 const useAuthStore = create<AuthState>((set) => ({
     token:  null,
     setToken: (newToken: string) => {
-        if(!newToken || newToken === "") return;
         localStorage.setItem("knackToken", newToken);
         set({token: newToken});
     },

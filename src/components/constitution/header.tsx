@@ -25,6 +25,7 @@ import {NavigationItem} from "@/lib/types/nanigation-item.type";
 import useProfileStore from "@/lib/store/profile.modal";
 import {useEffect, useRef, useState} from "react";
 import {usePathname, useRouter} from "next/navigation";
+import useAuthStore from "@/lib/store/user.modal";
 
 type Props = {
     logoLink: string,
@@ -41,6 +42,7 @@ export const Header = ({logoLink, components}: Props) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLUListElement | null>(null);
     const avatarRef = useRef<HTMLDivElement | null>(null);
+    const { removeToken} =useAuthStore()
 
     useEffect(() => {
         const handleScroll = () => {
@@ -124,6 +126,8 @@ export const Header = ({logoLink, components}: Props) => {
                                         <li className="px-2 py-2 w-full cursor-pointer hover:bg-gray-100 rounded-b-xl"
                                             onClick={() => {
                                                 setIsOpen(false);
+                                                removeToken();
+                                                router.push("/home")
                                             }}>Logout
                                         </li>
                                     </ul>
