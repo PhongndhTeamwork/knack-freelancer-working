@@ -1,6 +1,7 @@
-import {Card, CardContent} from "@/components/ui/card"
+import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
 import {ArrowDownCircle, Info} from 'lucide-react'
 import {Button} from "@/components/ui/button";
+import {Illustration} from "@/components/custom/illustration";
 
 interface FeaturedWork {
     title: string
@@ -54,99 +55,125 @@ export const WorkSection = () => {
     ]
 
     return (
-        <Card className="p-6 space-y-6">
-            <div className="flex flex-row items-center gap-2">
-                <Info className="h-5 w-5 text-muted-foreground"/>
-                <h3 className="font-bold">Công việc nổi bật</h3>
-            </div>
+        <div className="space-y-6 w-full">
+            <Card className="p-6 space-y-6">
+                <div className="flex flex-row items-center gap-2">
+                    <Illustration className="w-7 object-cover aspect-[1/1]"
+                                  url="/freelancer/profile/BriefCase.svg"/>
+                    <h3 className="font-bold">Công việc nổi bật</h3>
+                </div>
 
-            <div className="grid md:grid-cols-2 md:gap-4">
-                {
-                    featuredWork.map((work, index) => (
-                        <Card key={index} className="col-span-1 p-0">
-                            <CardContent className="p-4">
-                                <div key={index} className="space-y-2">
-                                    <div className="flex justify-between items-start">
-                                        <div>
-                                            <h3 className="font-medium">{work.title}</h3>
-                                            <p className="text-sm text-muted-foreground">{work.company}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="font-medium">{work.price.toLocaleString('vi-VN')} VND</p>
-                                            <p className="text-sm text-muted-foreground">{work.date}</p>
+                <div className="grid md:grid-cols-2 md:gap-4">
+                    {
+                        featuredWork.map((work, index) => (
+                            <Card key={index} className="col-span-1 p-0">
+                                <CardContent className="p-4">
+                                    <div key={index} className="space-y-2">
+                                        <div className="flex justify-between items-start">
+                                            <div>
+                                                <h3 className="font-medium">{work.title}</h3>
+                                                <p className="text-sm text-muted-foreground">{work.company}</p>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="font-medium">{work.price.toLocaleString('vi-VN')} VND</p>
+                                                <p className="text-sm text-muted-foreground">{work.date}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    ))
-                }
-            </div>
-
-            <div className="flex flex-row items-center gap-2">
-                <Info className="h-5 w-5 text-muted-foreground"/>
-                <h3 className="font-bold">Bảng giá</h3>
-            </div>
-
-            <div className="grid md:grid-cols-2 md:gap-4">
-                <Card className="p-4 space-y-4 h-fit">
-                    <h3 className="font-bold">Mẫu ảnh</h3>
-                    {priceList.map((p, index) => (<div key={index} className="space-y-2">
-                        <div className="flex justify-between items-center">
-                            <Button variant="secondary" size="sm" className="rounded-md border shadow text-[#333333]">
-                                {p.type}
-                                <ArrowDownCircle className="h-5 w-5"/>
-                            </Button>
-                            <span className="font-bold text-[#333333]">
-                                {p.price} VNĐ
-                            </span>
-                        </div>
-                        <div className="text-[#545454]">
-                            {p.description}
-                        </div>
-
-                    </div>))}
-                </Card>
-                <div className="space-y-4">
-                    <Card className="p-4 space-y-4">
-                        <h3 className="font-bold">Stylish</h3>
-                        {priceList.map((p, index) => (<div key={index} className="space-y-2">
-                            <div className="flex justify-between items-center">
-                                <Button variant="secondary" size="sm" className="rounded-md border shadow text-[#333333]">
-                                    {p.type}
-                                    <ArrowDownCircle className="h-5 w-5"/>
-                                </Button>
-                                <span className="font-bold text-[#333333]">
-                                {p.price} VNĐ
-                            </span>
-                            </div>
-                            <div className="text-[#545454]">
-                                {p.description}
-                            </div>
-
-                        </div>))}
-                    </Card>
-                    <Card className="p-4 space-y-4">
-                        <h3 className="font-bold">Makeup Artist</h3>
-                        {priceList.map((p, index) => (<div key={index} className="space-y-2">
-                            <div className="flex justify-between items-center">
-                                <Button variant="secondary" size="sm" className="rounded-md border shadow text-[#333333]">
-                                    {p.type}
-                                    <ArrowDownCircle className="h-5 w-5"/>
-                                </Button>
-                                <span className="font-bold text-[#333333]">
-                                {p.price} VNĐ
-                            </span>
-                            </div>
-                            <div className="text-[#545454]">
-                                {p.description}
-                            </div>
-
-                        </div>))}
-                    </Card>
+                                </CardContent>
+                            </Card>
+                        ))
+                    }
                 </div>
-            </div>
 
-        </Card>
+                <div className="flex flex-row items-center gap-2">
+                    <Illustration className="w-7 object-cover aspect-[1/1]"
+                                  url="/freelancer/profile/Coins.svg"/>
+                    <h3 className="font-bold">Bảng giá</h3>
+                </div>
+                <div className="grid md:grid-cols-2 md:gap-4">
+                    <Card className="p-4 space-y-4 h-fit">
+                        <h3 className="font-bold">Mẫu ảnh</h3>
+                        {priceList.map((p, index) => (<div key={index} className="space-y-2">
+                            <div className="flex justify-between items-center">
+                                <Button variant="secondary" size="sm" className="rounded-md border shadow text-[#333333]">
+                                    {p.type}
+                                    <ArrowDownCircle className="h-5 w-5"/>
+                                </Button>
+                                <span className="font-bold text-[#333333]">
+                                {p.price} VNĐ
+                            </span>
+                            </div>
+                            <div className="text-[#545454]">
+                                {p.description}
+                            </div>
+
+                        </div>))}
+                    </Card>
+                    <div className="space-y-4">
+                        <Card className="p-4 space-y-4">
+                            <h3 className="font-bold">Stylish</h3>
+                            {priceList.map((p, index) => (<div key={index} className="space-y-2">
+                                <div className="flex justify-between items-center">
+                                    <Button variant="secondary" size="sm"
+                                            className="rounded-md border shadow text-[#333333]">
+                                        {p.type}
+                                        <ArrowDownCircle className="h-5 w-5"/>
+                                    </Button>
+                                    <span className="font-bold text-[#333333]">
+                                {p.price} VNĐ
+                            </span>
+                                </div>
+                                <div className="text-[#545454]">
+                                    {p.description}
+                                </div>
+
+                            </div>))}
+                        </Card>
+                        <Card className="p-4 space-y-4">
+                            <h3 className="font-bold">Makeup Artist</h3>
+                            {priceList.map((p, index) => (<div key={index} className="space-y-2">
+                                <div className="flex justify-between items-center">
+                                    <Button variant="secondary" size="sm"
+                                            className="rounded-md border shadow text-[#333333]">
+                                        {p.type}
+                                        <ArrowDownCircle className="h-5 w-5"/>
+                                    </Button>
+                                    <span className="font-bold text-[#333333]">
+                                {p.price} VNĐ
+                            </span>
+                                </div>
+                                <div className="text-[#545454]">
+                                    {p.description}
+                                </div>
+
+                            </div>))}
+                        </Card>
+                    </div>
+                </div>
+            </Card>
+
+            <Card>
+                <CardHeader className="flex flex-row items-center gap-2">
+                    <Illustration className="w-7 object-cover aspect-[1/1]"
+                                  url="/freelancer/profile/BriefCase.svg"/>
+                    <CardTitle style={{marginTop : 0}}>Portfolio của bạn</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="space-y-2">
+                        {/*<div className="flex justify-between items-start">*/}
+                        {/*    <h3 className="font-medium">Người mẫu triển vọng</h3>*/}
+                        {/*    <span className="text-sm text-muted-foreground">7/2024 - 12/2025</span>*/}
+                        {/*</div>*/}
+                        {/*<p className="text-sm text-muted-foreground">*/}
+                        {/*    Làm việc ở đây tốt nhưng mà không có sướng. Sếp không trả lương đúng hạn. Tóm lại là không*/}
+                        {/*    cần nhắc làm ở đây thì khi vì quá.*/}
+                        {/*</p>*/}
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+
+
     )
 }

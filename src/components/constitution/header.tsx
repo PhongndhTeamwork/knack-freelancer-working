@@ -72,7 +72,7 @@ export const Header = ({logoLink, components}: Props) => {
             "top-0 z-50 w-full text-[16px] fixed transition-all",
             // isScrolled && "max-w-screen-lg"
         )}
-                style={{...(isScrolled ? {backgroundColor: 'rgba(255, 255, 255, 0.4)', top : "10px", width : "80%", borderRadius : "10px"} : {width : "100%"}), transition: 'background-color 0.3s ease, top 0.3s ease, width 0.3s ease',}}
+                style={{...(isScrolled ? {backgroundColor: 'rgba(255, 255, 255, 0.4)', top : "10px", width : "50%", borderRadius : "10px"} : {width : "100%"}), transition: 'background-color 0.3s ease, top 0.3s ease, width 0.3s ease',}}
         >
             <div className="container mx-auto max-width-suitable px-14">
                 <div className="flex h-16 items-center justify-between">

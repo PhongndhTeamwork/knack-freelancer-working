@@ -49,7 +49,7 @@ export default function Component() {
                 <div className="space-y-6">
                     {/* Header */}
                     <div className="space-y-2">
-                        <h1 className="text-4xl font-bold">Portfolio Template</h1>
+                        <h1 className="text-4xl font-bold">Portfolio của bạn</h1>
                         <p className="text-muted-foreground text-xl">
                             Khám phá những mẫu Hồ sơ năng lực hấp dẫn nhất từ chúng tôi
                         </p>
@@ -111,19 +111,21 @@ export default function Component() {
                                 </CardFooter>
                             </Card>
                         ))}
-                        {/*<Card className="overflow-hidden col-span-1 flex items-center justify-center cursor-pointer">*/}
-                        {/*    <div className="w-full flex justify-center flex-col items-center">*/}
-                        {/*        <Plus className="w-2/3 h-2/3 text-[#D8D8D8]"/>*/}
-                        {/*        <h3 className="w-full text-xl font-medium text-muted-foreground flex justify-center">Thêm*/}
-                        {/*            Portfolio mới</h3>*/}
+                        <Card className="overflow-hidden col-span-1 flex items-center justify-center cursor-pointer " onClick={() => {
+                            router.push("/freelancer/portfolio/template")
+                        }}>
+                            <div className="w-full flex justify-center flex-col items-center">
+                                <Plus className="w-2/3 h-2/3 text-[#D8D8D8]"/>
+                                <h3 className="w-full text-xl font-medium text-muted-foreground flex justify-center" >Thêm
+                                    Portfolio mới</h3>
 
-                        {/*    </div>*/}
-                        {/*    /!*<CardContent className="flex justify-center">*!/*/}
+                            </div>
+                            {/*<CardContent className="flex justify-center">*/}
 
-                        {/*    /!*</CardContent>*!/*/}
-                        {/*    /!*<CardFooter className="p-4">*!/*/}
-                        {/*    /!*</CardFooter>*!/*/}
-                        {/*</Card>*/}
+                            {/*</CardContent>*/}
+                            {/*<CardFooter className="p-4">*/}
+                            {/*</CardFooter>*/}
+                        </Card>
                     </div>
                 </div>
             </div>

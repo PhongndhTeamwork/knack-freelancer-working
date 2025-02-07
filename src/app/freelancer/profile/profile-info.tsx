@@ -1,5 +1,5 @@
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
-import {Info, Briefcase, Trophy} from 'lucide-react'
+import {Illustration} from "@/components/custom/illustration";
 
 interface WorkExperience {
     role: string
@@ -26,8 +26,10 @@ export const ProfileInfo = () => {
             {/* Introduction */}
             <Card>
                 <CardHeader className="flex flex-row items-center gap-2">
-                    <Info className="h-5 w-5 text-muted-foreground"/>
-                    <CardTitle>Giới thiệu</CardTitle>
+                    {/*<Info className="h-5 w-5 text-muted-foreground"/>*/}
+                    <Illustration className="w-7 object-cover aspect-[1/1]"
+                                  url="/freelancer/profile/UserCircle.svg"/>
+                    <CardTitle style={{marginTop : 0}}>Giới thiệu</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <p className="text-muted-foreground">
@@ -41,8 +43,9 @@ export const ProfileInfo = () => {
             {/* Work Experience */}
             <Card>
                 <CardHeader className="flex flex-row items-center gap-2">
-                    <Briefcase className="h-5 w-5 text-muted-foreground"/>
-                    <CardTitle>Kinh nghiệm làm việc</CardTitle>
+                    <Illustration className="w-7 object-cover aspect-[1/1]"
+                                  url="/freelancer/profile/UserList.svg"/>
+                    <CardTitle style={{marginTop : 0}}>Kinh nghiệm làm việc</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
                     {experiences.map((experience, index) => (
@@ -60,8 +63,9 @@ export const ProfileInfo = () => {
             {/* Personal Achievements */}
             <Card>
                 <CardHeader className="flex flex-row items-center gap-2">
-                    <Trophy className="h-5 w-5 text-muted-foreground"/>
-                    <CardTitle>Thành tích cá nhân</CardTitle>
+                    <Illustration className="w-7 object-cover aspect-[1/1]"
+                                  url="/freelancer/profile/Trophy.svg"/>
+                    <CardTitle style={{marginTop : 0}}>Thành tích cá nhân</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-2">
