@@ -10,7 +10,7 @@ export const PlatformSections = () => {
                     Dành cho Freelancers.
                 </h2>
                 <div className="bg-black rounded-3xl mt-8">
-                    <div className="grid md:grid-cols-[65%_1fr] gap-8 py-8 px-12  lg:py-12">
+                    <div className="grid md:grid-cols-[55%_1fr] gap-8 py-8 px-12  lg:py-12">
                         <div className="space-y-6">
                             <blockquote className="text-xl md:text-2xl text-white">
                                 &#34;Gặp gỡ những khách hàng mà bạn muốn làm việc cùng và nhận một công việc{" "}

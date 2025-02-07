@@ -147,105 +147,105 @@ export default function Login() {
                                         </p>
                                     </div>
 
-                                    <form className="space-y-4" onSubmit={handleSubmit}>
-                                        <div className="space-y-2">
-                                            <Input
-                                                // type="email"
-                                                placeholder="Email"
-                                                // defaultValue="jonas_kahnwald@gmail.com"
-                                                className="h-[40px]"
-                                                onChange={(e) => {
-                                                    setEmail(e.target.value)
-                                                }}
+                                {/*    <form className="space-y-4" onSubmit={handleSubmit}>*/}
+                                {/*        <div className="space-y-2">*/}
+                                {/*            <Input*/}
+                                {/*                // type="email"*/}
+                                {/*                placeholder="Email"*/}
+                                {/*                // defaultValue="jonas_kahnwald@gmail.com"*/}
+                                {/*                className="h-[40px]"*/}
+                                {/*                onChange={(e) => {*/}
+                                {/*                    setEmail(e.target.value)*/}
+                                {/*                }}*/}
 
-                                            />
-                                        </div>
+                                {/*            />*/}
+                                {/*        </div>*/}
 
-                                        <div className="space-y-2">
-                                            <div className="relative">
-                                                <Input
-                                                    type={showPassword ? "text" : "password"}
-                                                    placeholder="Mật khẩu"
-                                                    className="h-[40px]"
-                                                />
-                                                <Button
-                                                    type="button"
-                                                    variant="ghost"
-                                                    size="icon"
-                                                    className="absolute right-2 top-1/2 -translate-y-1/2"
-                                                    onClick={() => setShowPassword(!showPassword)}
-                                                >
-                                                    {!showPassword ? (
-                                                        <EyeOff className="h-4 w-4 text-muted-foreground"/>
-                                                    ) : (
-                                                        <Eye className="h-4 w-4 text-muted-foreground"/>
-                                                    )}
-                                                    <span className="sr-only">
-                                          {showPassword ? "Hide password" : "Show password"}
-                                        </span>
-                                                </Button>
-                                            </div>
-                                        </div>
+                                {/*        <div className="space-y-2">*/}
+                                {/*            <div className="relative">*/}
+                                {/*                <Input*/}
+                                {/*                    type={showPassword ? "text" : "password"}*/}
+                                {/*                    placeholder="Mật khẩu"*/}
+                                {/*                    className="h-[40px]"*/}
+                                {/*                />*/}
+                                {/*                <Button*/}
+                                {/*                    type="button"*/}
+                                {/*                    variant="ghost"*/}
+                                {/*                    size="icon"*/}
+                                {/*                    className="absolute right-2 top-1/2 -translate-y-1/2"*/}
+                                {/*                    onClick={() => setShowPassword(!showPassword)}*/}
+                                {/*                >*/}
+                                {/*                    {!showPassword ? (*/}
+                                {/*                        <EyeOff className="h-4 w-4 text-muted-foreground"/>*/}
+                                {/*                    ) : (*/}
+                                {/*                        <Eye className="h-4 w-4 text-muted-foreground"/>*/}
+                                {/*                    )}*/}
+                                {/*                    <span className="sr-only">*/}
+                                {/*          {showPassword ? "Hide password" : "Show password"}*/}
+                                {/*        </span>*/}
+                                {/*                </Button>*/}
+                                {/*            </div>*/}
+                                {/*        </div>*/}
 
-                                        {/*<div className="flex items-center space-x-2">*/}
-                                        {/*    <Checkbox id="remember"/>*/}
-                                        {/*    <label*/}
-                                        {/*        htmlFor="remember"*/}
-                                        {/*        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"*/}
-                                        {/*    >*/}
-                                        {/*        Nhớ tài khoản của tôi*/}
-                                        {/*    </label>*/}
-                                        {/*</div>*/}
+                                {/*        /!*<div className="flex items-center space-x-2">*!/*/}
+                                {/*        /!*    <Checkbox id="remember"/>*!/*/}
+                                {/*        /!*    <label*!/*/}
+                                {/*        /!*        htmlFor="remember"*!/*/}
+                                {/*        /!*        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"*!/*/}
+                                {/*        /!*    >*!/*/}
+                                {/*        /!*        Nhớ tài khoản của tôi*!/*/}
+                                {/*        /!*    </label>*!/*/}
+                                {/*        /!*</div>*!/*/}
 
-                                        <Button variant="dark" className="w-full" size="sm">
-                                            Đăng nhập
-                                        </Button>
+                                {/*        <Button variant="dark" className="w-full" size="sm">*/}
+                                {/*            Đăng nhập*/}
+                                {/*        </Button>*/}
 
-                                        <div className="relative mt-3">
-                                            <div className="absolute inset-0 flex items-center">
-                                                <span className="w-full border-t"/>
-                                            </div>
-                                            <div className="relative flex justify-center text-xs uppercase">
-                                  <span className="bg-background px-2 text-muted-foreground">
-                                    or
-                                  </span>
-                                            </div>
-                                        </div>
+                                {/*        <div className="relative mt-3">*/}
+                                {/*            <div className="absolute inset-0 flex items-center">*/}
+                                {/*                <span className="w-full border-t"/>*/}
+                                {/*            </div>*/}
+                                {/*            <div className="relative flex justify-center text-xs uppercase">*/}
+                                {/*  <span className="bg-background px-2 text-muted-foreground">*/}
+                                {/*    or*/}
+                                {/*  </span>*/}
+                                {/*            </div>*/}
+                                {/*        </div>*/}
 
-                                        <div className="text-center text-sm">
-                                <span className="text-muted-foreground">
-                                  Bạn chưa có tài khoản?{" "}
-                                </span>
-                                            <Link
-                                                href="/auth/signup"
-                                                className="font-semibold hover:underline"
-                                            >
-                                                Đăng kí ngay
-                                            </Link>
-                                        </div>
-                                        <div
-                                            className="border border-black max-w-xl rounded-xl p-4 text-xl flex justify-between items-center hover:text-white hover:bg-black cursor-pointer group"
-                                            onClick={() => {
-                                                setLayout(1);
-                                            }}>
-                                            Lựa chọn lại vai trò của bạn
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 200 100"
-                                                width="30"
-                                                height="15"
-                                                fill="none"
-                                                stroke="black"
-                                                stroke-width="10"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                className="group-hover:stroke-white transition-colors duration-300 group-hover:w-[40px] group-hover:h-[20px]"
-                                            >
-                                                <line x1="50" y1="50" x2="190" y2="50"/>
-                                                <polyline points="80,20 50,50 80,80"/>
-                                            </svg>
-                                        </div>
-                                    </form>
+                                {/*        <div className="text-center text-sm">*/}
+                                {/*<span className="text-muted-foreground">*/}
+                                {/*  Bạn chưa có tài khoản?{" "}*/}
+                                {/*</span>*/}
+                                {/*            <Link*/}
+                                {/*                href="/auth/signup"*/}
+                                {/*                className="font-semibold hover:underline"*/}
+                                {/*            >*/}
+                                {/*                Đăng kí ngay*/}
+                                {/*            </Link>*/}
+                                {/*        </div>*/}
+                                {/*        <div*/}
+                                {/*            className="border border-black max-w-xl rounded-xl p-4 text-xl flex justify-between items-center hover:text-white hover:bg-black cursor-pointer group"*/}
+                                {/*            onClick={() => {*/}
+                                {/*                setLayout(1);*/}
+                                {/*            }}>*/}
+                                {/*            Lựa chọn lại vai trò của bạn*/}
+                                {/*            <svg*/}
+                                {/*                xmlns="http://www.w3.org/2000/svg"*/}
+                                {/*                viewBox="0 0 200 100"*/}
+                                {/*                width="30"*/}
+                                {/*                height="15"*/}
+                                {/*                fill="none"*/}
+                                {/*                stroke="black"*/}
+                                {/*                stroke-width="10"*/}
+                                {/*                stroke-linecap="round"*/}
+                                {/*                stroke-linejoin="round"*/}
+                                {/*                className="group-hover:stroke-white transition-colors duration-300 group-hover:w-[40px] group-hover:h-[20px]"*/}
+                                {/*            >*/}
+                                {/*                <line x1="50" y1="50" x2="190" y2="50"/>*/}
+                                {/*                <polyline points="80,20 50,50 80,80"/>*/}
+                                {/*            </svg>*/}
+                                {/*        </div>*/}
+                                {/*    </form>*/}
                                 </CardContent>
                             </Card>
 
