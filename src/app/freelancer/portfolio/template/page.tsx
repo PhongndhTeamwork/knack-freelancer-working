@@ -5,7 +5,7 @@ import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardFooter} from "@/components/ui/card"
 import {Illustration} from "@/components/custom/illustration";
 import * as React from "react";
-import { Plus, Search} from "lucide-react";
+import { Search} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {CustomSelect} from "@/components/custom/custom-select";
 import {useRouter} from "next/navigation";
