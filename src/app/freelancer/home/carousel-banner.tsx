@@ -26,8 +26,7 @@ export const BannerCarousel = () => {
                             <span className="block mt-3">Khám phá cơ hội.</span>
                         </h1>
                         <p className="text-lg text-[#8A8A8A] max-w-xl">
-                            Preview this customizable portfolio template designed to showcase your work. With a modern,
-                            responsive design, it’s perfect for elevating your brand
+                            Thỏa sức sáng tạo cùng đam mê, Knack là đối tác tin cậy cho thành công của bạn!
                         </p>
                     </div>
 
@@ -50,10 +49,7 @@ export const BannerCarousel = () => {
                             <span className="block mt-3">Khám phá cơ hội.</span>
                         </h1>
                         <p className="text-lg text-[#8A8A8A] max-w-xl">
-                            Etiam accumsan urna a mauris dapibus, nec aliquet nunc convallis. Phasellus eget justo et
-                            libero ultrices posuere. Cras euismod, arcu nec congue convallis, ipsum nunc cursus nibh,
-                            vel condimentum sapien orci non libero. Integer ullamcorper felis sit amet felis placerat,
-                            eu convallis lorem iaculis.
+                            Thỏa sức sáng tạo cùng đam mê, Knack là đối tác tin cậy cho thành công của bạn!
                         </p>
                     </div>
 
@@ -76,9 +72,7 @@ export const BannerCarousel = () => {
                             <span className="block mt-3">Khám phá cơ hội.</span>
                         </h1>
                         <p className="text-lg text-[#8A8A8A] max-w-xl">
-                            Curabitur at felis non libero suscipit fermentum. Duis volutpat, ante et scelerisque luctus,
-                            sem nulla placerat leo, at aliquet libero justo id nulla. Integer at dui nec magna posuere
-                            fringilla. Nunc euismod bibendum augue. Cras nec ligula velit. Donec in laoreet leo.
+                            Thỏa sức sáng tạo cùng đam mê, Knack là đối tác tin cậy cho thành công của bạn!
                         </p>
                     </div>
 

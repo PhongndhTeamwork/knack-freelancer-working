@@ -1,13 +1,16 @@
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar"
 import {Card, CardContent} from "@/components/ui/card"
-import {Heart, AlertCircle, MapPin, HandMetalIcon} from 'lucide-react'
+import {Heart, AlertCircle, MapPin, HandMetalIcon, Link} from 'lucide-react'
 // import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
+import useProfileStore from "@/lib/store/profile.modal";
+import {Illustration} from "@/components/custom/illustration";
 
 export const ProfileCompletionProgress = () => {
     const router = useRouter();
+    const {profile} = useProfileStore()
 
     return (
         <div className="mx-auto space-y-4">
@@ -76,24 +79,37 @@ export const ProfileCompletionProgress = () => {
 
                 {/* Profile Banner */}
                 <Card className="relative overflow-hidden col-span-2 p-4 h-full">
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900/50 to-gray-900 z-0"/>
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-900/70 z-0"/>
                     <div className="absolute inset-0 bg-[url('/placeholder.svg')] bg-cover bg-center opacity-50"/>
 
                     <CardContent className="relative z-10 p-6" style={{backdropFilter: 'blur(20px)'}}>
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                            <Avatar className="w-20 h-20 border-2 border-white">
-                                <AvatarImage src="/placeholder.svg" alt="Trinh Văn Quyền"/>
-                                <AvatarFallback>TVQ</AvatarFallback>
+                            <Avatar className="w-30 h-30 border-2 border-white">
+                                <AvatarImage alt="User 1" src={profile.avatar}/>
+                                <AvatarFallback>{profile.username?.substring(0, 1) || "P"}</AvatarFallback>
                             </Avatar>
 
-                            <div className="flex-1 text-white">
-                                <h2 className="text-2xl font-bold">Trinh Văn Quyền</h2>
+                            <div className="flex-1 text-white space-y-2">
+                                <div className="flex space-x-3 items-center">
+                                    <h2 className="text-2xl font-bold">{profile.username}</h2>
+                                    <Illustration className="w-5 h-5 object-cover cursor-pointer"
+                                                  url="/freelancer/home/info/info1.svg"/>
+                                    <Illustration className="w-5 h-5 object-cover cursor-pointer"
+                                                  url="/freelancer/home/info/info2.svg"/>
+                                </div>
+
                                 <p className="text-gray-200">Người mẫu - Diễn viên Phim hành động</p>
-                                <div className="flex items-center gap-2 mt-2 text-sm text-gray-200">
-                                    <MapPin className="h-4 w-4"/>
-                                    Hà Nội, Việt Nam
-                                    <span className="mx-2">•</span>
-                                    175 cm | 72 kg
+                                <div className="flex flex-col gap-2 mt-2 text-sm text-gray-200">
+                                    <div className="flex gap-2 items-center">
+                                        <MapPin className="h-4 w-4"/>
+                                        Hà Nội, Việt Nam
+                                    </div>
+                                    <div className="flex gap-2 items-center">
+                                        <Link className="h-4 w-4 items-center"/>
+                                        phunguyenkoc.billard.com
+                                    </div>
+
+
                                 </div>
                             </div>
 
