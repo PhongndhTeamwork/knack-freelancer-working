@@ -12,7 +12,7 @@ export const Achievement = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Achievement Title Field */}
                         <div className="space-y-2">
-                            <Label htmlFor="achievement">Mục 1</Label>
+                            <Label htmlFor="achievement">Công việc/dự án</Label>
                             <Input
                                 id="achievement"
                                 placeholder=""

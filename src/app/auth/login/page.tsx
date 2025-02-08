@@ -10,14 +10,23 @@ import axios from "axios";
 import {LoginInformation} from "@/app/auth/login/information";
 import useAuthStore from "@/lib/store/user.modal";
 import {useRouter} from "next/navigation";
+import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
+import {MessagePayloadForm} from "@/lib/types/error.type";
+import {Toaster} from "react-hot-toast";
+
 
 
 export default function Login() {
-    const [layout, setLayout] = useState(1);
-    const [isLogin, setIsLogin] = useState(false);
-
+    const [layout, setLayout] = useState(1)
+    const [isLogin, setIsLogin] = useState(false)
     const {setToken} = useAuthStore()
     const router = useRouter()
+
+    const [message, setMessage] = useState<MessagePayloadForm>({content: ""});
+    const [triggerNotice, setTriggerNotice] = useState<boolean>(false);
+
+    ToastInitialisation({triggerMessage : triggerNotice, message : message})
+
 
     // useEffect( () => {
     //     const fetchData = async () => {
@@ -50,6 +59,7 @@ export default function Login() {
 
     return (
         <>
+            <Toaster position="bottom-left"/>
             <div className="min-h-screen w-full flex px-4">
                 {/* Left Side - Login Form */}
                 <Link href="/home" className="h-[130px] w-[47px] absolute left-8 top-8">
@@ -144,10 +154,19 @@ export default function Login() {
                                                 setToken(data.data.token)
                                                 if(!data.data.hasFillInfo) {
                                                     setIsLogin(true)
+                                                    setMessage({content : "Vui lòng cung cấp một số thông tin để hoàn thành đăng ký", type : "success"})
+                                                    setTriggerNotice(!triggerNotice)
                                                 }else {
-                                                    router.push("/freelancer/home")
+                                                    setMessage({content : "Đăng nhập thành công!", type : "success"})
+                                                    setTriggerNotice(!triggerNotice)
+                                                    setTimeout(() => {
+                                                        router.push("/freelancer/home")
+                                                    }, 1000)
+
                                                 }
                                             }).catch(() => {
+                                                setMessage({content : "Lỗi server", type : "error"})
+                                                setTriggerNotice(!triggerNotice)
                                             })
                                         }}
                                         onError={() => {

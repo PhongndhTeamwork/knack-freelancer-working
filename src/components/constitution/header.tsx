@@ -72,12 +72,11 @@ export const Header = ({logoLink, components}: Props) => {
     return (
         <header className={cn(
             "top-0 z-50 w-full text-[16px] fixed transition-all",
-            // isScrolled && "max-w-screen-lg"
         )}
-                style={{...(isScrolled ? {backgroundColor: 'rgba(255, 255, 255, 0.4)', top : "10px", width : "50%", borderRadius : "10px"} : {width : "100%"}), transition: 'background-color 0.3s ease, top 0.3s ease, width 0.3s ease',}}
+                style={{...(isScrolled ? {backgroundColor: 'rgba(255, 255, 255, 0.4)', top : "10px", width : "60%", borderRadius : "10px"} : {width : "100%"}), transition: 'background-color 0.5s ease, top 0.5s ease, width 0.5s ease',}}
         >
-            <div className="container mx-auto max-width-suitable px-14">
-                <div className="flex h-16 items-center justify-between">
+            <div className="container mx-auto max-width-suitable px-14" >
+                <div className={cn("flex h-16 items-center justify-between")}>
                     {/* Logo */}
                     <Link href={logoLink || "/home"} className="flex items-center space-x-2 w-[130px] h-[47px]">
                         <Illustration width={130} height={47} url='/logo/logo-black.svg'/>

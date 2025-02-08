@@ -8,20 +8,37 @@ import {FormEvent, useState} from "react"
 import {Card, CardContent} from "@/components/ui/card";
 import axios from "axios";
 import {useRouter} from "next/navigation";
+import {MessagePayloadForm} from "@/lib/types/error.type";
+import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
+import {Toaster} from "react-hot-toast";
 
 export const LoginInformation = () => {
     const [username, setUsername] = useState("");
     const [phone, setPhone] = useState("");
     const router = useRouter();
 
+    const [message, setMessage] = useState<MessagePayloadForm>({content: ""});
+    const [triggerNotice, setTriggerNotice] = useState<boolean>(false);
+
+    ToastInitialisation({triggerMessage: triggerNotice, message: message})
+
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
         const storedToken = localStorage.getItem("knackToken");
         if (!storedToken) {
+            setMessage({content: "Vui lòng đăng nhập để tiếp tục", type: "error"})
+            setTriggerNotice(!triggerNotice)
             return;
         }
         if (username.trim() === "" || phone.trim() === "") {
+            setMessage({content: "Vui lòng điền đầy đủ thông tin để tiếp tục", type: "error"})
+            setTriggerNotice(!triggerNotice)
+            return;
+        }
+        if(phone.trim().length !== 10) {
+            setMessage({content: "Số điện thoại phải bao gồm 10 số", type: "error"})
+            setTriggerNotice(!triggerNotice)
             return;
         }
 
@@ -33,14 +50,20 @@ export const LoginInformation = () => {
                 Authorization: "Bearer " + storedToken
             }
         }).then(() => {
-            router.push("/freelancer/home")
+            setMessage({content: "Đăng ký thành công!", type: "success"})
+            setTriggerNotice(!triggerNotice)
+            setTimeout(() => {
+                router.push("/freelancer/home")
+            }, 1000)
         }).catch(() => {
+            setMessage({content: "Lỗi server", type: "error"})
+            setTriggerNotice(!triggerNotice)
         })
-
     }
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-8 relative">
+            <Toaster position="bottom-left"/>
             <Card className="w-full max-w-md border-none shadow-none">
                 <CardContent className="space-y-6 mt-8">
                     {/* Login Form */}

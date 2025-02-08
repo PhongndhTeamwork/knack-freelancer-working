@@ -12,7 +12,7 @@ export const Work = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {/* Achievement Title Field */}
                         <div className="space-y-2">
-                            <Label htmlFor="achievement">Mục 1</Label>
+                            <Label htmlFor="achievement">Thành tựu</Label>
                             <Input
                                 id="achievement"
                                 placeholder=""
@@ -29,7 +29,7 @@ export const Work = () => {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="tip">Hoa hồng</Label>
+                            <Label htmlFor="tip">Chi phí/ Hoa hồng</Label>
                             <Input
                                 id="tip"
                                 placeholder=""
