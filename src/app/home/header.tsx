@@ -131,9 +131,9 @@ export const Header = () => {
                             <Button variant="dark" className="w-[108px]" size="sm" onClick={() => {
                                 router.push("/auth/login")
                             }}>Đăng nhập</Button>
-                            <Button variant="dark-outline" className="w-[108px]" size="sm" onClick={() => {
-                                router.push("/auth/signup")
-                            }}>Đăng ký</Button>
+                            {/*<Button variant="dark-outline" className="w-[108px]" size="sm" onClick={() => {*/}
+                            {/*    router.push("/auth/signup")*/}
+                            {/*}}>Đăng ký</Button>*/}
                         </div>
 
                         {/* Mobile Menu Button */}
