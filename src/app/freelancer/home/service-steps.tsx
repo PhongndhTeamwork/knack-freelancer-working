@@ -14,26 +14,26 @@ export const ServiceSteps = () => {
     const steps: Step[] = [
         {
             number: 1,
-            title: "Hoàn thiện Hồ sơ cá nhân",
-            description: "If our services is a good fit, start your subscription. Access your project board, and we'll reach out the same day for a introductory discussion. Plans & Pricing ↓",
+            title: "Đăng kí tài khoản",
+            description: "Tạo tài khoản với email, số điện thoại hoặc đăng nhập qua các nền tảng như Google/Facebook.",
             isDark: true
         },
         {
             number: 2,
-            title: "Hoàn thiện Hồ sơ cá nhân",
-            description: "If our services is a good fit, start your subscription. Access your project board, and we'll reach out the same day for a introductory discussion. Plans & Pricing ↓",
+            title: "Hoàn thiện hồ sơ cá nhân/Portfolio",
+            description: "Hãy cho chúng tôi và doanh nghiệp biết thêm về bạn thông qua kinh nghiệm làm việc và kỹ năng bạn đang có.",
             isDark: true
         },
         {
             number: 3,
-            title: "Hoàn thiện Hồ sơ cá nhân",
-            description: "If our services is a good fit, start your subscription. Access your project board, and we'll reach out the same day for a introductory discussion. Plans & Pricing ↓",
+            title: "Tìm kiếm và đăng tin",
+            description: "Tìm kiếm cơ hội việc làm phù hợp theo lĩnh vực của bạn (ví dụ: người mẫu, stylist, sự kiện).",
             isDark: true
         },
         {
             number: 4,
-            title: "Hoàn thiện Hồ sơ cá nhân",
-            description: "If our services is a good fit, start your subscription. Access your project board, and we'll reach out the same day for a introductory discussion. Plans & Pricing ↓",
+            title: "Kết nối và thương lượng",
+            description: "Trò chuyện với chính khách hàng của bạn ngay trên nền tảng, cùng thảo luận về yêu cầu công việc, chi phí và thời hạn.",
             isDark: true,
             showIcon: true
         }
