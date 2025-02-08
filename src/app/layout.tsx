@@ -31,7 +31,7 @@ export default function RootLayout({
               className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           >
 
-          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>{children}</GoogleOAuthProvider>;
+          <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>{children}</GoogleOAuthProvider>
 
           </body>
           </html>
