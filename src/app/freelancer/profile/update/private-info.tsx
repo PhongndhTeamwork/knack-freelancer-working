@@ -8,9 +8,11 @@ import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import Image from "next/image"
 import {Separator} from "@/components/ui/separator";
+import useProfileStore from "@/lib/store/profile.modal";
 
 export const PrivateInfo = () => {
-    const [avatar, setAvatar] = useState<string | null>(null)
+    const [avatar, setAvatar] = useState<string | null>(null);
+    const {profile} = useProfileStore();
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]
@@ -61,35 +63,35 @@ export const PrivateInfo = () => {
                 </div>
 
                 {/* Form Grid */}
-                <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-6">
                     {/* Basic Information */}
                     <div className="flex gap-6">
-                        <div className="space-y-2 w-full">
-                            <Label htmlFor="fullName">Họ và tên &nbsp;
+                        <div className="space-y-1.5 w-full">
+                            <Label htmlFor="fullName" className="responsive-text-16">Họ và tên &nbsp;
                                 <span className="text-red-700">*</span></Label>
-                            <Input id="fullName"/>
+                            <Input id="fullName" className="h-11" value={profile?.name}/>
                         </div>
 
-                        <div className="space-y-2 w-full">
-                            <Label htmlFor="location">Nơi sinh sống</Label>
-                            <Input id="location"/>
+                        <div className="space-y-1.5 w-full">
+                            <Label htmlFor="location" className="responsive-text-16">Nơi sinh sống</Label>
+                            <Input id="location" className="h-11"/>
                         </div>
                     </div>
 
                     <div className="flex gap-6">
-                        <div className="space-y-2 w-full">
-                            <Label htmlFor="email">Email của bạn</Label>
-                            <Input id="email" type="email"/>
+                        <div className="space-y-1.5 w-full">
+                            <Label htmlFor="email" className="responsive-text-16">Email của bạn</Label>
+                            <Input id="email" type="email" className="h-11"/>
                         </div>
 
-                        <div className="space-y-2 w-full">
-                            <Label htmlFor="phone">Số điện thoại</Label>
-                            <Input id="phone" type="tel"/>
+                        <div className="space-y-1.5 w-full">
+                            <Label htmlFor="phone" className="responsive-text-16">Số điện thoại</Label>
+                            <Input id="phone" type="tel" className="h-11"/>
                         </div>
 
-                        <div className="space-y-2 w-full">
-                            <Label htmlFor="occupation">Nghề nghiệp</Label>
-                            <Input id="occupation"/>
+                        <div className="space-y-1.5 w-full">
+                            <Label htmlFor="occupation" className="responsive-text-16">Nghề nghiệp</Label>
+                            <Input id="occupation" className="h-11"/>
                         </div>
                     </div>
 
@@ -97,24 +99,24 @@ export const PrivateInfo = () => {
 
                     <div className="flex gap-6">
                         {/* Social Media Links */}
-                        <div className="space-y-2 w-full">
-                            <Label htmlFor="facebook">Liên kết Facebook</Label>
-                            <Input id="facebook" placeholder="URL Facebook của bạn"/>
+                        <div className="space-y-1.5 w-full">
+                            <Label htmlFor="facebook" className="responsive-text-16">Liên kết Facebook</Label>
+                            <Input id="facebook" placeholder="URL Facebook của bạn" className="h-11"/>
                         </div>
 
-                        <div className="space-y-2 w-full">
-                            <Label htmlFor="instagram">Liên kết Instagram</Label>
-                            <Input id="instagram" placeholder="URL Instagram của bạn"/>
+                        <div className="space-y-1.5 w-full">
+                            <Label htmlFor="instagram" className="responsive-text-16">Liên kết Instagram</Label>
+                            <Input id="instagram" placeholder="URL Instagram của bạn" className="h-11"/>
                         </div>
 
-                        <div className="space-y-2 w-full">
-                            <Label htmlFor="youtube">Liên kết Youtube</Label>
-                            <Input id="youtube" placeholder="URL Youtube của bạn"/>
+                        <div className="space-y-1.5 w-full">
+                            <Label htmlFor="youtube" className="responsive-text-16">Liên kết Youtube</Label>
+                            <Input id="youtube" placeholder="URL Youtube của bạn" className="h-11"/>
                         </div>
 
-                        <div className="space-y-2 w-full">
-                            <Label htmlFor="tiktok">Liên kết TikTok</Label>
-                            <Input id="tiktok" placeholder="URL TikTok của bạn"/>
+                        <div className="space-y-1.5 w-full">
+                            <Label htmlFor="tiktok" className="responsive-text-16">Liên kết TikTok</Label>
+                            <Input id="tiktok" placeholder="URL TikTok của bạn" className="h-11"/>
                         </div>
                     </div>
                 </div>

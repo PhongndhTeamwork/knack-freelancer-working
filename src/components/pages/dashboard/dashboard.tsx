@@ -15,7 +15,7 @@ const data = Array.from({ length: 30 }, (_, i) => ({
 export const Dashboard = () => {
     const [targetDate, setTargetDate] = useState<Date | null>(new Date(Date.now()))
     return (
-        <div className="space-y-4 max-width-suitable px-14 mx-auto pt-12">
+        <div className="space-y-4 max-width-suitable px-[60px] mx-auto pt-12">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
                 <Card className="bg-[#D8D8D8]">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

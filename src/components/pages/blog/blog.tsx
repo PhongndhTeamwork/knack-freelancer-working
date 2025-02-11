@@ -30,7 +30,7 @@ export const Blog = () => {
     })
 
     return (
-        <div className="container mx-auto py-4 max-width-suitable px-14 mb-20">
+        <div className="container mx-auto py-4 max-width-suitable px-[60px] mb-20">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">
                     {/* Featured Article */}

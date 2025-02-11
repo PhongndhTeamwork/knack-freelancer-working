@@ -1,0 +1,218 @@
+/* Responsive Typography */
+.responsive-text-14 {
+    font-size: 12px; /* Default */
+    line-height: 14px;
+
+    @media (min-width: 768px) {
+        font-size: 13px;
+        line-height: 16px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}
+.responsive-text-16 {
+    font-size: 14px; /* Default */
+    line-height: 16px;
+
+    @media (min-width: 768px) {
+        font-size: 15px;
+        line-height: 18px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 16px;
+        line-height: 19px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 16px;
+        line-height: 19px;
+    }
+}
+.responsive-text-18 {
+    font-size: 16px; /* Default */
+    line-height: 18px;
+
+    @media (min-width: 768px) {
+        font-size: 17px;
+        line-height: 19px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 18px;
+        line-height: 20px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 18px;
+        line-height: 20px;
+    }
+}
+
+.responsive-text-20 {
+    font-size: 16px;
+    line-height: 19;
+
+    @media (min-width: 768px) {
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 20px;
+        line-height: 24px;
+    }
+}
+
+.responsive-text-24 {
+    font-size: 18px;
+    line-height: 1;
+
+    @media (min-width: 768px) {
+        font-size: 20px;
+        line-height: 25px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 24px;
+        line-height: 29px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 24px;
+        line-height: 29px;
+    }
+}
+
+.responsive-text-28 {
+    font-size: 20px;
+    line-height: 24px;
+
+    @media (min-width: 768px) {
+        font-size: 24px;
+        line-height: 29px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 28px;
+        line-height: 34px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 28px;
+        line-height: 34px;
+    }
+}
+
+.responsive-text-32{
+    font-size: 24px;
+    line-height: 29px;
+
+    @media (min-width: 768px) {
+        font-size: 28px;
+        line-height: 34px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 32px;
+        line-height: 38px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 32px;
+        line-height: 38px;
+    }
+}
+
+.responsive-text-36 {
+    font-size: 26px;
+    line-height: 32px;
+
+    @media (min-width: 768px) {
+        font-size: 34px;
+        line-height: 39px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 36px;
+        line-height: 43px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 36px;
+        line-height: 43px;
+    }
+}
+
+.responsive-text-40 {
+    font-size: 28px;
+    line-height: 32px;
+
+    @media (min-width: 768px) {
+        font-size: 32px;
+        line-height: 36px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 40px;
+        line-height: 48px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 40px;
+        line-height: 48px;
+    }
+}
+
+.responsive-text-48 {
+    font-size: 32px;
+    line-height: 38px;
+
+    @media (min-width: 768px) {
+        font-size: 40px;
+        line-height: 48px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 48px;
+        line-height: 56px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 48px;
+        line-height: 56px;
+    }
+}
+
+.responsive-text-64 {
+    font-size: 40px;
+    line-height: 48px;
+
+    @media (min-width: 768px) {
+        font-size: 52px;
+        line-height: 60px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 64px;
+        line-height: 78px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 64px;
+        line-height: 78px;
+    }
+}

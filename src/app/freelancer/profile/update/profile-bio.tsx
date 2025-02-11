@@ -4,8 +4,8 @@ import { Textarea } from "@/components/ui/textarea"
 export const ProfileBio =() => {
     return (
         <Card className="w-full mx-auto">
-            <CardHeader>
-                <CardTitle className="text-lg font-medium">Tiểu sử</CardTitle>
+            <CardHeader className="pb-2">
+                <CardTitle className="responsive-text-16 font-medium">Tiểu sử</CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="space-y-2">

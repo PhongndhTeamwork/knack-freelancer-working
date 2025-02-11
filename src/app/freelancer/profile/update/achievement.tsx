@@ -8,30 +8,32 @@ export const Achievement = () => {
     return (
         <Card className="w-full mx-auto">
             <CardContent className="p-6">
-                <form className="space-y-6">
+                <form className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Achievement Title Field */}
                         <div className="space-y-2">
-                            <Label htmlFor="achievement">Công việc/dự án</Label>
+                            <Label htmlFor="achievement" className="responsive-text-16">Công việc/dự án</Label>
                             <Input
                                 id="achievement"
                                 placeholder=""
+                                className="responsive-text-16 h-11"
                             />
                         </div>
 
                         {/* Time Period Field */}
                         <div className="space-y-2">
-                            <Label htmlFor="period">Thời gian</Label>
+                            <Label htmlFor="period" className="responsive-text-16">Thời gian</Label>
                             <Input
                                 id="period"
                                 placeholder=""
+                                className="responsive-text-16 h-11"
                             />
                         </div>
                     </div>
 
                     {/* Description Field */}
                     <div className="space-y-2">
-                        <Label htmlFor="description">Mô tả</Label>
+                        <Label htmlFor="description" className="responsive-text-16">Mô tả</Label>
                         <Textarea
                             id="description"
                             placeholder=""

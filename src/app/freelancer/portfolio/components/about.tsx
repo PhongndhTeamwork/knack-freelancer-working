@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 
 export const About  = () => {
     return (
-        <div className="mx-auto py-4 w-full">
+        <div className="mx-auto w-full">
             {/*<div className="flex items-center gap-2 mb-6">*/}
             {/*    <div className="w-2 h-2 bg-green-500 rounded-full" />*/}
             {/*    <h2 className="text-xl font-semibold">About</h2>*/}
@@ -21,17 +21,16 @@ export const About  = () => {
                             </Avatar>
                             <div className="space-y-3">
                                 {/*<h3 className="font-semibold">I&#39;m Simrann</h3>*/}
-                                <p className="text-muted-foreground">
+                                <p className="text-muted-foreground responsive-text-24">
                                     <span className="font-bold text-black">I&#39;m Simrann</span> - an experienced freelance web
                                     developer crafting Digital experiences from Montreal
                                 </p>
-                                <Button variant="dark">
+                                <Button variant="dark" size="sm">
                                     Liên hệ ngay
                                 </Button>
                             </div>
                         </div>
-
-                        <div className="space-y-4">
+                        <div className="space-y-4 responsive-text-20">
                             <p className="text-muted-foreground">
                                 Hey there! I&#39;m Simrann Gokhan, a freelance web developer based in Montreal. With over 5 years of experience, I specialize in crafting dynamic websites that leave a lasting impression. My skills span HTML, CSS, JavaScript, and more, allowing me to bring your digital vision to life with precision and creativity.
                             </p>

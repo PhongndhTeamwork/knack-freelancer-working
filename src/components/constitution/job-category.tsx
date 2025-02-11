@@ -103,10 +103,10 @@ export const RelatedJobs = () => {
         <div className="mx-auto px-4 py-12">
             <div className="mb-8 flex justify-between">
                 <div>
-                    <h2 className="text-4xl font-bold">
+                    <h2 className="responsive-text-40 font-bold mb-2">
                         Thông tin
                     </h2>
-                    <p className="text-4xl font-bold text-[#8A8A8A]">
+                    <p className="responsive-text-40 font-bold text-[#8A8A8A]">
                         việc làm hàng đầu tại Việt Nam
                     </p>
                 </div>
@@ -118,12 +118,12 @@ export const RelatedJobs = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {jobCategories.map((category, index) => (
                     <div key={index} className="space-y-4">
-                        <ul className="space-y-2 text-[#545454] text-xl">
+                        <ul className="space-y-2 text-[#545454] responsive-text-18">
                             {category.jobs.map((item, itemIndex) => (
                                 <li key={itemIndex}>
                                     <Link
                                         href="#"
-                                        className="text-gray-600 hover:text-black transition-colors duration-200"
+                                        className="text-[#545454] hover:text-black transition-colors duration-200"
                                     >
                                         {item}
                                     </Link>

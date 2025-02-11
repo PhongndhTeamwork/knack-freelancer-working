@@ -17,7 +17,7 @@ export const Skill = () => {
         <div>
             <div className="grid lg:grid-cols-2 gap-12 w-full">
                 <div>
-                    <p className="text-muted-foreground mb-6 text-2xl">
+                    <p className="text-muted-foreground mb-6 responsive-text-24">
                         Here, I showcase the programs I work with and the programming languages I master.
                         From Photoshop to JavaScript, each skill contributes to the mosaic of my professional expertise.
                     </p>
@@ -26,7 +26,7 @@ export const Skill = () => {
                     {
                         groupedSkills.map((groupedSkill, index) => (<div className="flex justify-end space-x-4" key={index}>
                             {groupedSkill.map((skill, skillIndex) => (
-                                <Badge key={skillIndex} variant="secondary" className="font-normal h-10 rounded-3xl p-3 text-xl border border-black">
+                                <Badge key={skillIndex} variant="secondary" className="rounded-[40px] font-normal h-14 px-6 responsive-text-20 bg-[#DDDDDD] bg-opacity-50">
                                     {skill}
                                 </Badge>
                             ))}

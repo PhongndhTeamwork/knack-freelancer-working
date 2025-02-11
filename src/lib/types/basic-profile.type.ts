@@ -1,7 +1,7 @@
 export type BasicProfileForm = {
     id ?: number;
-    username ?: string;
+    name ?: string;
     avatar ?: string
-    social?: string;
+    // social?: string;
     role ?: number;
 };

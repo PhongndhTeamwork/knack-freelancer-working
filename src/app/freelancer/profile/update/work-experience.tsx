@@ -12,30 +12,32 @@ export const WorkExperience = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Position Field */}
                         <div className="space-y-2">
-                            <Label htmlFor="position">Vị trí</Label>
+                            <Label htmlFor="position" className="responsive-text-16">Vị trí</Label>
                             <Input
                                 id="position"
                                 placeholder="Người mẫu"
+                                className="h-11 responsive-text-16"
                             />
                         </div>
 
                         {/* Work Period Field */}
                         <div className="space-y-2">
-                            <Label htmlFor="period">Thời gian làm việc</Label>
+                            <Label htmlFor="period" className="responsive-text-16">Thời gian làm việc</Label>
                             <Input
                                 id="period"
                                 placeholder=""
+                                className="h-11 responsive-text-16"
                             />
                         </div>
                     </div>
 
                     {/* Description Field */}
                     <div className="space-y-2">
-                        <Label htmlFor="description">Mô tả</Label>
+                        <Label htmlFor="description" className="responsive-text-16">Mô tả</Label>
                         <Textarea
                             id="description"
                             placeholder=""
-                            className="min-h-[100px] resize-none"
+                            className="min-h-[100px] resize-none responsive-text-16"
                         />
                     </div>
 

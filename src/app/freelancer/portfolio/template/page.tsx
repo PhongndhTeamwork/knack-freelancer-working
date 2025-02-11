@@ -38,7 +38,8 @@ export default function Component() {
     const router = useRouter();
 
     return (
-        <div className="max-w-[1800px] px-14 mx-auto mt-28">
+        <div className="max-w-[1800px] px-[60px] mx-auto mt-28">
+
             {/* Banner Section */}
             <div className="relative h-[200px] w-full overflow-hidden">
                 <Illustration url="/freelancer/portfolio/banner/1.svg" className="h-full rounded-xl"/>

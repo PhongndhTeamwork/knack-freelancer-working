@@ -15,7 +15,7 @@ import {PricingDisplayForm} from "@/app/freelancer/profile/update/pricing-displa
 export default function Component() {
     const [activeBar, setActiveBar] = useState<number>(1);
 
-    return <div className="px-14 mx-auto py-6 space-y-8">
+    return <div className="px-[60px] mx-auto py-6 space-y-10">
         <WelcomeBanner userName="" message="Chỉnh sửa thông tin cá nhân"
                        supportingText="Hãy nhớ cập nhật thông tin thường xuyên nếu cần nhé!"/>
         <div className="grid md:grid-cols-12 gap-8">

@@ -20,11 +20,11 @@ const components: NavigationItem[] = [
     },
     {
         href: "/freelancer/profile",
-        title: "Hồ sơ cá nhân"
+        title: "Trang cá nhân"
     },
     {
         href: "/freelancer/portfolio/general",
-        title: "Quản lý portfolio"
+        title: "Portfolio"
     },
 ]
 

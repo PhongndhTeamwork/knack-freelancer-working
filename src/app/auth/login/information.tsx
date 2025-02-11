@@ -36,9 +36,16 @@ export const LoginInformation = () => {
             setTriggerNotice(!triggerNotice)
             return;
         }
-        if(phone.trim().length !== 10) {
-            setMessage({content: "Số điện thoại phải bao gồm 10 số", type: "error"})
-            setTriggerNotice(!triggerNotice)
+
+        const cleanedPhone = phone.replace(/\s+/g, '');
+        if (!/^\d+$/.test(cleanedPhone)) {
+            setMessage({ content: "Số điện thoại chỉ được chứa số", type: "error" });
+            setTriggerNotice(!triggerNotice);
+            return;
+        }
+        if (cleanedPhone.length !== 10) {
+            setMessage({ content: "Số điện thoại phải bao gồm 10 số", type: "error" });
+            setTriggerNotice(!triggerNotice);
             return;
         }
 
@@ -78,7 +85,7 @@ export const LoginInformation = () => {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             {/* Name Input */}
                             <div className="space-y-2">
-                                <Label htmlFor="name" className="text-sm font-medium">
+                                <Label htmlFor="name" className="font-medium">
                                     Họ và tên
                                 </Label>
                                 <Input id="name" placeholder="Họ và tên" value={username} onChange={(e) => {

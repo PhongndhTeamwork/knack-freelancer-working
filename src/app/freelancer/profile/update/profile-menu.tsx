@@ -49,12 +49,12 @@ export const ProfileMenu = ({onChangeNavbar, activeBar}: Props) => {
                         <div
                             key={index}
                             // href={item.href}
-                            className={cn("flex items-center justify-between p-4 transition-colors rounded-xl cursor-pointer", activeBar !== item.id && "hover:bg-gray-300", activeBar === item.id && "bg-black text-white")}
+                            className={cn("flex items-center justify-between p-4 transition-colors rounded-xl cursor-pointer space-y-3", activeBar !== item.id && "hover:bg-gray-300", activeBar === item.id && "bg-black text-white")}
                             onClick={() => onChangeNavbar(item.id)}
                         >
                             <div className="space-y-1">
-                                <h2 className="text-sm font-medium leading-none">{item.title}</h2>
-                                <p className={cn("text-sm", activeBar !== item.id ? " text-muted-foreground" : "text-[#D8D8D8]" )}>{item.description}</p>
+                                <h2 className="responsive-text-16 font-medium leading-none">{item.title}</h2>
+                                <p className={cn("responsive-text-14", activeBar !== item.id ? " text-muted-foreground" : "text-[#D8D8D8]" )}>{item.description}</p>
                             </div>
                         </div>
                     ))}

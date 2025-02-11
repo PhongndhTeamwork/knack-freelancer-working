@@ -14,45 +14,26 @@ export const ProfileCompletionProgress = () => {
 
     return (
         <div className="mx-auto space-y-4">
-            <div className="grid gap-10 md:grid-cols-[300px,1fr] lg:grid-cols-3">
+            <div className="grid gap-6  lg:grid-cols-3">
                 {/* Progress Section */}
-                <Card className="p-6">
+                <Card className="p-6 col-span-1">
                     <div className="space-y-6">
                         <div
-                            className="p-3 rounded-xl flex items-center gap-3 border-[#E57A00] text-warning text-[#E57A00] bg-[#E57A0033]"
+                            className="rounded-xl flex p-4 items-center gap-3 border-[#DC6803] text-warning text-[#E57A00] bg-[#E57A0033]"
                             style={{border: "1px dashed"}}>
-                            <AlertCircle className="h-5 w-5" style={{color: "#E57A00"}}/>
-                            <span>Trang cá nhân và Portfolio chưa hoàn thiện</span>
+                            <AlertCircle className="h-5 w-5" style={{color: "#DC6803"}}/>
+                            <span className="responsive-text-16">Trang cá nhân và Portfolio chưa hoàn thiện</span>
                         </div>
-
-                        {/*<div onClick={() => {*/}
-                        {/*    router.push("/freelancer/profile/update")*/}
-                        {/*}} className="cursor-pointer">*/}
-                        {/*    <span className="text-sm font-medium">40%</span>*/}
-                        {/*    <CircularProgressbar className="w-11 h-11" styles={buildStyles({*/}
-                        {/*        pathColor: "#D86603",*/}
-                        {/*        textColor: "#D86603",*/}
-                        {/*        textSize: "18px"*/}
-                        {/*    })} value={40} text="40%"/>*/}
-                        {/*</div>*/}
                         <div className="flex justify-between items-center">
-                            {/*<span className="text-sm font-medium">Hoàn thiện Hồ sơ cá nhân</span>*/}
-                            {/*<p className="text-sm text-muted-foreground">*/}
-                            {/*    Cho chúng tôi biết rõ hơn về bạn và công việc bạn đang làm*/}
-                            {/*</p>*/}
-                            <p className="font-bold text-[16px]">Trang cá nhân</p>
-                            <Button variant="dark" size="sm" className="h-8 text-[16px]" onClick={() => {
+                            <p className="font-medium responsive-text-20">Trang cá nhân</p>
+                            <Button variant="dark" size="sm" className="px-4 py-2 h-10 responsive-text-16" onClick={() => {
                                 router.push("/freelancer/profile/update")
                             }}> Hoàn thiện</Button>
                         </div>
 
                         <div className="flex justify-between items-center">
-                            {/*<span className="text-sm font-medium">Hoàn thiện Hồ sơ cá nhân</span>*/}
-                            {/*<p className="text-sm text-muted-foreground">*/}
-                            {/*    Cho chúng tôi biết rõ hơn về bạn và công việc bạn đang làm*/}
-                            {/*</p>*/}
-                            <p className="font-bold text-[16px]">Portfolio</p>
-                            <Button variant="dark" size="sm" className="h-8 text-[16px]" onClick={() => {
+                            <p className="font-medium responsive-text-20">Portfolio</p>
+                            <Button variant="dark" size="sm" className="px-4 py-2 h-10 responsive-text-16" onClick={() => {
                                 router.push("/freelancer/portfolio/template")
                             }}> Hoàn thiện</Button>
                         </div>
@@ -83,28 +64,28 @@ export const ProfileCompletionProgress = () => {
                     <div className="absolute inset-0 bg-[url('/placeholder.svg')] bg-cover bg-center opacity-50"/>
 
                     <CardContent className="relative z-10 p-6" style={{backdropFilter: 'blur(20px)'}}>
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                            <Avatar className="w-30 h-30 border-2 border-white">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
+                            <Avatar className="w-[136px] h-[136px] border-2 border-white">
                                 <AvatarImage alt="User 1" src={profile.avatar}/>
-                                <AvatarFallback>{profile.username?.substring(0, 1) || "P"}</AvatarFallback>
+                                <AvatarFallback className="text-3xl">{profile.name?.substring(0, 1) || "P"}</AvatarFallback>
                             </Avatar>
 
-                            <div className="flex-1 text-white space-y-2">
+                            <div className="flex-1 text-white space-y-3">
                                 <div className="flex space-x-3 items-center">
-                                    <h2 className="text-2xl font-bold">{profile.username}</h2>
+                                    <h2 className="responsive-text-28 font-bold">{profile.name}</h2>
                                     <Illustration className="w-5 h-5 object-cover cursor-pointer"
                                                   url="/freelancer/home/info/info1.svg"/>
                                     <Illustration className="w-5 h-5 object-cover cursor-pointer"
                                                   url="/freelancer/home/info/info2.svg"/>
                                 </div>
 
-                                <p className="text-gray-200">Người mẫu - Diễn viên Phim hành động</p>
-                                <div className="flex flex-col gap-2 mt-2 text-sm text-gray-200">
-                                    <div className="flex gap-2 items-center">
+                                <p className="text-gray-200 responsive-text-16">Người mẫu - Diễn viên Phim hành động</p>
+                                <div className="flex flex-col gap-2 mt-2 text-sm text-gray-200 responsive-text-16">
+                                    <div className="flex gap-3 items-center">
                                         <MapPin className="h-4 w-4"/>
                                         Hà Nội, Việt Nam
                                     </div>
-                                    <div className="flex gap-2 items-center">
+                                    <div className="flex gap-3 items-center">
                                         <Link className="h-4 w-4 items-center"/>
                                         phunguyenkoc.billard.com
                                     </div>

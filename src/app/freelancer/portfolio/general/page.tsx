@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import {Button} from "@/components/ui/button"
+// import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardFooter} from "@/components/ui/card"
 import {Illustration} from "@/components/custom/illustration";
 import * as React from "react";
@@ -38,7 +38,7 @@ export default function Component() {
     const router = useRouter();
 
     return (
-        <div className="max-w-[1800px] px-14 mx-auto mt-28">
+        <div className="max-w-[1800px] px-[60px] mx-auto mt-28">
             {/* Banner Section */}
             <div className="relative h-[200px] w-full overflow-hidden">
                 <Illustration url="/freelancer/portfolio/banner/1.svg" className="h-full rounded-xl"/>
@@ -48,9 +48,9 @@ export default function Component() {
             <div className="mx-auto py-8 mt-4">
                 <div className="space-y-6">
                     {/* Header */}
-                    <div className="space-y-2">
-                        <h1 className="text-4xl font-bold">Portfolio của bạn</h1>
-                        <p className="text-muted-foreground text-xl">
+                    <div className="space-y-3">
+                        <h1 className="responsive-text-48 font-bold">Portfolio của bạn</h1>
+                        <p className="text-muted-foreground responsive-text-20">
                             Khám phá những mẫu Hồ sơ năng lực hấp dẫn nhất từ chúng tôi
                         </p>
                     </div>
@@ -63,13 +63,13 @@ export default function Component() {
                             <Input
                                 type="search"
                                 placeholder="Tìm kiếm..."
-                                className="pl-10 w-[200px] lg:w-[300px] bg-[#DDDDDD80]"
+                                className="pl-10 w-[200px] lg:w-[300px] bg-[#DDDDDD80] responsive-text-16"
                             />
                         </div>
                         {/*<Badge variant="secondary" className="px-4 py-1">*/}
                         {/*    Style*/}
                         {/*</Badge>*/}
-                        <CustomSelect items={styles} className="w-52"/>
+                        <CustomSelect items={styles} className="w-52 responsive-text-16"/>
                         {/*<Select>*/}
                         {/*    <SelectTrigger className="w-[100px] bg-[#DDDDDD80] h-[40px]">*/}
                         {/*        <SelectValue placeholder="Style"/>*/}
@@ -83,11 +83,12 @@ export default function Component() {
                         {/*        </SelectGroup>*/}
                         {/*    </SelectContent>*/}
                         {/*</Select>*/}
-                        <div className="ml-auto">
-                            <div>
-                                <Button variant="dark" size="sm">Tìm kiếm</Button>
-                            </div>
-                        </div>
+
+                        {/*<div className="ml-auto">*/}
+                        {/*    <div>*/}
+                        {/*        <Button variant="dark" size="sm">Tìm kiếm</Button>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
 
                     {/* Portfolio Grid */}

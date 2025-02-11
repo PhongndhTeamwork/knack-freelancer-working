@@ -1,0 +1,57 @@
+.slick-dots li button:before{
+    font-size: 6px;
+    line-height: 24px;
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    content: "";
+    text-align: center;
+    background-color: black;
+    border-radius: 100%;
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.slick-dots li{
+    width:16px;
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+.slick-dots li button{
+    width:16px;
+}
+
+
+.slick-dots {
+    position: relative;
+    top : 24px;
+}
+
+.slick-dots li.slick-active {
+    width: 50px;
+}
+
+.slick-dots li.slick-active button:before {
+    /*width: 50px; !* Adjust this value as needed *!*/
+    /*height: 5px; !* Optional: Adjust thickness *!*/
+    /*content: ''; !* Ensure it's displayed *!*/
+    /*display: block;*/
+    /*background-color: black; !* Adjust color if needed *!*/
+    /*border-radius: 5px; !* Optional: Make it rounded *!*/
+    font-size: 6px;
+    line-height: 24px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 12px;
+    content: "";
+    text-align: center;
+    background-color: black;
+    border-radius: 10px;
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+}

@@ -11,30 +11,30 @@ import {MarqueeBrand} from "@/components/constitution/marquee-brand";
 
 const HomePage = () => {
     return <div className="mt-3 mb-10">
-        <div className="max-width-suitable px-14 mx-auto">
+        <div className="max-width-suitable px-[60px] mx-auto">
             <Banner/>
         </div>
         <div>
             <MarqueeBrand/>
         </div>
         <div className="bg-black mt-16">
-            <div className="max-width-suitable px-14 mx-auto">
+            <div className="max-width-suitable px-[60px] mx-auto">
                 <CareerCategories/>
             </div>
         </div>
-        <div className="max-width-suitable px-14 mx-auto">
+        <div className="max-width-suitable px-[60px] mx-auto">
             <PlatformSections/>
         </div>
-        <div className="max-width-suitable px-14 mx-auto">
+        <div className="max-width-suitable px-[60px] mx-auto">
             <CommunitySection/>
         </div>
-        <div className="max-width-suitable px-14 mx-auto ">
+        <div className="max-width-suitable px-[60px] mx-auto ">
             <RecruitmentFeatures/>
         </div>
-        <div className="max-width-suitable px-14 mx-auto">
+        <div className="max-width-suitable px-[60px] mx-auto">
             <WhyKnackSection/>
         </div>
-        <div className="max-width-suitable px-14 mx-auto">
+        <div className="max-width-suitable px-[60px] mx-auto">
             <JobCategories/>
         </div>
     </div>

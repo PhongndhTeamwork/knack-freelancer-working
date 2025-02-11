@@ -73,7 +73,7 @@ export const CustomerFeedback = () => {
     }, []);
 
     return (
-        <div className="container mx-auto py-8 max-w-none">
+        <div className="container mx-auto max-w-none">
             {/*<div className="flex items-center gap-2 mb-8">*/}
             {/*    <div className="w-2 h-2 bg-green-500 rounded-full"/>*/}
             {/*    <h2 className="text-xl font-semibold">Feedback của Khách hàng</h2>*/}

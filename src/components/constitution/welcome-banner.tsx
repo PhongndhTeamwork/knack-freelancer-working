@@ -14,12 +14,12 @@ export const WelcomeBanner = ({
     return (
         <Card className="border-none shadow-none p-0 bg-transparent">
             <CardContent className="p-0">
-                <div className="space-y-2">
+                <div className="space-y-3">
                     <div className="flex items-center gap-2">
                         {/*<Hand className="h-6 w-6 rotate-12 text-yellow-400" />*/}
-                        <span className="text-4xl font-bold">{message} {userName}</span>
+                        <span className="responsive-text-40 font-bold">{message} {userName}</span>
                     </div>
-                    <p className="text-muted-foreground text-xl">
+                    <p className="text-muted-foreground responsive-text-24">
                         {supportingText}
                     </p>
                 </div>

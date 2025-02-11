@@ -28,16 +28,16 @@ export const WorkExperience = () => {
                         {experiences.map((item, index) => (
                             <div
                                 key={index}
-                                className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b-2 text-2xl"
+                                className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b-2 responsive-text-32"
                             >
                                 <div className="font-medium text-muted-foreground">
                                     {item.label}
                                 </div>
                                 <div className="flex flex-wrap gap-4">
-                                    <Badge variant="secondary" className="font-normal h-10 rounded-3xl p-3 text-xl border border-black">
+                                    <Badge variant="secondary" className="rounded-[40px] font-normal h-14 px-6 responsive-text-20 bg-[#DDDDDD] bg-opacity-50">
                                         {item.company}
                                     </Badge>
-                                    <Badge variant="secondary" className="font-normal h-10 rounded-3xl p-3 text-xl border border-black">
+                                    <Badge variant="secondary" className="font-normal h-14 rounded-[40px] px-6 responsive-text-20 bg-[#DDDDDD] bg-opacity-50">
                                         {item.period}
                                     </Badge>
                                 </div>

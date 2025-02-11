@@ -75,7 +75,7 @@ export const Header = ({logoLink, components}: Props) => {
         )}
                 style={{...(isScrolled ? {backgroundColor: 'rgba(255, 255, 255, 0.4)', top : "10px", width : "60%", borderRadius : "10px"} : {width : "100%"}), transition: 'background-color 0.5s ease, top 0.5s ease, width 0.5s ease',}}
         >
-            <div className="container mx-auto max-width-suitable px-14" >
+            <div className="container mx-auto max-width-suitable px-[60px]" >
                 <div className={cn("flex h-16 items-center justify-between")}>
                     {/* Logo */}
                     <Link href={logoLink || "/home"} className="flex items-center space-x-2 w-[130px] h-[47px]">
@@ -83,7 +83,7 @@ export const Header = ({logoLink, components}: Props) => {
                     </Link>
 
                     {/*NavBar*/}
-                    <div className="gap-2 flex text-[16px]">
+                    <div className="gap-2 flex responsive-text-16">
                         {components.map((c, index) => (
                             <div key={index}
                                  className={cn("rounded-md px-3 py-1 cursor-pointer select-none", path.includes(c.href) ? "bg-[#333333] text-white hover:bg-black active:bg-[#333333]" : "hover:bg-gray-200")}
@@ -104,9 +104,9 @@ export const Header = ({logoLink, components}: Props) => {
                                     <AvatarImage src={profile.avatar} alt="User 1"
                                                  className="w-full h-full"/>
                                     <AvatarFallback
-                                        className="text-[20px]">{profile.username?.substring(0, 1) || "P"}</AvatarFallback>
+                                        className="text-[20px]">{profile.name?.substring(0, 1) || "P"}</AvatarFallback>
                                 </Avatar>
-                                <p className="ml-3 text-[16px] font-bold">{profile.username}</p>
+                                <p className="ml-3 text-[16px] font-bold">{profile.name}</p>
                                 {isOpen && <div
                                     className="absolute bg-white border border-gray-300 w-32 top-12 right-1/2 rounded-md">
                                     <ul ref={dropdownRef} className="w-full rounded-xl">
@@ -151,9 +151,9 @@ export const Header = ({logoLink, components}: Props) => {
                                                     <AvatarImage src={profile?.avatar} alt="User 1"
                                                                  className="w-full h-full"/>
                                                     <AvatarFallback
-                                                        className="text-[20px]">{profile.username?.substring(0, 1) || "P"}</AvatarFallback>
+                                                        className="text-[20px]">{profile.name?.substring(0, 1) || "P"}</AvatarFallback>
                                                 </Avatar>
-                                                <p className="ml-3 text-[16px] font-bold cursor-pointer">{profile.username}</p>
+                                                <p className="ml-3 text-[16px] font-bold cursor-pointer">{profile.name}</p>
                                             </div>
                                         </div>
                                     </div>

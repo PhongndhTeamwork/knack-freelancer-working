@@ -23,7 +23,7 @@ const categories = [
 export default function Component() {
     // const {profile} = useProfileStore()
     return (
-        <div className="max-width-suitable px-14 mt-28 mx-auto">
+        <div className="max-width-suitable px-[60px] mt-28 mx-auto">
             <div className="">
                 {/*<WelcomeBanner userName={profile.username} supportingText="Hôm nay Knack có thể giúp gì cho bạn nhỉ?"/>*/}
 

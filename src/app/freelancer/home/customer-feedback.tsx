@@ -4,10 +4,10 @@ import {Illustration} from "@/components/custom/illustration";
 
 export const CustomerFeedback = () => {
     return (
-        <div className="mx-autopy-12">
-            <div className="space-y-4 mb-8">
-                <h2 className="text-4xl font-bold">Feedback từ Khách hàng</h2>
-                <p className="text-[#545454] max-w-3xl text-xl">
+        <div className="mx-auto">
+            <div className="space-y-3 mb-8">
+                <h2 className="responsive-text-40 font-bold">Feedback từ Khách hàng</h2>
+                <p className="text-[#545454] max-w-3xl responsive-text-24">
                     Our services are loved by founders around the all world. We are proud to work with emerging talents, innovative startups and companies. So you are Our Customers
                 </p>
             </div>

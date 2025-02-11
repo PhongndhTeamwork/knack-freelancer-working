@@ -2,15 +2,21 @@
 
 import {WelcomeBanner} from "@/components/constitution/welcome-banner";
 import {ProfileCompletionProgress} from "@/components/constitution/profile-completion-progress";
-import useProfileStore from "@/lib/store/profile.modal";
 
-export const FreelancerProgress = () => {
-    const {profile} = useProfileStore()
+type Props = {
+    userName : string;
+    supportingText : string;
+    message : string
+}
+export const FreelancerProgress = ({userName,supportingText, message}:Props) => {
+
     return (
-        <div className="bg-[#F2F2F280] px-14 mx-auto py-6 space-y-8">
-            <WelcomeBanner userName={profile?.username + " 🎉!"}
-                           supportingText="Chúng mình có một số gợi ý nhỏ cho bạn đó!"/>
-            <ProfileCompletionProgress/>
+        <div className="px-[60px] mx-auto py-0 space-y-8">
+            <WelcomeBanner userName={ userName}
+                           supportingText={supportingText}
+                           message={message}/>
+                <ProfileCompletionProgress/>
+
         </div>
     )
 }

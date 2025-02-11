@@ -85,28 +85,29 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 @font-face {
   font-family: 'sf-pro';
-  src: url('fonts/SFPRODISPLAYREGULAR.OTF') format('truetype');
+  src: url('../app/fonts/SFPRODISPLAYREGULAR.OTF') format('truetype');
 }
 
 @font-face {
   font-family: 'sf-black-italic';
-  src: url('fonts/SFPRODISPLAYBLACKITALIC.OTF') format('opentype');
+  src: url('../app/fonts/SFPRODISPLAYBLACKITALIC.OTF') format('opentype');
   font-style: normal;
 }
 
 @font-face {
   font-family: 'sf-bold';
-  src: url('fonts/SFPRODISPLAYBOLD.OTF') format('opentype');
+  src: url('../app/fonts/SFPRODISPLAYBOLD.OTF') format('opentype');
   font-style: normal;
 }
 
 @font-face {
   font-family: 'sf-heavy-italic';
-  src: url('fonts/SFPRODISPLAYHEAVYITALIC.OTF') format('opentype');
+  src: url('../app/fonts/SFPRODISPLAYHEAVYITALIC.OTF') format('opentype');
   font-style: normal;
 }
 
 .max-width-suitable{
   max-width: none;
 }
+
 

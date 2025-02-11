@@ -1,6 +1,7 @@
 import Slider, {Settings} from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "@/styles/slick-modification.css"
 import {Illustration} from "@/components/custom/illustration";
 
 export const BannerCarousel = () => {
@@ -11,7 +12,7 @@ export const BannerCarousel = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 5000,
+        autoplaySpeed: 10000,
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const SlickSlider = Slider as any;
@@ -21,7 +22,7 @@ export const BannerCarousel = () => {
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                     {/* Left Column - Text Content */}
                     <div className="space-y-6">
-                        <h1 className="text-4xl md:text-5xl lg:text-[72px] font-semibold">
+                        <h1 className="responsive-text-64 font-semibold">
                             Phát huy tài năng,{" "}
                             <span className="block mt-3">Khám phá cơ hội.</span>
                         </h1>
@@ -31,7 +32,7 @@ export const BannerCarousel = () => {
                     </div>
 
                     {/* Right Column - Image and Cards */}
-                    <div className="relative flex justify-center mr-16">
+                    <div className="relative flex justify-end" style={{marginRight : "0.1px", marginLeft:"1px"}}>
                         {/* Main Profile Image */}
                         <div className="w-full">
                             <Illustration className="w-full object-cover aspect-[2/1]"
@@ -40,11 +41,12 @@ export const BannerCarousel = () => {
                     </div>
                 </div>
             </div>
+
             <div>
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                     {/* Left Column - Text Content */}
                     <div className="space-y-6">
-                        <h1 className="text-4xl md:text-5xl lg:text-[72px] font-semibold">
+                        <h1 className="responsive-text-64 font-semibold">
                             Phát huy tài năng,{" "}
                             <span className="block mt-3">Khám phá cơ hội.</span>
                         </h1>
@@ -54,7 +56,7 @@ export const BannerCarousel = () => {
                     </div>
 
                     {/* Right Column - Image and Cards */}
-                    <div className="relative flex justify-center mr-16">
+                    <div className="relative flex justify-end" style={{marginRight : "0.1px", marginLeft:"1px"}}>
                         {/* Main Profile Image */}
                         <div className="w-full">
                             <Illustration className="w-full object-cover aspect-[2/1]"
@@ -63,11 +65,12 @@ export const BannerCarousel = () => {
                     </div>
                 </div>
             </div>
+
             <div>
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                     {/* Left Column - Text Content */}
-                    <div className="space-y-6">
-                        <h1 className="text-4xl md:text-5xl lg:text-[72px] font-semibold">
+                    <div className="space-y-5">
+                        <h1 className="responsive-text-64 font-semibold">
                             Phát huy tài năng,{" "}
                             <span className="block mt-3">Khám phá cơ hội.</span>
                         </h1>
@@ -77,7 +80,7 @@ export const BannerCarousel = () => {
                     </div>
 
                     {/* Right Column - Image and Cards */}
-                    <div className="relative flex justify-center mr-16">
+                    <div className="relative flex justify-end" style={{marginRight : "0.1px", marginLeft:"1px"}}>
                         {/* Main Profile Image */}
                         <div className="w-full">
                             <Illustration className="w-full object-cover aspect-[2/1]"
