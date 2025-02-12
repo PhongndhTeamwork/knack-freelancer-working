@@ -79,8 +79,8 @@ export const Chat = ({goBackLink} : Props) => {
                             className="flex items-center gap-3 p-4 hover:bg-muted/50 cursor-pointer"
                         >
                             <Avatar>
-                                <AvatarImage src={chat.avatar}/>
-                                <AvatarFallback>{chat.sender[0]}</AvatarFallback>
+                                <AvatarImage src={chat?.avatar}/>
+                                <AvatarFallback>{chat?.sender[0]}</AvatarFallback>
                             </Avatar>
                             <div className="flex-1 overflow-hidden">
                                 <div className="flex items-center justify-between">

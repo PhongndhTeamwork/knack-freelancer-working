@@ -16,26 +16,21 @@ export const ProfileMenu = ({onChangeNavbar, activeBar}: Props) => {
         },
         {
             id: 2,
-            title: "Giới thiệu",
-            description: "Cập nhật thông tin về công việc của bạn",
-        },
-        {
-            id: 3,
             title: "Kinh nghiệm làm việc",
             description: "Cập nhật thông tin về công việc của bạn",
         },
         {
-            id: 4,
+            id: 3,
             title: "Thành tựu cá nhân",
             description: "Cập nhật thông tin về công việc của bạn",
         },
         {
-            id: 5,
+            id: 4,
             title: "Công việc nổi bật",
             description: "Cập nhật thông tin về công việc của bạn",
         },
         {
-            id: 6,
+            id: 5,
             title: "Biểu giá dịch vụ",
             description: "Cập nhật thông tin về công việc của bạn",
         }

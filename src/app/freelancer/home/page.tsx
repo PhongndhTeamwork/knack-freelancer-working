@@ -17,9 +17,9 @@ const HomePage = () => {
             <BannerCarousel/>
         </div>
 
-        <FreelancerProgress userName={profile.name || ""}
+        <FreelancerProgress userName={profile?.name + "! 🎉" || ""}
                             supportingText="Chúng tôi có một vài gợi ý cho bạn!"
-                            message="Chào mừng bạn trở lại, Quyền! 🎉"/>
+                            message="Chào mừng bạn trở lại, "/>
 
         <div className="max-width-suitable px-[60px] mx-auto py-0">
             <ServiceSteps/>

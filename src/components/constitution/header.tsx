@@ -101,12 +101,12 @@ export const Header = ({logoLink, components}: Props) => {
                         <div className="hidden md:flex items-center space-x-2">
                             <div className="flex items-center relative">
                                 <Avatar ref={avatarRef} className="border border-gray-300 w-10 h-10 cursor-pointer" onClick={toggleDropdown}>
-                                    <AvatarImage src={profile.avatar} alt="User 1"
+                                    <AvatarImage src={String(profile?.avatar) || ""} alt="User 1"
                                                  className="w-full h-full"/>
                                     <AvatarFallback
-                                        className="text-[20px]">{profile.name?.substring(0, 1) || "P"}</AvatarFallback>
+                                        className="text-[20px]">{profile?.name?.substring(0, 1) || "P"}</AvatarFallback>
                                 </Avatar>
-                                <p className="ml-3 text-[16px] font-bold">{profile.name}</p>
+                                <p className="ml-3 text-[16px] font-bold">{profile?.name}</p>
                                 {isOpen && <div
                                     className="absolute bg-white border border-gray-300 w-32 top-12 right-1/2 rounded-md">
                                     <ul ref={dropdownRef} className="w-full rounded-xl">
@@ -148,12 +148,12 @@ export const Header = ({logoLink, components}: Props) => {
                                         <div className="hidden md:flex items-center space-x-2">
                                             <div className="flex items-center">
                                                 <Avatar className="border border-gray-300 w-10 h-10">
-                                                    <AvatarImage src={profile?.avatar} alt="User 1"
+                                                    <AvatarImage src={String(profile?.avatar) || ""} alt="User 1"
                                                                  className="w-full h-full"/>
                                                     <AvatarFallback
-                                                        className="text-[20px]">{profile.name?.substring(0, 1) || "P"}</AvatarFallback>
+                                                        className="text-[20px]">{profile?.name?.substring(0, 1) || "P"}</AvatarFallback>
                                                 </Avatar>
-                                                <p className="ml-3 text-[16px] font-bold cursor-pointer">{profile.name}</p>
+                                                <p className="ml-3 text-[16px] font-bold cursor-pointer">{profile?.name}</p>
                                             </div>
                                         </div>
                                     </div>

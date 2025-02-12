@@ -33,7 +33,7 @@ const ToastInitialisation = ({ triggerMessage, message } : Props) => {
                 primary: message.type === "error" ? "red" : "green",
                 secondary: "#FFFAEE",
             },
-            duration: 3000,
+            duration: 5000,
         });
     }, [triggerMessage, message]);
 

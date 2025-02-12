@@ -66,13 +66,13 @@ export const ProfileCompletionProgress = () => {
                     <CardContent className="relative z-10 p-6" style={{backdropFilter: 'blur(20px)'}}>
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
                             <Avatar className="w-[136px] h-[136px] border-2 border-white">
-                                <AvatarImage alt="User 1" src={profile.avatar}/>
-                                <AvatarFallback className="text-3xl">{profile.name?.substring(0, 1) || "P"}</AvatarFallback>
+                                <AvatarImage alt="User 1" src={String(profile?.avatar) || ""}/>
+                                <AvatarFallback className="text-3xl">{profile?.name?.substring(0, 1) || "P"}</AvatarFallback>
                             </Avatar>
 
                             <div className="flex-1 text-white space-y-3">
                                 <div className="flex space-x-3 items-center">
-                                    <h2 className="responsive-text-28 font-bold">{profile.name}</h2>
+                                    <h2 className="responsive-text-28 font-bold">{profile?.name}</h2>
                                     <Illustration className="w-5 h-5 object-cover cursor-pointer"
                                                   url="/freelancer/home/info/info1.svg"/>
                                     <Illustration className="w-5 h-5 object-cover cursor-pointer"
