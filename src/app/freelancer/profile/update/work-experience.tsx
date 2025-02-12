@@ -7,6 +7,7 @@ import useProfileStore from "@/lib/store/profile.modal";
 import {CustomSelect} from "@/components/custom/custom-select";
 import months from '@/lib/json/month.json';
 import years from '@/lib/json/year.json';
+import {Checkbox} from "@/components/ui/checkbox";
 
 export const WorkExperience = () => {
     const {draftProfile, setProfileUpdate, resetDraftProfile} = useProfileStore();
@@ -38,7 +39,6 @@ export const WorkExperience = () => {
                 profileWorkExperiences: prev.profileWorkExperiences.filter((_, i) => i !== index),
             }
         })
-        console.log(draftProfile.profileWorkExperiences)
     }
 
 
@@ -58,6 +58,16 @@ export const WorkExperience = () => {
                                             <Input
                                                 id="position"
                                                 className="h-11 responsive-text-16"
+                                                value={pwe.name}
+                                                onChange={(e) => {
+                                                    setProfileUpdate((prev) => ({
+                                                        ...prev, profileWorkExperiences: prev.profileWorkExperiences.map((pwe, i) =>
+                                                            i === index
+                                                                ? {...pwe, name: e.target.value}
+                                                                : pwe
+                                                        )
+                                                    }))
+                                                }}
                                             />
                                         </div>
                                         {/* Work Period Field */}
@@ -79,6 +89,15 @@ export const WorkExperience = () => {
                                             id="description"
                                             placeholder=""
                                             className="min-h-[100px] resize-none responsive-text-16"
+                                            onChange={(e) => {
+                                                setProfileUpdate((prev) => ({
+                                                    ...prev, profileWorkExperiences: prev.profileWorkExperiences.map((pwe, i) =>
+                                                        i === index
+                                                            ? {...pwe, description: e.target.value}
+                                                            : pwe
+                                                    )
+                                                }))
+                                            }}
                                         />
                                     </div>
 
@@ -107,11 +126,23 @@ export const WorkExperience = () => {
                                                           className="bg-white h-11 w-full responsive-text-16"/>
                                         </div>
                                     </div>
+                                    <div>
+                                        <div className="flex items-center space-x-2">
+                                            <Checkbox id="terms"/>
+                                            <label
+                                                htmlFor="terms"
+                                                className="responsive-text-16 font-medium relative top-[1px] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                            >
+                                                Hiện tại tôi vẫn đang làm công việc này
+                                            </label>
+                                        </div>
+                                    </div>
 
-                                    {(draftProfile.profileWorkExperiences.length > 1 || index!==0) &&  <div className="flex justify-end">
-                                        <Button variant="danger-outline" size="sm" onClick={() => {
-                                            handleRemoveWorkExperience(index)
-                                        }}> Xóa Lĩnh Vực </Button>
+                                    {(draftProfile.profileWorkExperiences.length > 1 || index !== 0) &&
+                                        <div className="flex justify-end">
+                                            <Button variant="danger-outline" type="button" size="sm" onClick={() => {
+                                                handleRemoveWorkExperience(index)
+                                        }}> Xóa lĩnh vực </Button>
                                     </div>}
                                 </div>
                             })
