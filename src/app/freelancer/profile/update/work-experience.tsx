@@ -4,29 +4,23 @@ import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import {Textarea} from "@/components/ui/textarea"
 import useProfileStore from "@/lib/store/profile.modal";
-import {useEffect} from "react";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import {CustomSelect} from "@/components/custom/custom-select";
-
+import months from '@/lib/json/month.json';
+import years from '@/lib/json/year.json';
 
 export const WorkExperience = () => {
-    const {profile, setProfileUpdate} = useProfileStore();
-    useEffect(() => {
-        if (profile.profileWorkExperiences.length === 0) {
-            setProfileUpdate((prev) => {
-                return {
-                    ...prev,
-                    profileWorkExperiences: [...prev.profileWorkExperiences, {name: "", description: ""}],
-                }
-            })
-        }
-    }, [profile, setProfileUpdate]);
+    const {draftProfile, setProfileUpdate, resetDraftProfile} = useProfileStore();
+
+    // useEffect(() => {
+    //     if (draftProfile.profileWorkExperiences.length === 0) {
+    //         setProfileUpdate((prev) => {
+    //             return {
+    //                 ...prev,
+    //                 profileWorkExperiences: [...prev.profileWorkExperiences, {name: "", description: ""}],
+    //             }
+    //         })
+    //     }
+    // }, [draftProfile.profileWorkExperiences, setProfileUpdate]);
 
     const handleAddWorkExperience = () => {
         setProfileUpdate((prev) => {
@@ -37,6 +31,16 @@ export const WorkExperience = () => {
         })
     }
 
+    const handleRemoveWorkExperience = (index : number) => {
+        setProfileUpdate((prev) => {
+            return {
+                ...prev,
+                profileWorkExperiences: prev.profileWorkExperiences.filter((_, i) => i !== index),
+            }
+        })
+        console.log(draftProfile.profileWorkExperiences)
+    }
+
 
     return (
         <>
@@ -44,8 +48,9 @@ export const WorkExperience = () => {
                 <CardContent className="p-6">
                     <form className="space-y-6">
                         {
-                            profile.profileWorkExperiences.map((pwe, index) => {
-                                return <div key={index} className={`space-y-4 pb-4 ${index > 0 && "border-t border-black pt-8"}`}>
+                            draftProfile.profileWorkExperiences.map((pwe, index) => {
+                                return <div key={index}
+                                            className={`space-y-4 pb-4 ${index > 0 && "border-t border-black pt-8"}`}>
                                     <div className="gap-6">
                                         {/* Position Field */}
                                         <div className="space-y-2">
@@ -77,27 +82,37 @@ export const WorkExperience = () => {
                                         />
                                     </div>
 
-                                    <div className="grid md:grid-cols-2 gap-2">
+                                    <div className="grid md:grid-cols-2 gap-4">
                                         <div className="flex flex-col w-full responsive-text-16 space-y-2">
-                                            <label htmlFor="cars">Tháng bắt đầu</label>
-                                            <select id="cars" name="cars" className="w-full h-11 border shadow cursor-pointer rounded-md">
-                                                <option value="volvo">Volvo</option>
-                                                <option value="bmw">BMW</option>
-                                                <option value="mercedes">Mercedes</option>
-                                                <option value="audi">Audi</option>
-                                            </select>
+                                            <div className="responsive-text-16">Tháng bắt đầu</div>
+                                            <CustomSelect items={months} className="bg-white h-11 w-full"/>
                                         </div>
-                                        {/*<div>*/}
-                                        {/*    <label htmlFor="cars">Năm bắt đầu</label>*/}
-                                        {/*    <select id="cars" name="cars">*/}
-                                        {/*        <option value="volvo">Volvo</option>*/}
-                                        {/*        <option value="bmw">BMW</option>*/}
-                                        {/*        <option value="mercedes">Mercedes</option>*/}
-                                        {/*        <option value="audi">Audi</option>*/}
-                                        {/*    </select>*/}
-                                        {/*</div>*/}
-                                        <CustomSelect items={[]} className="bg-white w-11"/>
+
+                                        <div className="flex flex-col w-full responsive-text-16 space-y-2">
+                                            <div className="responsive-text-16">Năm bắt đầu</div>
+                                            <CustomSelect items={years}
+                                                          className="bg-white h-11 w-full responsive-text-16"/>
+                                        </div>
                                     </div>
+
+                                    <div className="grid md:grid-cols-2 gap-4">
+                                        <div className="flex flex-col w-full responsive-text-16 space-y-2">
+                                            <div className="responsive-text-16">Tháng kết thúc</div>
+                                            <CustomSelect items={months} className="bg-white h-11 w-full"/>
+                                        </div>
+
+                                        <div className="flex flex-col w-full responsive-text-16 space-y-2">
+                                            <div className="responsive-text-16">Năm kết thúc</div>
+                                            <CustomSelect items={years}
+                                                          className="bg-white h-11 w-full responsive-text-16"/>
+                                        </div>
+                                    </div>
+
+                                    {(draftProfile.profileWorkExperiences.length > 1 || index!==0) &&  <div className="flex justify-end">
+                                        <Button variant="danger-outline" size="sm" onClick={() => {
+                                            handleRemoveWorkExperience(index)
+                                        }}> Xóa Lĩnh Vực </Button>
+                                    </div>}
                                 </div>
                             })
                         }
@@ -116,7 +131,7 @@ export const WorkExperience = () => {
             </Card>
             <div className="flex justify-end gap-4 mt-6">
                 <Button variant="dark" size="sm">Lưu thay đổi</Button>
-                <Button variant="dark-outline" size="sm">Hủy</Button>
+                <Button variant="dark-outline" size="sm" onClick={resetDraftProfile}>Hủy</Button>
             </div>
         </>
 

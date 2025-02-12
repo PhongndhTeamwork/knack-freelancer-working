@@ -21,7 +21,7 @@ interface Props {
 
 
 export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Props) => {
-    const {profile, setProfileUpdate, updateProfile} = useProfileStore();
+    const {draftProfile, setProfileUpdate, updateProfile, resetDraftProfile} = useProfileStore();
     const {token} = useAuthStore();
     const [avatarImage, setAvatarImage] = useState<string>("");
 
@@ -61,9 +61,9 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
                             htmlFor="avatar"
                             className="block w-full h-full rounded-full border-2 border-dashed border-gray-300 hover:border-gray-400 cursor-pointer"
                         >
-                            {profile?.avatar != null ? (
+                            {draftProfile?.avatar != null ? (
                                 <Image
-                                    src={avatarImage !== "" ? avatarImage : profile?.avatar?.toString() || ""}
+                                    src={avatarImage !== "" ? avatarImage : draftProfile?.avatar?.toString() || ""}
                                     alt="Profile"
                                     fill
                                     className="rounded-full object-cover"
@@ -95,7 +95,7 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="fullName" className="responsive-text-16">Họ và tên &nbsp;
                                 <span className="text-red-700">*</span></Label>
-                            <Input id="fullName" className="h-11" value={profile?.name} onChange={(e) => {
+                            <Input id="fullName" className="h-11" value={draftProfile?.name} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, name: e.target.value}
                                 })
@@ -104,7 +104,7 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
 
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="location" className="responsive-text-16">Nơi sinh sống</Label>
-                            <Input id="location" className="h-11" value={profile.address} onChange={(e) => {
+                            <Input id="location" className="h-11" value={draftProfile.address} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, address: e.target.value}
                                 })
@@ -115,12 +115,12 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
                     <div className="flex gap-6">
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="email" className="responsive-text-16">Email của bạn</Label>
-                            <Input id="email" type="email" className="h-11" value={profile.email} readOnly={true}/>
+                            <Input id="email" type="email" className="h-11" value={draftProfile.email} readOnly={true}/>
                         </div>
 
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="phone" className="responsive-text-16">Số điện thoại</Label>
-                            <Input id="phone" type="tel" className="h-11" value={profile.phone} onChange={(e) => {
+                            <Input id="phone" type="tel" className="h-11" value={draftProfile.phone} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, phone: e.target.value}
                                 })
@@ -129,7 +129,7 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
 
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="occupation" className="responsive-text-16">Nghề nghiệp</Label>
-                            <Input id="occupation" className="h-11" value={profile.occupation} onChange={(e) => {
+                            <Input id="occupation" className="h-11" value={draftProfile.occupation} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, occupation: e.target.value}
                                 })
@@ -144,7 +144,7 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
                                 id="bio"
                                 placeholder=""
                                 className="min-h-[80px] resize-none responsive-text-16"
-                                value={profile.biography} onChange={(e) => {
+                                value={draftProfile.biography} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, biography: e.target.value}
                                 })
@@ -161,7 +161,7 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="facebook" className="responsive-text-16">Liên kết Facebook</Label>
                             <Input id="facebook" placeholder="URL Facebook của bạn" className="h-11"
-                                   value={profile.facebookLink} onChange={(e) => {
+                                   value={draftProfile.facebookLink} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, facebookLink: e.target.value}
                                 })
@@ -171,7 +171,7 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="instagram" className="responsive-text-16">Liên kết Instagram</Label>
                             <Input id="instagram" placeholder="URL Instagram của bạn" className="h-11"
-                                   value={profile.instagramLink} onChange={(e) => {
+                                   value={draftProfile.instagramLink} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, instagramLink: e.target.value}
                                 })
@@ -181,7 +181,7 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="youtube" className="responsive-text-16">Liên kết Youtube</Label>
                             <Input id="youtube" placeholder="URL Youtube của bạn" className="h-11"
-                                   value={profile.youtubeLink} onChange={(e) => {
+                                   value={draftProfile.youtubeLink} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, youtubeLink: e.target.value}
                                 })
@@ -191,7 +191,7 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="tiktok" className="responsive-text-16">Liên kết TikTok</Label>
                             <Input id="tiktok" placeholder="URL TikTok của bạn" className="h-11"
-                                   value={profile.tiktokLink} onChange={(e) => {
+                                   value={draftProfile.tiktokLink} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, tiktokLink: e.target.value}
                                 })
@@ -210,7 +210,7 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
         </Card>
             <div className="flex justify-end gap-4 mt-6">
                 <Button variant="dark" size="sm" onClick={handleSubmit}>Lưu thay đổi</Button>
-                <Button variant="dark-outline" size="sm">Hủy</Button>
+                <Button variant="dark-outline" size="sm" onClick={resetDraftProfile}>Hủy</Button>
             </div>
         </>
 

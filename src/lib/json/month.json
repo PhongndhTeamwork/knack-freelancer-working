@@ -1,0 +1,14 @@
+[
+  { "label": "Tháng Một", "value": "1" },
+  { "label": "Tháng Hai", "value": "2" },
+  { "label": "Tháng Ba", "value": "3" },
+  { "label": "Tháng Tư", "value": "4" },
+  { "label": "Tháng Năm", "value": "5" },
+  { "label": "Tháng Sáu", "value": "6" },
+  { "label": "Tháng Bảy", "value": "7" },
+  { "label": "Tháng Tám", "value": "8"},
+  { "label": "Tháng Chín", "value": "9"},
+  { "label": "Tháng Mười", "value": "10"},
+  { "label": "Tháng Mười Một", "value": "11"},
+  { "label": "Tháng Mười Hai", "value": "12"}
+]

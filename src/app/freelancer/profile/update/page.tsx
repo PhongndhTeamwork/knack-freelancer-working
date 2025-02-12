@@ -25,7 +25,7 @@ export default function Component() {
 
 
 
-    return <div className="px-[60px] mx-auto py-6 space-y-10">
+    return <div className="px-[60px] mx-auto py-2 space-y-10">
         <Toaster position="bottom-center"/>
         <WelcomeBanner userName="" message="Chỉnh sửa thông tin cá nhân"
                        supportingText="Hãy nhớ cập nhật thông tin thường xuyên nếu cần nhé!"/>

@@ -44,7 +44,7 @@ export const CustomSelect = ({items, className}: Props) => {
             </div>
             {isOpen && (
                 <ul ref={dropdownRef}
-                    className={`z-40 absolute top-full left-0 mt-1 w-full bg-[#D8D8D8] border rounded-md shadow-lg`}>
+                    className={`z-40 absolute top-full left-0 mt-1 w-full bg-[#D8D8D8] border rounded-md shadow-lg max-h-[16rem] overflow-y-auto`}>
                     {
                         items
                             // .filter((_, index) => index !== active)

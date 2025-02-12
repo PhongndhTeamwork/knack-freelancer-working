@@ -5,6 +5,8 @@ import axios from "axios";
 
 type ProfileState = {
     profile: BasicProfileForm;
+    draftProfile : BasicProfileForm;
+    resetDraftProfile : () => void;
     setProfile: (profile: BasicProfileForm) => void;
     fetchProfile: (token: string) => void;
     updateProfile:  (token: string) => Promise<boolean>;
@@ -19,20 +21,29 @@ const useProfileStore = create<ProfileState>((set, get) => ({
         profileAchievements: [],
         profileProminentWorks: []
     },
+    draftProfile : {
+        profileWorkExperiences: [
+
+        ],
+        profileAchievements: [],
+        profileProminentWorks: []
+    },
     setProfile: (newProfile: BasicProfileForm) => {
         set({profile: newProfile});
+        set({draftProfile : newProfile})
     },
+
     setProfileUpdate: (updateFn: (profileInfo: BasicProfileForm) => BasicProfileForm) => {
         set((state) => {
             return {
-                profile: updateFn(state.profile)
+                draftProfile: updateFn(state.draftProfile)
             };
         });
     },
 
      updateProfile: async (token: string) => {
         const form = new FormData();
-        for (const [key, value] of Object.entries(get().profile)) {
+        for (const [key, value] of Object.entries(get().draftProfile)) {
             if (Array.isArray(value)) {
 
             } else if (value instanceof File) {
@@ -63,7 +74,7 @@ const useProfileStore = create<ProfileState>((set, get) => ({
         // return false;
 
          try {
-              await axios.put(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/update-profile`, form, {
+              const {data} = await axios.put(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/update-profile`, form, {
                  headers: {
                      'Content-Type': 'multipart/form-data',
                      Authorization: `Bearer ${token}`,
@@ -71,9 +82,11 @@ const useProfileStore = create<ProfileState>((set, get) => ({
              });
 
              // Successfully updated profile
-             // set({ profile: data.data });
+             set({ profile: data.data });
+             set({ draftProfile: data.data });
              return true;  // Return true when the request is successful
-         } catch (error) {
+             // eslint-disable-next-line @typescript-eslint/no-unused-vars
+         } catch (e) {
              // Handle error
              // console.error(error);
              return false;  // Return false when there's an error
@@ -90,8 +103,13 @@ const useProfileStore = create<ProfileState>((set, get) => ({
         }).then(({data}) => {
             // console.log(data.data);
             set({profile: data.data});
+            set({draftProfile : data.data});
         }).catch(() => {
         })
+    },
+
+    resetDraftProfile : () => {
+        set({draftProfile : get().profile})
     }
 }));
 
