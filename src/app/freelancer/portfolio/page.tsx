@@ -9,6 +9,7 @@ import {PortfolioHeader} from "@/app/freelancer/portfolio/components/portfolio-h
 import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
 import {Button} from "@/components/ui/button";
 import * as React from "react";
+import {PortfolioFooter} from "@/app/freelancer/portfolio/components/portfolio-footer";
 
 export default function Component() {
     return (
@@ -79,6 +80,10 @@ export default function Component() {
                     <h2 className="responsive-text-40 font-semibold">Kỹ năng</h2>
                 </div>
                 <Skill/>
+            </div>
+
+            <div className="max-width-suitable px-[60px] mx-auto">
+                <PortfolioFooter/>
             </div>
         </div>
     )

@@ -78,7 +78,7 @@ export const Header = ({logoLink, components}: Props) => {
             <div className="container mx-auto max-width-suitable px-[60px]" >
                 <div className={cn("flex h-16 items-center justify-between")}>
                     {/* Logo */}
-                    <Link href={logoLink || "/home"} className="flex items-center space-x-2 w-[130px] h-[47px]">
+                    <Link href={logoLink || "/freelancer/home"} className="flex items-center space-x-2 w-[130px] h-[47px]">
                         <Illustration width={130} height={47} url='/logo/logo-black.svg'/>
                     </Link>
 
@@ -86,7 +86,7 @@ export const Header = ({logoLink, components}: Props) => {
                     <div className="gap-2 flex responsive-text-16">
                         {components.map((c, index) => (
                             <div key={index}
-                                 className={cn("rounded-md px-3 py-1 cursor-pointer select-none", path.includes(c.href) ? "bg-[#333333] text-white hover:bg-black active:bg-[#333333]" : "hover:bg-gray-200")}
+                                 className={cn("rounded-md px-3 py-1 cursor-pointer select-none h-9 responsive-text-16 flex items-center", path.includes(c.hrefCheck) ? "bg-[#333333] text-white hover:bg-black active:bg-[#333333]" : "hover:bg-gray-200")}
                                  onClick={() => {
                                      router.push(c.href)
                                  }}>

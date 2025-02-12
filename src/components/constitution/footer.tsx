@@ -1,7 +1,6 @@
 import Link from "next/link"
 import {Illustration} from "@/components/custom/illustration";
 import {Button} from "@/components/ui/button"
-import Image from "next/image";
 import {useEffect, useRef, useState} from "react";
 
 
@@ -48,8 +47,11 @@ export const Footer = () => {
                     </div>
                 </div>
                 <div className="w-full">
-                    <Image src='/footer/footer1.svg' alt="Footer Image" width={0} height={0}
-                           className="w-full object-cover rounded-2xl" style={{
+                    {/*<Image src='/footer/footer1.svg' alt="Footer Image" width={0} height={0}*/}
+                    {/*       className="w-full object-cover rounded-2xl" style={{*/}
+                    {/*    height: height*/}
+                    {/*}}/>*/}
+                    <Illustration url="/footer/footer1.svg" className="w-full object-cover rounded-2xl" style={{
                         height: height
                     }}/>
                     {/*<Illustration className="w-full object-cover aspect-[7/2] rounded-2xl"*/}

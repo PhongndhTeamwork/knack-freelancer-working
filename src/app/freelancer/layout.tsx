@@ -16,14 +16,17 @@ type Props = {
 const components: NavigationItem[] = [
     {
         href: "/freelancer/home",
+        hrefCheck  :"/freelancer/home",
         title: "Trang chủ",
     },
     {
         href: "/freelancer/profile",
+        hrefCheck  :"/freelancer/profile",
         title: "Trang cá nhân"
     },
     {
         href: "/freelancer/portfolio/general",
+        hrefCheck  :"/freelancer/portfolio",
         title: "Portfolio"
     },
 ]
@@ -48,7 +51,7 @@ const HomeLayout = ({children}: Props) => {
         <div>
             <div className="flex justify-center">
                 {!pathname.includes("chat") &&
-                    <Header logoLink="/freelancer/welcome"
+                    <Header logoLink="/freelancer/home"
                             components={components}
                     />}
             </div>
@@ -56,7 +59,7 @@ const HomeLayout = ({children}: Props) => {
                 {children}
             </div>
             <div className="mt-24">
-                {!pathname.includes("chat") && <Footer/>}
+                {!pathname.includes("chat") && !pathname.includes("/freelancer/portfolio") && <Footer/>}
             </div>
         </div>)
 }

@@ -88,12 +88,12 @@ export const CustomerFeedback = () => {
                     {testimonials.map((testimonial, index) => (
                         <Card key={index} className="mx-2 w-[380px] border-gray-500">
                             <CardContent className="p-6 text-xl">
-                                <div className="space-y-4">
+                                <div className="">
                                     <div className="flex ">
                                         {Array.from({length: 5}).map((_, i) => (
                                             <Star
                                                 key={i}
-                                                className={`h-5 w-5 ${
+                                                className={`h-6 w-6 ${
                                                     i < testimonial.rating
                                                         ? "text-yellow-400 fill-yellow-400"
                                                         : "text-gray-500 fill-gray-200"
@@ -101,17 +101,17 @@ export const CustomerFeedback = () => {
                                             />
                                         ))}
                                     </div>
-                                    <p className="text-muted-foreground">
+                                    <p className="text-muted-foreground responsive-text-20 mt-4">
                                         {testimonial.text}
                                     </p>
-                                    <div className="flex items-center gap-3">
-                                        <Avatar>
+                                    <div className="flex items-center gap-3 mt-12">
+                                        <Avatar className="w-12 h-12">
                                             <AvatarImage src={testimonial.author.image} alt={testimonial.author.name}/>
                                             <AvatarFallback>{testimonial.author.name.charAt(0)}</AvatarFallback>
                                         </Avatar>
-                                        <div>
-                                            <p className="font-medium">{testimonial.author.name}</p>
-                                            <p className="text-muted-foreground">{testimonial.author.role}</p>
+                                        <div className="space-y-2">
+                                            <p className="font-medium responsive-text-20">{testimonial.author.name}</p>
+                                            <p className="text-muted-foreground responsive-text-16">{testimonial.author.role}</p>
                                         </div>
                                     </div>
                                 </div>
