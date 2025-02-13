@@ -1,6 +1,6 @@
 "use client"
 
-import {ImageWithContent} from "@/components/custom/image-with-comtent";
+import {ImageWithContent} from "@/components/custom/image-with-content";
 
 const categories = [
     {

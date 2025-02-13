@@ -1,14 +1,14 @@
 [
-  { "label": "Tháng Một", "value": "1" },
-  { "label": "Tháng Hai", "value": "2" },
-  { "label": "Tháng Ba", "value": "3" },
-  { "label": "Tháng Tư", "value": "4" },
-  { "label": "Tháng Năm", "value": "5" },
-  { "label": "Tháng Sáu", "value": "6" },
-  { "label": "Tháng Bảy", "value": "7" },
-  { "label": "Tháng Tám", "value": "8"},
-  { "label": "Tháng Chín", "value": "9"},
-  { "label": "Tháng Mười", "value": "10"},
-  { "label": "Tháng Mười Một", "value": "11"},
-  { "label": "Tháng Mười Hai", "value": "12"}
+  { "label": "Tháng 01", "value": "1" },
+  { "label": "Tháng 02", "value": "2" },
+  { "label": "Tháng 03", "value": "3" },
+  { "label": "Tháng 04", "value": "4" },
+  { "label": "Tháng 05", "value": "5" },
+  { "label": "Tháng 06", "value": "6" },
+  { "label": "Tháng 07", "value": "7" },
+  { "label": "Tháng 08", "value": "8"},
+  { "label": "Tháng 09", "value": "9"},
+  { "label": "Tháng 10", "value": "10"},
+  { "label": "Tháng 11", "value": "11"},
+  { "label": "Tháng 12", "value": "12"}
 ]

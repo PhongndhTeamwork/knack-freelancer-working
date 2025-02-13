@@ -10,6 +10,18 @@ import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator} from "@
 import {Button} from "@/components/ui/button";
 import * as React from "react";
 import {PortfolioFooter} from "@/app/freelancer/portfolio/components/portfolio-footer";
+import {Illustration} from "@/components/custom/illustration";
+import {
+    Dialog,
+    DialogContent,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import {ProminentProjectUpdateDialog} from "@/app/freelancer/portfolio/components/dialogs/prominent-project-update";
+import {ScrollArea} from "@/components/ui/scroll-area";
+import {FeedbackUpdateDialog} from "@/app/freelancer/portfolio/components/dialogs/feedback-update";
+import {AboutMeUpdateDialog} from "@/app/freelancer/portfolio/components/dialogs/about-me-update";
+import {SkillUpdateDialog} from "@/app/freelancer/portfolio/components/dialogs/skill-update";
+import {WorkExperienceUpdateDialog} from "@/app/freelancer/portfolio/components/dialogs/work-experience-update";
 
 export default function Component() {
     return (
@@ -29,8 +41,11 @@ export default function Component() {
                         </BreadcrumbItem>
                     </Breadcrumb>
 
-                    <Button variant="dark" className="h-12 responsive-text-20">Chỉnh sửa mẫu
-                        này</Button>
+                    <div className="space-x-4">
+                        <Button variant="dark-outline" className="h-12 responsive-text-20">Xem trước</Button>
+                        <Button variant="dark" className="h-12 responsive-text-20">Lưu chỉnh sửa</Button>
+                    </div>
+
                 </header>
             </div>
             <div className="max-width-suitable px-[60px] mx-auto">
@@ -38,46 +53,123 @@ export default function Component() {
             </div>
             {/*<MarqueeBrand/>*/}
             <div className="max-width-suitable px-[60px] mx-auto ">
-                <div className="flex items-center gap-6 mb-8">
-                    <div className="w-5 h-5 bg-green-500 rounded-full"/>
-                    <h2 className="responsive-text-40 font-semibold">Dự án nổi bật</h2>
+                <div className="flex items-center justify-between mb-8">
+                    <div className="flex gap-6 items-center">
+                        <div className="w-5 h-5 bg-green-500 rounded-full"/>
+                        <h2 className="responsive-text-40 font-semibold">Dự án nổi bật</h2>
+                    </div>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button className="" variant="dark">
+                                <Illustration className="w-6 h-6 object-cover" url="/freelancer/portfolio/PencilLine.svg" />
+                                Chỉnh sửa
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
+                            <ScrollArea className="h-full">
+                                <ProminentProjectUpdateDialog/>
+                            </ScrollArea>
+                        </DialogContent>
+                    </Dialog>
+
                 </div>
                 {
                     Array.from({length: 2}).map((_, i) => (
-                            <div key={i} className={i > 0 ? "mt-10" : "mt-5"}><ProminentProject/></div>
+                        <div key={i} className={i > 0 ? "mt-10" : "mt-5"}><ProminentProject/></div>
                         )
                     )
                 }
             </div>
 
             <div className="mt-8">
-                <div className="flex items-center gap-6 mb-8 max-width-suitable px-[60px] mx-auto">
-                    <div className="w-5 h-5 bg-green-500 rounded-full"/>
-                    <h2 className="responsive-text-40 font-semibold">Feedback của Khách hàng</h2>
+                <div className="flex items-center justify-between mb-8 max-width-suitable px-[60px] mx-auto">
+                    <div className="flex gap-6 items-center">
+                        <div className="w-5 h-5 bg-green-500 rounded-full"/>
+                        <h2 className="responsive-text-40 font-semibold">Feedback của Khách hàng</h2>
+                    </div>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button className="" variant="dark">
+                                <Illustration className="w-6 h-6 object-cover" url="/freelancer/portfolio/PencilLine.svg"/>
+                                Chỉnh sửa
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
+                            <ScrollArea className="h-full">
+                                <FeedbackUpdateDialog/>
+                            </ScrollArea>
+                        </DialogContent>
+                    </Dialog>
+
                 </div>
                 <CustomerFeedback/>
             </div>
 
             <div className="max-width-suitable px-[60px] mx-auto">
-                <div className="flex items-center gap-6 mb-8">
-                    <div className="w-5 h-5 bg-green-500 rounded-full"/>
-                    <h2 className="responsive-text-40 font-semibold">About</h2>
+                <div className="flex items-center justify-between mb-8 max-width-suitable mx-auto">
+                    <div className="flex gap-6 items-center">
+                        <div className="w-5 h-5 bg-green-500 rounded-full"/>
+                        <h2 className="responsive-text-40 font-semibold">About</h2>
+                    </div>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button className="" variant="dark">
+                                <Illustration className="w-6 h-6 object-cover" url="/freelancer/portfolio/PencilLine.svg"/>
+                                Chỉnh sửa
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
+                            <ScrollArea className="h-full">
+                                <AboutMeUpdateDialog/>
+                            </ScrollArea>
+                        </DialogContent>
+                    </Dialog>
                 </div>
                 <About/>
             </div>
 
             <div className="max-width-suitable px-[60px] mx-auto">
-                <div className="flex items-center gap-6 mb-6">
-                    <div className="w-5 h-5 bg-green-500 rounded-full"/>
-                    <h2 className="responsive-text-40 font-semibold">Kinh nghiệm làm việc</h2>
+                <div className="flex items-center justify-between mb-8 max-width-suitable mx-auto">
+                    <div className="flex gap-6 items-center">
+                        <div className="w-5 h-5 bg-green-500 rounded-full"/>
+                        <h2 className="responsive-text-40 font-semibold">Kinh nghiệm làm việc</h2>
+                    </div>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button className="" variant="dark">
+                                <Illustration className="w-6 h-6 object-cover" url="/freelancer/portfolio/PencilLine.svg"/>
+                                Chỉnh sửa
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
+                            <ScrollArea className="h-full">
+                                <WorkExperienceUpdateDialog/>
+                            </ScrollArea>
+                        </DialogContent>
+                    </Dialog>
                 </div>
                 <WorkExperience/>
             </div>
 
             <div className="max-width-suitable px-[60px] mx-auto">
-                <div className="flex items-center gap-6 mb-6">
-                    <div className="w-5 h-5 bg-green-500 rounded-full"/>
-                    <h2 className="responsive-text-40 font-semibold">Kỹ năng</h2>
+                <div className="flex items-center justify-between mb-8 max-width-suitable mx-auto">
+                    <div className="flex gap-6 items-center">
+                        <div className="w-5 h-5 bg-green-500 rounded-full"/>
+                        <h2 className="responsive-text-40 font-semibold">Kỹ năng</h2>
+                    </div>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button className="" variant="dark">
+                                <Illustration className="w-6 h-6 object-cover" url="/freelancer/portfolio/PencilLine.svg"/>
+                                Chỉnh sửa
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
+                            <ScrollArea className="h-full">
+                                <SkillUpdateDialog/>
+                            </ScrollArea>
+                        </DialogContent>
+                    </Dialog>
                 </div>
                 <Skill/>
             </div>

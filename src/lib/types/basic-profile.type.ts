@@ -23,6 +23,7 @@ export type ProfileWorkExperienceForm = {
     description?: string;
     from ?: string;
     to ?: string;
+    isCurrent ?: boolean;
 }
 
 export type ProfileAchievement = {
@@ -30,6 +31,7 @@ export type ProfileAchievement = {
     description?: string;
     from ?: string;
     to ?: string;
+    isCurrent ?: boolean;
 }
 
 export type ProfileProminentWork = {
@@ -37,5 +39,6 @@ export type ProfileProminentWork = {
     description?: string;
     from ?: string;
     to ?: string;
-    wages?: number
+    wage?: number;
+    isCurrent ?: boolean;
 }

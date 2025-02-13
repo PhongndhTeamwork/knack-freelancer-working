@@ -27,7 +27,7 @@ export const WorkExperience = () => {
         setProfileUpdate((prev) => {
             return {
                 ...prev,
-                profileWorkExperiences: [...prev.profileWorkExperiences, {name: "", description: ""}],
+                profileWorkExperiences: [...prev.profileWorkExperiences, {name: "", description: "",isCurrent : false}],
             }
         })
     }
@@ -46,7 +46,7 @@ export const WorkExperience = () => {
         <>
             <Card className="w-full mx-auto">
                 <CardContent className="p-6">
-                    <form className="space-y-6">
+                    <div className="space-y-6">
                         {
                             draftProfile.profileWorkExperiences.map((pwe, index) => {
                                 return <div key={index}
@@ -104,31 +104,39 @@ export const WorkExperience = () => {
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <div className="flex flex-col w-full responsive-text-16 space-y-2">
                                             <div className="responsive-text-16">Tháng bắt đầu</div>
-                                            <CustomSelect items={months} className="bg-white h-11 w-full"/>
+                                            <CustomSelect items={months} className="bg-white h-11 w-full" ulClassname="bg-gray-100"/>
                                         </div>
 
                                         <div className="flex flex-col w-full responsive-text-16 space-y-2">
                                             <div className="responsive-text-16">Năm bắt đầu</div>
                                             <CustomSelect items={years}
-                                                          className="bg-white h-11 w-full responsive-text-16"/>
+                                                          className="bg-white h-11 w-full responsive-text-16" ulClassname="bg-gray-100"/>
                                         </div>
                                     </div>
 
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <div className="flex flex-col w-full responsive-text-16 space-y-2">
                                             <div className="responsive-text-16">Tháng kết thúc</div>
-                                            <CustomSelect items={months} className="bg-white h-11 w-full"/>
+                                            <CustomSelect items={months} className={`h-11 w-full bg-white`} disabled={pwe.isCurrent} ulClassname="bg-gray-100"/>
                                         </div>
 
                                         <div className="flex flex-col w-full responsive-text-16 space-y-2">
                                             <div className="responsive-text-16">Năm kết thúc</div>
                                             <CustomSelect items={years}
-                                                          className="bg-white h-11 w-full responsive-text-16"/>
+                                                          className={`h-11 w-full bg-white`} disabled={pwe.isCurrent} ulClassname="bg-gray-100"/>
                                         </div>
                                     </div>
                                     <div>
                                         <div className="flex items-center space-x-2">
-                                            <Checkbox id="terms"/>
+                                            <Checkbox id={`isCurrent-${index}`}
+                                                      onClick={() => {
+                                                          setProfileUpdate((prev) => ({
+                                                              ...prev,
+                                                              profileWorkExperiences: prev.profileWorkExperiences.map((pwe, i) =>
+                                                                  i === index ? { ...pwe, isCurrent: !pwe.isCurrent } : pwe
+                                                              ),
+                                                          }));
+                                                      }}/>
                                             <label
                                                 htmlFor="terms"
                                                 className="responsive-text-16 font-medium relative top-[1px] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -138,12 +146,15 @@ export const WorkExperience = () => {
                                         </div>
                                     </div>
 
-                                    {(draftProfile.profileWorkExperiences.length > 1 || index !== 0) &&
-                                        <div className="flex justify-end">
-                                            <Button variant="danger-outline" type="button" size="sm" onClick={() => {
-                                                handleRemoveWorkExperience(index)
+
+                                    <div className="flex justify-end">
+                                        <Button variant="danger-outline" type="button" size="sm" onClick={() => {
+                                            handleRemoveWorkExperience(index)
                                         }}> Xóa lĩnh vực </Button>
-                                    </div>}
+                                        <Button variant="danger-outline" type="button" size="sm" onClick={() => {
+                                            handleRemoveWorkExperience(index)
+                                        }}> Lưu lĩnh vực </Button>
+                                    </div>
                                 </div>
                             })
                         }
@@ -157,7 +168,7 @@ export const WorkExperience = () => {
                         >
                             Thêm công việc
                         </Button>
-                    </form>
+                    </div>
                 </CardContent>
             </Card>
             <div className="flex justify-end gap-4 mt-6">
