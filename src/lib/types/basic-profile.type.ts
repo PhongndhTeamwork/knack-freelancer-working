@@ -19,26 +19,41 @@ export type BasicProfileForm = {
 };
 
 export type ProfileWorkExperienceForm = {
+    id ?: number
     name?: string;
     description?: string;
     from ?: string;
     to ?: string;
+    fromMonth ?: string;
+    toMonth ?: string;
+    fromYear ?: string;
+    toYear ?: string;
     isCurrent ?: boolean;
 }
 
 export type ProfileAchievement = {
+    id ?: number
     name?: string;
     description?: string;
     from ?: string;
     to ?: string;
+    fromMonth ?: string;
+    toMonth ?: string;
+    fromYear ?: string;
+    toYear ?: string;
     isCurrent ?: boolean;
 }
 
 export type ProfileProminentWork = {
+    id ?: number;
     name?: string;
     description?: string;
     from ?: string;
     to ?: string;
     wage?: number;
+    fromMonth ?: string;
+    toMonth ?: string;
+    fromYear ?: string;
+    toYear ?: string;
     isCurrent ?: boolean;
 }

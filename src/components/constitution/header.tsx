@@ -71,7 +71,7 @@ export const Header = ({logoLink, components}: Props) => {
 
     return (
         <header className={cn(
-            "top-0 z-50 w-full text-[16px] fixed transition-all",
+            "top-0 z-50 w-full responsive-text-16 fixed transition-all",
         )}
                 style={{...(isScrolled ? {backgroundColor: 'rgba(255, 255, 255, 0.4)', top : "10px", width : "60%", borderRadius : "10px"} : {width : "100%"}), transition: 'background-color 0.5s ease, top 0.5s ease, width 0.5s ease',}}
         >

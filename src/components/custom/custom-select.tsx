@@ -11,9 +11,11 @@ type Props = {
     liClassname?: string,
     items: { value: string, label: string }[];
     disabled?: boolean,
+    onSelect ?: (value : string) => void,
+    currentLabel ?: string
 }
 
-export const CustomSelect = ({disabled = false,items, className, ulClassname, liClassname}: Props) => {
+export const CustomSelect = ({currentLabel, onSelect ,disabled = false,items, className, ulClassname, liClassname}: Props) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLUListElement | null>(null);
     const selectRef = useRef<HTMLDivElement | null>(null);
@@ -42,12 +44,12 @@ export const CustomSelect = ({disabled = false,items, className, ulClassname, li
             <div ref={selectRef}
                  className={cn("flex w-full items-center cursor-pointer", active < 0 ? "text-muted-foreground" : "text-black",disabled ?"justify-end" : "justify-between")}
                  onClick={toggleDropdown}>
-                {disabled ? "" : active < 0 ? "Select" : items[active].label}
+                {disabled ? "" : currentLabel && active < 0 ? currentLabel : active < 0 ? "Select" : items[active].label}
                 <ChevronDown className="w-4 h-4 text-gray-400"/>
             </div>
             {isOpen && (
                 <ul ref={dropdownRef}
-                    className={cn(`z-40 absolute top-full left-0 mt-1 w-full bg-[#D8D8D8] border rounded-md shadow-lg max-h-[16rem] overflow-y-auto`, ulClassname && ulClassname, disabled && "hidden") }>
+                    className={cn(`z-40 absolute top-full left-0 mt-1 w-full bg-[#D8D8D8] border rounded-md shadow-lg max-h-[14rem] overflow-y-auto`, ulClassname && ulClassname, disabled && "hidden") }>
                     {
                         items
                             // .filter((_, index) => index !== active)
@@ -57,6 +59,9 @@ export const CustomSelect = ({disabled = false,items, className, ulClassname, li
                                 onClick={() => {
                                     setActive(index);
                                     setIsOpen(false);
+                                    if (onSelect) {
+                                        onSelect(item.value);
+                                    }
                                 }}>{item.label}</li>
                         ))
                     }

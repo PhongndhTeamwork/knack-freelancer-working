@@ -66,7 +66,7 @@ export default function Component() {
                             </Button>
                         </DialogTrigger>
                         <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                            <ScrollArea className="h-full">
+                            <ScrollArea className="h-full px-4">
                                 <ProminentProjectUpdateDialog/>
                             </ScrollArea>
                         </DialogContent>
