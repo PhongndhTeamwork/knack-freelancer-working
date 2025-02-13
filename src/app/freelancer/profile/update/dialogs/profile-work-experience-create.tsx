@@ -17,7 +17,7 @@ import useProfileStore from "@/lib/store/profile.modal";
 import {ValidateHelper} from "@/lib/helpers/validate.helper";
 
 
-export const ProfileWorkExperienceUpdateDialog = () => {
+export const ProfileWorkExperienceCreateDialog = () => {
     const [isCurrent, setIsCurrent] = useState<boolean>(false);
     const [newWorkExperience,setNewWorkExperience] = useState<ProfileWorkExperienceForm>({});
     const {token} = useAuthStore();
@@ -102,16 +102,6 @@ export const ProfileWorkExperienceUpdateDialog = () => {
                         }}
                     />
                 </div>
-                {/* Work Period Field */}
-                {/*<div className="space-y-2">*/}
-                {/*    <Label htmlFor="period" className="responsive-text-16">Thời gian làm*/}
-                {/*        việc</Label>*/}
-                {/*    <Input*/}
-                {/*        id="period"*/}
-                {/*        placeholder=""*/}
-                {/*        className="h-11 responsive-text-16"*/}
-                {/*    />*/}
-                {/*</div>*/}
             </div>
 
             {/* Description Field */}

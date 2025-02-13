@@ -74,16 +74,13 @@ const useProfileStore = create<ProfileState>((set, get) => ({
         // return false;
 
          try {
-              const {data} = await axios.put(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/update-profile`, form, {
+              await axios.put(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/update-profile`, form, {
                  headers: {
                      'Content-Type': 'multipart/form-data',
                      Authorization: `Bearer ${token}`,
                  }
              });
 
-             // Successfully updated profile
-             set({ profile: data.data });
-             set({ draftProfile: data.data });
              return true;  // Return true when the request is successful
              // eslint-disable-next-line @typescript-eslint/no-unused-vars
          } catch (e) {

@@ -13,8 +13,8 @@ import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import * as React from "react";
 import {
-    ProfileWorkExperienceUpdateDialog
-} from "@/app/freelancer/profile/update/dialogs/profile-work-experience-update";
+    ProfileWorkExperienceCreateDialog
+} from "@/app/freelancer/profile/update/dialogs/profile-work-experience-create";
 import {FormatHelper} from "@/lib/helpers/format.helper";
 import axios from "axios";
 import useAuthStore from "@/lib/store/user.modal";
@@ -70,8 +70,6 @@ export const WorkExperience = () => {
 
     const handleUpdateWorkExperience = (work: ProfileWorkExperienceForm) => {
         if(!validateWorkExperience(work)) return;
-        console.log(work);
-        // setIsCloseDialog(true);
         const from = new Date(Number(work?.fromYear), Number(work?.fromMonth),1);
         let to : Date = new Date();
         if(!work.isCurrent) to = new Date(Number(work?.toYear) , Number(work?.toMonth),1);
@@ -247,7 +245,6 @@ export const WorkExperience = () => {
                                                                 : pwe
                                                         )
                                                     }))
-                                                    console.log(draftProfile.profileWorkExperiences);
                                                 }}/>
                                         </div>
 
@@ -321,7 +318,8 @@ export const WorkExperience = () => {
                             </DialogTrigger>
                             <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
                                 <ScrollArea className="h-full">
-                                    <ProfileWorkExperienceUpdateDialog/>
+                                    <
+                                    ProfileWorkExperienceCreateDialog/>
                                 </ScrollArea>
                             </DialogContent>
                         </Dialog>

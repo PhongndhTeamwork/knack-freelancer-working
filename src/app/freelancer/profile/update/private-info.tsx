@@ -21,7 +21,7 @@ interface Props {
 
 
 export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Props) => {
-    const {draftProfile, setProfileUpdate, updateProfile, resetDraftProfile} = useProfileStore();
+    const {draftProfile, setProfileUpdate, updateProfile, resetDraftProfile, fetchProfile} = useProfileStore();
     const {token} = useAuthStore();
     const [avatarImage, setAvatarImage] = useState<string>("");
 
@@ -43,6 +43,7 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
     const handleSubmit = async () => {
         const result = await updateProfile(token || "");
         if (result) {
+            fetchProfile(token || "");
             setMessage({content: "Cập nhật thông tin cá nhân thành công", type: "success"});
             setTriggerNotice(!triggerNotice);
         } else {
