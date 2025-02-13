@@ -30,9 +30,9 @@ export const ProfileWorkExperienceUpdateDialog = () => {
     const handleSubmit = () => {
         if(!validateBeforeAdding()) return;
         // setIsCloseDialog(true);
-        const from = new Date(Number(newWorkExperience?.fromYear) || Number(newWorkExperience?.fromMonth),1);
+        const from = new Date(Number(newWorkExperience?.fromYear) , Number(newWorkExperience?.fromMonth),1);
         let to : Date = new Date();
-        if(!isCurrent) to = new Date(Number(newWorkExperience?.toYear) || Number(newWorkExperience?.toMonth),1);
+        if(!isCurrent) to = new Date(Number(newWorkExperience?.toYear) , Number(newWorkExperience?.toMonth),1);
         // console.log(newWorkExperience);
         axios.post(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/create-work-experience`,{
             name : newWorkExperience.name,

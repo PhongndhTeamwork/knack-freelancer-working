@@ -70,11 +70,12 @@ export const WorkExperience = () => {
 
     const handleUpdateWorkExperience = (work: ProfileWorkExperienceForm) => {
         if(!validateWorkExperience(work)) return;
+        console.log(work);
         // setIsCloseDialog(true);
-        // console.log(work);
-        const from = new Date(Number(work?.fromYear) || Number(work?.fromMonth),1);
+        const from = new Date(Number(work?.fromYear), Number(work?.fromMonth),1);
         let to : Date = new Date();
-        if(!work.isCurrent) to = new Date(Number(work?.toYear) || Number(work?.toMonth),1);
+        if(!work.isCurrent) to = new Date(Number(work?.toYear) , Number(work?.toMonth),1);
+        console.log(from);
         // console.log(newWorkExperience);
         axios.put(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/update-work-experience/${work?.id}`,{
             name : work.name,
@@ -95,7 +96,6 @@ export const WorkExperience = () => {
     }
 
     const validateWorkExperience = (work: ProfileWorkExperienceForm) => {
-        // console.log(work);
 
         if (!work.name  || work.name.trim() === "") {
             setMessage({content : "Vui lòng nhập lĩnh vực.", type : "error"})
@@ -114,7 +114,7 @@ export const WorkExperience = () => {
             setTriggerNotice(!triggerNotice)
             return false
         }
-        if(!work.isCurrent && (!work.toYear || +work.toYear < 2010 || !work.toMonth) && work.to){
+        if(!work.isCurrent && (!work.toYear || !work.toMonth) && work.to){
             work.toYear =  (new Date(work.to || "")).getFullYear().toString()
             work.toMonth =  (new Date(work.to || "")).getMonth().toString()
         }
@@ -127,7 +127,6 @@ export const WorkExperience = () => {
             setTriggerNotice(!triggerNotice)
             return false
         }
-        console.log(work);
 
 
         return true
@@ -248,6 +247,7 @@ export const WorkExperience = () => {
                                                                 : pwe
                                                         )
                                                     }))
+                                                    console.log(draftProfile.profileWorkExperiences);
                                                 }}/>
                                         </div>
 
@@ -259,6 +259,7 @@ export const WorkExperience = () => {
                                                           className={`h-11 w-full bg-white`} disabled={pwe.isCurrent}
                                                           ulClassname="bg-gray-100"
                                                           onSelect={(value) => {
+
                                                               setProfileUpdate((prev) => ({
                                                                   ...prev,
                                                                   profileWorkExperiences: prev.profileWorkExperiences.map((pwe, i) =>
