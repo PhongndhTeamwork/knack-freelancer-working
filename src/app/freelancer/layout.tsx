@@ -59,7 +59,7 @@ const HomeLayout = ({children}: Props) => {
                 {children}
             </div>
             <div className="mt-24">
-                {!pathname.includes("chat") && !pathname.includes("/freelancer/portfolio") && <Footer/>}
+                {!pathname.includes("chat") && !pathname.includes("/freelancer/portfolio") && !pathname.includes("/freelancer/profile/update") && <Footer/>}
             </div>
         </div>)
 }

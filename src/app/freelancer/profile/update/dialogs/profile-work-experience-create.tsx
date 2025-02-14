@@ -4,31 +4,29 @@ import {CustomSelect} from "@/components/custom/custom-select";
 import months from "@/lib/json/month.json";
 import years from "@/lib/json/year.json";
 import {Checkbox} from "@/components/ui/checkbox";
-import {useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import * as React from "react";
 import {Button} from "@/components/ui/button";
 import {ProfileWorkExperienceForm} from "@/lib/types/basic-profile.type";
 import axios from "axios";
 import useAuthStore from "@/lib/store/user.modal";
 import {MessagePayloadForm} from "@/lib/types/error.type";
-import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
 import useProfileStore from "@/lib/store/profile.modal";
 import {ValidateHelper} from "@/lib/helpers/validate.helper";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
 
 type Props = {
-    setIsOpen: (value : boolean) => void
+    setIsOpen: (value : boolean) => void;
+    setMessage: Dispatch<SetStateAction<MessagePayloadForm>>;
+    setTriggerNotice: Dispatch<SetStateAction<boolean>>;
+    triggerNotice: boolean;
 }
 
-export const ProfileWorkExperienceCreateDialog = ({setIsOpen} : Props) => {
+export const ProfileWorkExperienceCreateDialog = ({setIsOpen, setMessage, setTriggerNotice, triggerNotice} : Props) => {
     const [isCurrent, setIsCurrent] = useState<boolean>(false);
     const [newWorkExperience,setNewWorkExperience] = useState<ProfileWorkExperienceForm>({});
     const {token} = useAuthStore();
     const {fetchProfile} = useProfileStore();
-    const [message, setMessage] = useState<MessagePayloadForm>({content: ""});
-    const [triggerNotice, setTriggerNotice] = useState<boolean>(false);
-
-    ToastInitialisation({triggerMessage : triggerNotice, message : message})
 
     const handleSubmit = () => {
         if(!validateBeforeAdding()) return;
@@ -55,8 +53,8 @@ export const ProfileWorkExperienceCreateDialog = ({setIsOpen} : Props) => {
                 setIsOpen(false)
                 window.scrollTo({ top: 0, behavior: "smooth" }); // Smoothly scroll to top
             }, 500)
-        }).catch(() => {
-            // console.error(error)
+        }).catch((error) => {
+            console.error(error)
         })
     };
 

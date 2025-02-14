@@ -7,10 +7,21 @@ import {useRouter} from "next/navigation";
 import {Button} from "@/components/ui/button";
 import useProfileStore from "@/lib/store/profile.modal";
 import {Illustration} from "@/components/custom/illustration";
+import {useEffect, useState} from "react";
+import {ExtractInformation} from "@/lib/helpers/extract-information";
 
 export const ProfileCompletionProgress = () => {
     const router = useRouter();
     const {profile} = useProfileStore()
+    const [link, setLink] = useState<string | undefined>(undefined)
+    useEffect(() => {
+        let socialLink = undefined;
+        if (profile.tiktokLink && profile.tiktokLink?.trim() !== "") socialLink = profile.tiktokLink;
+        else if (profile.facebookLink && profile.facebookLink?.trim() !== "") socialLink = profile.facebookLink;
+        else if (profile.youtubeLink && profile.youtubeLink?.trim() !== "") socialLink = profile.youtubeLink;
+        else if (profile.instagramLink && profile.instagramLink?.trim() !== "") socialLink = profile.tiktokLink;
+        setLink(socialLink);
+    }, [profile.facebookLink, profile.instagramLink, profile.tiktokLink, profile.youtubeLink]);
 
     return (
         <div className="mx-auto space-y-4">
@@ -26,16 +37,18 @@ export const ProfileCompletionProgress = () => {
                         </div>
                         <div className="flex justify-between items-center">
                             <p className="font-medium responsive-text-20">Trang cá nhân</p>
-                            <Button variant="dark" size="sm" className="px-4 py-2 h-10 responsive-text-16" onClick={() => {
-                                router.push("/freelancer/profile/update")
-                            }}> Hoàn thiện</Button>
+                            <Button variant="dark" size="sm" className="px-4 py-2 h-10 responsive-text-16"
+                                    onClick={() => {
+                                        router.push("/freelancer/profile/update")
+                                    }}> Hoàn thiện</Button>
                         </div>
 
                         <div className="flex justify-between items-center">
                             <p className="font-medium responsive-text-20">Portfolio</p>
-                            <Button variant="dark" size="sm" className="px-4 py-2 h-10 responsive-text-16" onClick={() => {
-                                router.push("/freelancer/portfolio/template")
-                            }}> Hoàn thiện</Button>
+                            <Button variant="dark" size="sm" className="px-4 py-2 h-10 responsive-text-16"
+                                    onClick={() => {
+                                        router.push("/freelancer/portfolio/template")
+                                    }}> Hoàn thiện</Button>
                         </div>
 
                         {/*<div className="flex items-center gap-5">*/}
@@ -59,15 +72,16 @@ export const ProfileCompletionProgress = () => {
                 </Card>
 
                 {/* Profile Banner */}
-                <Card className="relative overflow-hidden col-span-2 p-4 h-full">
+                <Card className="relative flex justify-center items-center overflow-hidden col-span-2 p-4 h-full">
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-900/70 z-0"/>
                     <div className="absolute inset-0 bg-[url('/placeholder.svg')] bg-cover bg-center opacity-50"/>
 
-                    <CardContent className="relative z-10 p-6" style={{backdropFilter: 'blur(20px)'}}>
+                    <CardContent className="relative z-10 p-6 m-auto" style={{backdropFilter: 'blur(20px)'}}>
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
                             <Avatar className="w-[136px] h-[136px] border-2 border-white">
                                 <AvatarImage alt="User 1" src={String(profile?.avatar) || ""}/>
-                                <AvatarFallback className="text-3xl">{profile?.name?.substring(0, 1) || "P"}</AvatarFallback>
+                                <AvatarFallback
+                                    className="text-3xl">{profile?.name?.substring(0, 1) || "P"}</AvatarFallback>
                             </Avatar>
 
                             <div className="flex-1 text-white space-y-3">
@@ -79,18 +93,21 @@ export const ProfileCompletionProgress = () => {
                                                   url="/freelancer/home/info/info2.svg"/>
                                 </div>
 
-                                <p className="text-gray-200 responsive-text-16">Người mẫu - Diễn viên Phim hành động</p>
+                                {/*<p className="text-gray-200 responsive-text-16">Người mẫu - Diễn viên Phim hành động</p>*/}
                                 <div className="flex flex-col gap-2 mt-2 text-sm text-gray-200 responsive-text-16">
-                                    <div className="flex gap-3 items-center">
-                                        <MapPin className="h-4 w-4"/>
-                                        Hà Nội, Việt Nam
-                                    </div>
-                                    <div className="flex gap-3 items-center">
-                                        <Link className="h-4 w-4 items-center"/>
-                                        phunguyenkoc.billard.com
-                                    </div>
-
-
+                                    {profile.address && profile.address?.trim() !== "" &&
+                                        <div className="flex gap-3 items-center">
+                                            <MapPin className="h-4 w-4"/>
+                                            Hà Nội, Việt Nam
+                                        </div>}
+                                    {
+                                        link && <div className="flex gap-3 items-center cursor-pointer hover:text-gray-300" onClick={() => {
+                                            window.open(link, "_blank");
+                                        }}>
+                                            <Link className="h-4 w-4 items-center"/>
+                                            {ExtractInformation.getUsernameFromURL(link) }
+                                        </div>
+                                    }
                                 </div>
                             </div>
 

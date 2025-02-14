@@ -29,15 +29,17 @@ export default function Component() {
         <Toaster position="bottom-center"/>
         <WelcomeBanner userName="" message="Chỉnh sửa thông tin cá nhân"
                        supportingText="Hãy nhớ cập nhật thông tin thường xuyên nếu cần nhé!"/>
-        <div className="grid md:grid-cols-12 gap-8">
+        <div className="grid md:grid-cols-12 gap-8 ">
             <div className="md:col-span-3">
-                <ProfileMenu onChangeNavbar={(id) => setActiveBar(id)} activeBar={activeBar} />
+                <div className="sticky top-20"> {/* Adjust `top-20` as needed */}
+                    <ProfileMenu onChangeNavbar={(id) => setActiveBar(id)} activeBar={activeBar}/>
+                </div>
             </div>
             <div className="md:col-span-9">
                 {activeBar === 1 && <PrivateInfo triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice} setMessage={setMessage}/>}
-                {activeBar === 2 &&<WorkExperience/> }
-                { activeBar ===3 && <Achievement/> }
-                { activeBar ===4 && <Work/> }
+                {activeBar === 2 &&<WorkExperience triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice} setMessage={setMessage}/> }
+                { activeBar ===3 && <Achievement triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice} setMessage={setMessage}/> }
+                { activeBar ===4 && <Work triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice} setMessage={setMessage}/> }
                 { activeBar ===5 && <PricingDisplayForm/> }
             </div>
         </div>

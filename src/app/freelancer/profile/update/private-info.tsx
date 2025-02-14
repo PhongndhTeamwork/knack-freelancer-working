@@ -162,7 +162,7 @@ export const PrivateInfo = ({setMessage, setTriggerNotice, triggerNotice}: Props
                         {/* Social Media Links */}
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="facebook" className="responsive-text-16">Liên kết Facebook</Label>
-                            <Input id="facebook" placeholder="URL Facebook của bạn" className="h-11"
+                            <Input id="facebook" placeholder="" className="h-11"
                                    value={draftProfile.facebookLink} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, facebookLink: e.target.value}
@@ -172,7 +172,7 @@ export const PrivateInfo = ({setMessage, setTriggerNotice, triggerNotice}: Props
 
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="instagram" className="responsive-text-16">Liên kết Instagram</Label>
-                            <Input id="instagram" placeholder="URL Instagram của bạn" className="h-11"
+                            <Input id="instagram" placeholder="" className="h-11"
                                    value={draftProfile.instagramLink} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, instagramLink: e.target.value}
@@ -182,7 +182,7 @@ export const PrivateInfo = ({setMessage, setTriggerNotice, triggerNotice}: Props
 
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="youtube" className="responsive-text-16">Liên kết Youtube</Label>
-                            <Input id="youtube" placeholder="URL Youtube của bạn" className="h-11"
+                            <Input id="youtube" placeholder="" className="h-11"
                                    value={draftProfile.youtubeLink} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, youtubeLink: e.target.value}
@@ -192,7 +192,7 @@ export const PrivateInfo = ({setMessage, setTriggerNotice, triggerNotice}: Props
 
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="tiktok" className="responsive-text-16">Liên kết TikTok</Label>
-                            <Input id="tiktok" placeholder="URL TikTok của bạn" className="h-11"
+                            <Input id="tiktok" placeholder="" className="h-11"
                                    value={draftProfile.tiktokLink} onChange={(e) => {
                                 setProfileUpdate((prev) => {
                                     return {...prev, tiktokLink: e.target.value}
@@ -202,12 +202,12 @@ export const PrivateInfo = ({setMessage, setTriggerNotice, triggerNotice}: Props
                     </div>
                 </div>
 
-                <Separator/>
+                {/*<Separator/>*/}
 
                 {/* Add External Link Button */}
-                <Button variant="dark" type="button" size="sm">
-                    Thêm liên kết ngoài
-                </Button>
+                {/*<Button variant="dark" type="button" size="sm">*/}
+                {/*    Thêm liên kết ngoài*/}
+                {/*</Button>*/}
             </form>
         </Card>
             <div className="flex justify-end gap-4 mt-6">

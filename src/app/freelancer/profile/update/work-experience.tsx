@@ -16,23 +16,23 @@ import {
 import {FormatHelper} from "@/lib/helpers/format.helper";
 import axios from "axios";
 import useAuthStore from "@/lib/store/user.modal";
-import {useCallback, useEffect, useState} from "react";
+import {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
 import {MessagePayloadForm} from "@/lib/types/error.type";
-import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
 import {ValidateHelper} from "@/lib/helpers/validate.helper";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
 import CustomDialog from "@/components/custom/custom-dialog";
 
-export const WorkExperience = () => {
+interface Props {
+    setMessage: Dispatch<SetStateAction<MessagePayloadForm>>;
+    setTriggerNotice: Dispatch<SetStateAction<boolean>>;
+    triggerNotice: boolean;
+}
+
+export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Props) => {
     const {draftProfile, setProfileUpdate, resetDraftProfile, profile} = useProfileStore();
     const {token} = useAuthStore();
-    const [message, setMessage] = useState<MessagePayloadForm>({content: ""});
-    const [triggerNotice, setTriggerNotice] = useState<boolean>(false);
     const {fetchProfile} = useProfileStore();
     const [isOpen, setIsOpen] = useState(false);
-
-
-    ToastInitialisation({triggerMessage: triggerNotice, message: message})
 
     const updateIsCurrentStatus = useCallback(() => {
         setProfileUpdate((prev) => ({
@@ -317,7 +317,7 @@ export const WorkExperience = () => {
                             <CustomDialog className="w-3/4 h-5/6" isOpen={isOpen} onClose={() => setIsOpen(false)}>
                                 <div className="py-6 px-4 h-full">
                                     <ScrollArea className="h-full">
-                                        <ProfileWorkExperienceCreateDialog setIsOpen={setIsOpen}/>
+                                        <ProfileWorkExperienceCreateDialog setIsOpen={setIsOpen} setMessage={setMessage} triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice}/>
                                     </ScrollArea>
                                 </div>
                             </CustomDialog>

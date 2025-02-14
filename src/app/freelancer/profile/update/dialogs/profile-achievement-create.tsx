@@ -6,29 +6,28 @@ import years from "@/lib/json/year.json";
 import {Checkbox} from "@/components/ui/checkbox";
 import {Button} from "@/components/ui/button";
 import * as React from "react";
-import {useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import {ProfileWorkExperienceForm} from "@/lib/types/basic-profile.type";
 import useAuthStore from "@/lib/store/user.modal";
 import useProfileStore from "@/lib/store/profile.modal";
 import {MessagePayloadForm} from "@/lib/types/error.type";
-import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
 import axios from "axios";
 import {ValidateHelper} from "@/lib/helpers/validate.helper";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
 
 type Props = {
-    setIsOpen: (value : boolean) => void
+    setIsOpen: (value : boolean) => void;
+    setMessage: Dispatch<SetStateAction<MessagePayloadForm>>;
+    setTriggerNotice: Dispatch<SetStateAction<boolean>>;
+    triggerNotice: boolean;
 }
 
-export const ProfileAchievementCreateDialog = ({setIsOpen} : Props) => {
+export const ProfileAchievementCreateDialog = ({setIsOpen, setMessage, setTriggerNotice, triggerNotice} : Props ) => {
     const [isCurrent, setIsCurrent] = useState<boolean>(false);
     const [newAchievement, setNewAchievement] = useState<ProfileWorkExperienceForm>({});
     const {token} = useAuthStore();
     const {fetchProfile} = useProfileStore();
-    const [message, setMessage] = useState<MessagePayloadForm>({content: ""});
-    const [triggerNotice, setTriggerNotice] = useState<boolean>(false);
 
-    ToastInitialisation({triggerMessage: triggerNotice, message: message})
 
     const handleSubmit = () => {
         if (!validateBeforeAdding()) return;
