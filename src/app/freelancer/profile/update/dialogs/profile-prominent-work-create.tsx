@@ -1,6 +1,5 @@
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
-import {Textarea} from "@/components/ui/textarea";
 import {CustomSelect} from "@/components/custom/custom-select";
 import months from "@/lib/json/month.json";
 import years from "@/lib/json/year.json";
@@ -15,9 +14,13 @@ import {MessagePayloadForm} from "@/lib/types/error.type";
 import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
 import useProfileStore from "@/lib/store/profile.modal";
 import {ValidateHelper} from "@/lib/helpers/validate.helper";
+import {CustomTextarea} from "@/components/custom/custom-textarea";
 
+type Props = {
+    setIsOpen: (value : boolean) => void
+}
 
-export const ProfileProminentWorkCreateDialog = () => {
+export const ProfileProminentWorkCreateDialog = ({setIsOpen} : Props) => {
     const [isCurrent, setIsCurrent] = useState<boolean>(false);
     const [newProminentWork,setNewProminentWork] = useState<ProfileProminentWork>({});
     const {token} = useAuthStore();
@@ -50,8 +53,12 @@ export const ProfileProminentWorkCreateDialog = () => {
             setNewProminentWork({
             });
             fetchProfile(token || "")
-        }).catch((error) => {
-            console.error(error)
+            setTimeout(() => {
+                setIsOpen(false)
+                window.scrollTo({ top: 0, behavior: "smooth" }); // Smoothly scroll to top
+            }, 500)
+        }).catch(() => {
+            // console.error(error)
         })
     };
 
@@ -139,15 +146,15 @@ export const ProfileProminentWorkCreateDialog = () => {
                 {/* Description Field */}
                 <div className="space-y-2">
                     <Label htmlFor="description" className="responsive-text-16">Mô tả</Label>
-                    <Textarea
+                    <CustomTextarea
                         id="description"
                         placeholder=""
                         value={newProminentWork.description}
                         className="min-h-[100px] resize-none responsive-text-16"
-                        onChange={(e) => {
+                        onChange={(value) => {
                             setNewProminentWork((prev) => ({
                                 ...prev,
-                                description : e.target.value
+                                description : value
                             }))
                         }}
                     />

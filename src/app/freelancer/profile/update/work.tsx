@@ -2,13 +2,11 @@ import {Button} from "@/components/ui/button"
 import {Card, CardContent} from "@/components/ui/card"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
-import {Textarea} from "@/components/ui/textarea"
 import useProfileStore from "@/lib/store/profile.modal";
 import {CustomSelect} from "@/components/custom/custom-select";
 import months from "@/lib/json/month.json";
 import years from "@/lib/json/year.json";
 import {Checkbox} from "@/components/ui/checkbox";
-import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 import {ScrollArea} from "@/components/ui/scroll-area";
 
 import * as React from "react";
@@ -23,6 +21,8 @@ import axios from "axios";
 import {ProfileProminentWork} from "@/lib/types/basic-profile.type";
 import {ValidateHelper} from "@/lib/helpers/validate.helper";
 import {FormatHelper} from "@/lib/helpers/format.helper";
+import {CustomTextarea} from "@/components/custom/custom-textarea";
+import CustomDialog from "@/components/custom/custom-dialog";
 
 export const Work = () => {
     const {draftProfile, setProfileUpdate, resetDraftProfile, profile} = useProfileStore();
@@ -30,6 +30,9 @@ export const Work = () => {
     const [message, setMessage] = useState<MessagePayloadForm>({content: ""});
     const [triggerNotice, setTriggerNotice] = useState<boolean>(false);
     const {fetchProfile} = useProfileStore();
+    const [isOpen, setIsOpen] = useState(false);
+
+
 
     ToastInitialisation({triggerMessage: triggerNotice, message: message})
 
@@ -194,17 +197,17 @@ export const Work = () => {
                                     {/* Description Field */}
                                     <div className="space-y-2">
                                         <Label htmlFor="description" className="responsive-text-16">Mô tả</Label>
-                                        <Textarea
+                                        <CustomTextarea
                                             id="description"
                                             placeholder=""
                                             value={pwe.description}
                                             className="min-h-[100px] resize-none responsive-text-16"
-                                            onChange={(e) => {
+                                            onChange={(value) => {
                                                 setProfileUpdate((prev) => ({
                                                     ...prev,
                                                     profileProminentWorks: prev.profileProminentWorks.map((pwe, i) =>
                                                         i === index
-                                                            ? {...pwe, description: e.target.value}
+                                                            ? {...pwe, description: value}
                                                             : pwe
                                                     )
                                                 }))
@@ -324,22 +327,24 @@ export const Work = () => {
                                 </div>
                             })
                         }
-                        <Dialog>
-                            <DialogTrigger asChild>
-                                <Button
-                                    type="button"
-                                    variant="dark-outline"
-                                    size="sm"
-                                >
-                                    Thêm công vệc
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                                <ScrollArea className="h-full">
-                                    <ProfileProminentWorkCreateDialog/>
-                                </ScrollArea>
-                            </DialogContent>
-                        </Dialog>
+
+                        <div className="">
+                            <Button
+                                type="button"
+                                variant="dark-outline"
+                                size="sm"
+                                onClick={() => setIsOpen(true)}
+                            >
+                                Thêm công việc
+                            </Button>
+                            <CustomDialog className="w-3/4 h-5/6" isOpen={isOpen} onClose={() => setIsOpen(false)}>
+                                <div className="py-6 px-4 h-full">
+                                    <ScrollArea className="h-full">
+                                        <ProfileProminentWorkCreateDialog setIsOpen={setIsOpen}/>
+                                    </ScrollArea>
+                                </div>
+                            </CustomDialog>
+                        </div>
                     </div>
                 </CardContent>
             </Card>

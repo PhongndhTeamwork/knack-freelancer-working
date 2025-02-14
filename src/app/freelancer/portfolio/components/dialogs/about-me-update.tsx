@@ -4,9 +4,9 @@
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import {Button} from "@/components/ui/button"
-import {Textarea} from "@/components/ui/textarea"
 import {FileUploader} from "@/components/constitution/file-uploader";
 import * as React from "react";
+import {CustomTextarea} from "@/components/custom/custom-textarea";
 
 
 export const AboutMeUpdateDialog = () => {
@@ -30,7 +30,7 @@ export const AboutMeUpdateDialog = () => {
                     </div>
                     <div className="space-y-2">
                         <Label className="responsive-text-16">Mô tả chi tiết</Label>
-                        <Textarea placeholder="" className="responsive-text-16 "/>
+                        <CustomTextarea placeholder="" className="responsive-text-16 "/>
                     </div>
                 </div>
             </div>

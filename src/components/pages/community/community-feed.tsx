@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import {Camera, ImagePlus, Search} from 'lucide-react'
 import {Illustration} from "@/components/custom/illustration";
-import { Textarea } from "@/components/ui/textarea"
 import {useState} from "react";
+import {CustomTextarea} from "@/components/custom/custom-textarea";
 
 const posts = [
     {
@@ -50,11 +50,11 @@ export const CommunityFeed = () => {
                         <Card className="w-full mx-auto bg-[#D8D8D8]">
                             <CardContent className="p-4">
                                 <div className="space-y-4">
-                                    <Textarea
+                                    <CustomTextarea
                                         placeholder="Hôm nay bạn muốn chia sẻ điều gì..."
                                         className="min-h-[40px] w-full resize-none border-0 focus-visible:ring-0 p-0 shadow-none"
                                         value={content}
-                                        onChange={(e) => setContent(e.target.value)}
+                                        onChange={(value) => setContent(value)}
                                         style={{marginTop : 0}}
                                     />
                                     <div className="flex items-center justify-between">

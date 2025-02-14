@@ -2,14 +2,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import {CustomSelect} from "@/components/custom/custom-select";
 import months from "@/lib/json/month.json";
 import years from "@/lib/json/year.json";
 import {Checkbox} from "@/components/ui/checkbox";
 import useProfileStore from "@/lib/store/profile.modal";
 import * as React from "react";
-import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {ProfileAchievementCreateDialog} from "@/app/freelancer/profile/update/dialogs/profile-achievement-create";
 import {FormatHelper} from "@/lib/helpers/format.helper";
@@ -20,6 +18,8 @@ import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
 import axios from "axios";
 import {ProfileAchievement} from "@/lib/types/basic-profile.type";
 import {ValidateHelper} from "@/lib/helpers/validate.helper";
+import {CustomTextarea} from "@/components/custom/custom-textarea";
+import CustomDialog from "@/components/custom/custom-dialog";
 
 export const Achievement = () => {
     const {draftProfile, setProfileUpdate, resetDraftProfile, profile} = useProfileStore();
@@ -27,6 +27,7 @@ export const Achievement = () => {
     const [message, setMessage] = useState<MessagePayloadForm>({content: ""});
     const [triggerNotice, setTriggerNotice] = useState<boolean>(false);
     const {fetchProfile} = useProfileStore();
+    const [isOpen, setIsOpen] = useState<boolean>(false)
 
     ToastInitialisation({triggerMessage: triggerNotice, message: message})
 
@@ -165,17 +166,17 @@ export const Achievement = () => {
                                     {/* Description Field */}
                                     <div className="space-y-2">
                                         <Label htmlFor="description" className="responsive-text-16">Mô tả</Label>
-                                        <Textarea
+                                        <CustomTextarea
                                             id="description"
                                             placeholder=""
                                             className="min-h-[100px] resize-none responsive-text-16"
                                             value={pwe.description}
-                                            onChange={(e) => {
+                                            onChange={(value) => {
                                                 setProfileUpdate((prev) => ({
                                                     ...prev,
                                                     profileAchievements: prev.profileAchievements.map((pwe, i) =>
                                                         i === index
-                                                            ? {...pwe, description: e.target.value}
+                                                            ? {...pwe, description: value}
                                                             : pwe
                                                     )
                                                 }))
@@ -258,7 +259,7 @@ export const Achievement = () => {
                                                                   )
                                                               }))
                                                           }
-                                                          />
+                                            />
                                         </div>
                                         <div>
                                             <div className="flex items-center space-x-2">
@@ -292,28 +293,28 @@ export const Achievement = () => {
                                         }}> Xóa thành tựu </Button>
                                         <Button variant="primary-outline" type="button" size="sm" onClick={() => {
                                             handleUpdateAchievement(pwe)
-                                        }}> Lưu thành tựu  </Button>
+                                        }}> Lưu thành tựu </Button>
                                     </div>
                                 </div>
                             })
                         }
-                        <Dialog>
-                            <DialogTrigger asChild>
-                                <Button
-                                    type="button"
-                                    variant="dark-outline"
-                                    size="sm"
-                                >
-                                    Thêm thành tựu
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                                <ScrollArea className="h-full">
-                                    <ProfileAchievementCreateDialog/>
-                                </ScrollArea>
-                            </DialogContent>
-                        </Dialog>
-
+                        <div className="">
+                            <Button
+                                type="button"
+                                variant="dark-outline"
+                                size="sm"
+                                onClick={() => setIsOpen(true)}
+                            >
+                                Thêm thành tựu
+                            </Button>
+                            <CustomDialog className="w-3/4 h-5/6" isOpen={isOpen} onClose={() => setIsOpen(false)}>
+                                <div className="py-6 px-4 h-full">
+                                    <ScrollArea className="h-full">
+                                        <ProfileAchievementCreateDialog setIsOpen={setIsOpen}/>
+                                    </ScrollArea>
+                                </div>
+                            </CustomDialog>
+                        </div>
                     </div>
                 </CardContent>
             </Card>

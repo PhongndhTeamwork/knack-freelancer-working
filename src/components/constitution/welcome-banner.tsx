@@ -12,7 +12,7 @@ export const WelcomeBanner = ({
                                   supportingText = "Hãy để Knack tìm cho bạn những nhân sự phù hợp nhất nhé!"
                               }: WelcomeBannerProps) => {
     return (
-        <Card className="border-none shadow-none p-0 bg-transparent">
+        <Card className="border-none shadow-none p-0 bg-transparent mt-0">
             <CardContent className="p-0">
                 <div className="space-y-3">
                     <div className="flex items-center gap-2">

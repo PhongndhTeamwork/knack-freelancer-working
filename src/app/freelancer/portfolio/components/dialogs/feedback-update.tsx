@@ -6,12 +6,12 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
 import {useState} from "react";
 import stars from "@/lib/json/star.json";
 import { FileUploader} from "@/components/constitution/file-uploader";
 import * as React from "react";
 import {CustomSelect} from "@/components/custom/custom-select";
+import {CustomTextarea} from "@/components/custom/custom-textarea";
 
 
 
@@ -63,7 +63,7 @@ export const FeedbackUpdateDialog = () => {
                                 </div>
                                 <div className="space-y-2">
                                     <Label className="responsive-text-16">Lời nhận xét</Label>
-                                    <Textarea placeholder="" className="responsive-text-16"/>
+                                    <CustomTextarea placeholder="" className="responsive-text-16"/>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div className="space-y-2">

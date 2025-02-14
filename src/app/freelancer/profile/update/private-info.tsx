@@ -9,18 +9,18 @@ import {Label} from "@/components/ui/label"
 import Image from "next/image"
 import {Separator} from "@/components/ui/separator";
 import useProfileStore from "@/lib/store/profile.modal";
-import {Textarea} from "@/components/ui/textarea";
 import useAuthStore from "@/lib/store/user.modal";
 import {MessagePayloadForm} from "@/lib/types/error.type";
+import {CustomTextarea} from "@/components/custom/custom-textarea";
 
 interface Props {
-    setMessage:Dispatch<SetStateAction<MessagePayloadForm>>;
+    setMessage: Dispatch<SetStateAction<MessagePayloadForm>>;
     setTriggerNotice: Dispatch<SetStateAction<boolean>>;
     triggerNotice: boolean;
 }
 
 
-export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Props) => {
+export const PrivateInfo = ({setMessage, setTriggerNotice, triggerNotice}: Props) => {
     const {draftProfile, setProfileUpdate, updateProfile, resetDraftProfile, fetchProfile} = useProfileStore();
     const {token} = useAuthStore();
     const [avatarImage, setAvatarImage] = useState<string>("");
@@ -141,15 +141,16 @@ export const PrivateInfo = ({ setMessage, setTriggerNotice, triggerNotice } : Pr
                     <div className="flex gap-6">
                         <div className="space-y-1.5 w-full">
                             <Label htmlFor="phone" className="responsive-text-16">Tiểu sử</Label>
-                            <Textarea
+                            <CustomTextarea
                                 id="bio"
                                 placeholder=""
-                                className="min-h-[80px] resize-none responsive-text-16"
-                                value={draftProfile.biography} onChange={(e) => {
-                                setProfileUpdate((prev) => {
-                                    return {...prev, biography: e.target.value}
-                                })
-                            }}
+                                className="min-h-[80px] responsive-text-16 max-h-[120px]"
+                                value={draftProfile.biography}
+                                onChange={(value) => {
+                                    setProfileUpdate((prev) => {
+                                        return {...prev, biography: value}
+                                    })
+                                }}
                             />
                         </div>
                     </div>

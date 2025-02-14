@@ -6,7 +6,6 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
 import {useState} from "react";
 import {CustomSelect} from "@/components/custom/custom-select";
 import months from "@/lib/json/month.json";
@@ -14,6 +13,7 @@ import years from "@/lib/json/year.json";
 import {Checkbox} from "@/components/ui/checkbox";
 import { FileUploader} from "@/components/constitution/file-uploader";
 import * as React from "react";
+import {CustomTextarea} from "@/components/custom/custom-textarea";
 
 
 export const ProminentProjectUpdateDialog = () => {
@@ -63,7 +63,7 @@ export const ProminentProjectUpdateDialog = () => {
                                 </div>
                                 <div className="space-y-2">
                                     <Label className="responsive-text-16">Mô tả về dự án</Label>
-                                    <Textarea placeholder="" className="responsive-text-16 "/>
+                                    <CustomTextarea placeholder="" className="responsive-text-16 "/>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div className="space-y-2">

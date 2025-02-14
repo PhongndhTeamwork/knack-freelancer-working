@@ -1,6 +1,5 @@
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
-import {Textarea} from "@/components/ui/textarea";
 import {CustomSelect} from "@/components/custom/custom-select";
 import months from "@/lib/json/month.json";
 import years from "@/lib/json/year.json";
@@ -15,9 +14,13 @@ import {MessagePayloadForm} from "@/lib/types/error.type";
 import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
 import useProfileStore from "@/lib/store/profile.modal";
 import {ValidateHelper} from "@/lib/helpers/validate.helper";
+import {CustomTextarea} from "@/components/custom/custom-textarea";
 
+type Props = {
+    setIsOpen: (value : boolean) => void
+}
 
-export const ProfileWorkExperienceCreateDialog = () => {
+export const ProfileWorkExperienceCreateDialog = ({setIsOpen} : Props) => {
     const [isCurrent, setIsCurrent] = useState<boolean>(false);
     const [newWorkExperience,setNewWorkExperience] = useState<ProfileWorkExperienceForm>({});
     const {token} = useAuthStore();
@@ -48,8 +51,12 @@ export const ProfileWorkExperienceCreateDialog = () => {
             setTriggerNotice(!triggerNotice)
             setNewWorkExperience({});
             fetchProfile(token || "")
-        }).catch((error) => {
-            console.error(error)
+            setTimeout(() => {
+                setIsOpen(false)
+                window.scrollTo({ top: 0, behavior: "smooth" }); // Smoothly scroll to top
+            }, 500)
+        }).catch(() => {
+            // console.error(error)
         })
     };
 
@@ -107,17 +114,18 @@ export const ProfileWorkExperienceCreateDialog = () => {
             {/* Description Field */}
             <div className="space-y-2">
                 <Label htmlFor="description" className="responsive-text-16">Mô tả</Label>
-                <Textarea
+                <CustomTextarea
                     id="description"
                     placeholder=""
                     className="min-h-[100px] resize-none responsive-text-16"
-                    onChange={(e) => {
+                    onChange={(value) => {
                         setNewWorkExperience((prev) => ({
-                           ...prev, description: e.target.value
+                            ...prev, description: value
                         }))
                     }}
                 />
             </div>
+
 
             <div className="grid md:grid-cols-2 gap-4">
                 <div className="flex flex-col w-full responsive-text-16 space-y-2">

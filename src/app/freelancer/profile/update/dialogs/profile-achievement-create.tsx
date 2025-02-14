@@ -1,6 +1,5 @@
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
-import {Textarea} from "@/components/ui/textarea";
 import {CustomSelect} from "@/components/custom/custom-select";
 import months from "@/lib/json/month.json";
 import years from "@/lib/json/year.json";
@@ -15,11 +14,15 @@ import {MessagePayloadForm} from "@/lib/types/error.type";
 import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
 import axios from "axios";
 import {ValidateHelper} from "@/lib/helpers/validate.helper";
+import {CustomTextarea} from "@/components/custom/custom-textarea";
 
+type Props = {
+    setIsOpen: (value : boolean) => void
+}
 
-export const ProfileAchievementCreateDialog = () => {
+export const ProfileAchievementCreateDialog = ({setIsOpen} : Props) => {
     const [isCurrent, setIsCurrent] = useState<boolean>(false);
-    const [newAcheivement, setNewAchievement] = useState<ProfileWorkExperienceForm>({});
+    const [newAchievement, setNewAchievement] = useState<ProfileWorkExperienceForm>({});
     const {token} = useAuthStore();
     const {fetchProfile} = useProfileStore();
     const [message, setMessage] = useState<MessagePayloadForm>({content: ""});
@@ -30,13 +33,13 @@ export const ProfileAchievementCreateDialog = () => {
     const handleSubmit = () => {
         if (!validateBeforeAdding()) return;
         // setIsCloseDialog(true);
-        const from = new Date(Number(newAcheivement?.fromYear), Number(newAcheivement?.fromMonth), 1);
+        const from = new Date(Number(newAchievement?.fromYear), Number(newAchievement?.fromMonth), 1);
         let to: Date = new Date();
-        if (!isCurrent) to = new Date(Number(newAcheivement?.toYear), Number(newAcheivement?.toMonth), 1);
+        if (!isCurrent) to = new Date(Number(newAchievement?.toYear), Number(newAchievement?.toMonth), 1);
         // console.log(newWorkExperience);
         axios.post(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/create-achievement`, {
-            name: newAcheivement.name,
-            description: newAcheivement.description,
+            name: newAchievement.name,
+            description: newAchievement.description,
             from: from.toISOString(),
             to: !isCurrent ? to?.toISOString() : "",
         }, {
@@ -48,33 +51,37 @@ export const ProfileAchievementCreateDialog = () => {
             setTriggerNotice(!triggerNotice)
             setNewAchievement({});
             fetchProfile(token || "")
-        }).catch((error) => {
-            console.error(error)
+            setTimeout(() => {
+                setIsOpen(false)
+                window.scrollTo({ top: 0, behavior: "smooth" }); // Smoothly scroll to top
+            }, 500)
+        }).catch(() => {
+            // console.error(error)
         })
     };
 
     const validateBeforeAdding = (): boolean => {
-        if (!newAcheivement.name) {
+        if (!newAchievement.name) {
             setMessage({content: "Vui lòng nhập thành tựu.", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
         }
-        if (!newAcheivement.description) {
+        if (!newAchievement.description) {
             setMessage({content: "Vui lòng nhập mô tả.", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
         }
-        if (!newAcheivement.fromMonth || !newAcheivement.fromYear) {
+        if (!newAchievement.fromMonth || !newAchievement.fromYear) {
             setMessage({content: "Vui lòng chọn tháng và năm bắt đầu.", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
         }
-        if (!isCurrent && (!newAcheivement.toMonth || !newAcheivement.toYear)) {
+        if (!isCurrent && (!newAchievement.toMonth || !newAchievement.toYear)) {
             setMessage({content: "Vui lòng chọn tháng và năm kết thúc.", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
         }
-        if (newAcheivement.fromMonth && newAcheivement.fromYear && newAcheivement.toMonth && newAcheivement.toYear && !(ValidateHelper.checkStartAndEndTime(+newAcheivement.fromMonth, +newAcheivement.fromYear, +newAcheivement.toMonth, +newAcheivement.toYear))) {
+        if (newAchievement.fromMonth && newAchievement.fromYear && newAchievement.toMonth && newAchievement.toYear && !(ValidateHelper.checkStartAndEndTime(+newAchievement.fromMonth, +newAchievement.fromYear, +newAchievement.toMonth, +newAchievement.toYear))) {
             setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
@@ -109,13 +116,14 @@ export const ProfileAchievementCreateDialog = () => {
                 {/* Description Field */}
                 <div className="space-y-2">
                     <Label htmlFor="description" className="responsive-text-16">Mô tả</Label>
-                    <Textarea
+                    <CustomTextarea
                         id="description"
                         placeholder=""
                         className="min-h-[100px] resize-none responsive-text-16"
-                        onChange={(e) => {
+                        value={newAchievement.description}
+                        onChange={(value) => {
                             setNewAchievement((prev) => ({
-                                ...prev, description: e.target.value
+                                ...prev, description: value
                             }))
                         }}
                     />

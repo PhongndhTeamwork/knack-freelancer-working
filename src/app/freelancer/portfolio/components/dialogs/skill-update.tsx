@@ -5,9 +5,9 @@ import {Trash2} from "lucide-react"
 import {Input} from "@/components/ui/input"
 import {Label} from "@/components/ui/label"
 import {Button} from "@/components/ui/button"
-import {Textarea} from "@/components/ui/textarea"
 import {useState} from "react";
 import * as React from "react";
+import {CustomTextarea} from "@/components/custom/custom-textarea";
 
 
 export const SkillUpdateDialog = () => {
@@ -24,7 +24,7 @@ export const SkillUpdateDialog = () => {
                 <div className="space-y-6">
                     <div className="space-y-2">
                         <Label className="responsive-text-16">Mô tả</Label>
-                        <Textarea placeholder="" className="responsive-text-16 h-11"/>
+                        <CustomTextarea placeholder="" className="responsive-text-16 h-11"/>
                     </div>
                     <div className="space-y-2">
                         <Label className="responsive-text-16">Kỹ năng</Label>
