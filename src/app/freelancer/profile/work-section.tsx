@@ -19,7 +19,7 @@ export const WorkSection = () => {
                 <div className={cn("space-y-5", profile.profileProminentWorks.length ===0 && "mb-4")}>
                     <div className="flex flex-row items-center gap-2">
                         <Illustration className="w-8 object-cover aspect-[1/1]"
-                                      url="/freelancer/profile/BriefCase.svg"/>
+                                      url="/freelancer/profile/Briefcase.png"/>
                         <h3 className="font-bold responsive-text-20">Công việc nổi bật</h3>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-4">
@@ -58,7 +58,7 @@ export const WorkSection = () => {
             <Card className="py-6 space-y-4">
                 <CardHeader className="px-6 py-0 flex flex-row items-center gap-2">
                     <Illustration className="w-8 object-cover aspect-[1/1]"
-                                  url="/freelancer/profile/BriefCase.svg"/>
+                                  url="/freelancer/profile/Briefcase.png"/>
                     <CardTitle style={{marginTop: 0}} className="responsive-text-20">Portfolio của bạn</CardTitle>
                 </CardHeader>
             </Card>
