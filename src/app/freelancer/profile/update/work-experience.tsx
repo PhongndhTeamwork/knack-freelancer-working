@@ -7,20 +7,17 @@ import {CustomSelect} from "@/components/custom/custom-select";
 import months from '@/lib/json/month.json';
 import years from '@/lib/json/year.json';
 import {Checkbox} from "@/components/ui/checkbox";
-import {ProfileWorkExperienceForm} from "@/lib/types/basic-profile.type";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import * as React from "react";
 import {
-    ProfileWorkExperienceCreateDialog
-} from "@/app/freelancer/profile/update/dialogs/profile-work-experience-create";
+    ProfileWorkExperienceDialog
+} from "@/app/freelancer/profile/update/dialogs/profile-work-experience-dialog";
 import {FormatHelper} from "@/lib/helpers/format.helper";
-import axios from "axios";
-import useAuthStore from "@/lib/store/user.modal";
 import {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
 import {MessagePayloadForm} from "@/lib/types/error.type";
-import {ValidateHelper} from "@/lib/helpers/validate.helper";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
 import CustomDialog from "@/components/custom/custom-dialog";
+import {CirclePlus, Pencil} from "lucide-react";
 
 interface Props {
     setMessage: Dispatch<SetStateAction<MessagePayloadForm>>;
@@ -29,10 +26,9 @@ interface Props {
 }
 
 export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Props) => {
-    const {draftProfile, setProfileUpdate, resetDraftProfile, profile} = useProfileStore();
-    const {token} = useAuthStore();
-    const {fetchProfile} = useProfileStore();
-    const [isOpen, setIsOpen] = useState(false);
+    const {draftProfile, setProfileUpdate, profile} = useProfileStore();
+    const [isOpenCreate, setIsOpenCreate] = useState(false);
+    const [isOpenUpdate, setIsOpenUpdate] = useState<boolean[]>([]);
 
     const updateIsCurrentStatus = useCallback(() => {
         setProfileUpdate((prev) => ({
@@ -47,99 +43,60 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
         updateIsCurrentStatus()
     }, [updateIsCurrentStatus, profile]);
 
+    useEffect(() => {
+        setIsOpenUpdate(new Array(draftProfile.profileWorkExperiences.length).fill(false))
+    }, [draftProfile.profileWorkExperiences.length]);
 
-    const handleDeleteWorkExperience = (id ?: number) => {
-        if (!token) {
-            setMessage({content: "Vui lòng đăng nhập lại", type: "error"})
-            setTriggerNotice(!triggerNotice)
-        }
-        if (!id) {
-            setMessage({content: "Kinh nghiệm này không tồn tại", type: "error"})
-            setTriggerNotice(!triggerNotice)
-        }
-        axios.delete(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/delete-work-experience/${id}`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        }).then(() => {
-            setMessage({content: "Xóa kinh nghiệm làm việc thành công!", type: "success"})
-            setTriggerNotice(!triggerNotice)
-            fetchProfile(token || "")
-        }).catch(() => {
-        })
-    }
+    const handleOpenUpdateDialog = (index: number) => {
+        const updatedState: boolean[] = [...isOpenUpdate];
+        updatedState[index] = true;
+        setIsOpenUpdate(updatedState);
+    };
 
-    const handleUpdateWorkExperience = (work: ProfileWorkExperienceForm) => {
-        if (!validateWorkExperience(work)) return;
-        const from = new Date(Number(work?.fromYear), Number(work?.fromMonth), 1);
-        let to: Date = new Date();
-        if (!work.isCurrent) to = new Date(Number(work?.toYear), Number(work?.toMonth), 1);
-        console.log(from);
-        // console.log(newWorkExperience);
-        axios.put(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/update-work-experience/${work?.id}`, {
-            name: work.name,
-            description: work.description,
-            from: from.toISOString(),
-            to: !work.isCurrent ? to?.toISOString() : "",
-        }, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        }).then(() => {
-            setMessage({content: "Lưu kinh nghiệm làm việc thành công!", type: "success"})
-            setTriggerNotice(!triggerNotice)
-            fetchProfile(token || "")
-        }).catch(() => {
-            // console.error(error)
-        })
-    }
-
-    const validateWorkExperience = (work: ProfileWorkExperienceForm) => {
-
-        if (!work.name || work.name.trim() === "") {
-            setMessage({content: "Vui lòng nhập lĩnh vực.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-        if (!work.description || work.description.trim() === "") {
-            setMessage({content: "Vui lòng nhập mô tả.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-        if (!work.fromYear || +work.fromYear < 2010) work.fromYear = (new Date(work.from || "")).getFullYear().toString()
-        if (!work.fromMonth) work.fromMonth = (new Date(work.from || "")).getMonth().toString()
-        if (!work.isCurrent && (!work.toYear || !work.toMonth) && !work.to) {
-            setMessage({content: "Vui lòng chọn tháng và năm kết thúc.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-        if (!work.isCurrent && (!work.toYear || !work.toMonth) && work.to) {
-            work.toYear = (new Date(work.to || "")).getFullYear().toString()
-            work.toMonth = (new Date(work.to || "")).getMonth().toString()
-        }
-        // if(work.isCurrent && work.to) {
-        //     work.toYear =  (new Date(work.to || "")).getFullYear().toString()
-        //     work.toMonth =  (new Date(work.to || "")).getMonth().toString()
-        // }
-        if (work.fromMonth && work.fromYear && work.toMonth && work.toYear && !(ValidateHelper.checkStartAndEndTime(+work.fromMonth, +work.fromYear, +work.toMonth, +work.toYear))) {
-            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-
-
-        return true
-    }
+    const handleCloseUpdateDialog = (index: number) => {
+        const updatedState: boolean[] = [...isOpenUpdate];
+        updatedState[index] = false;
+        setIsOpenUpdate(updatedState);
+    };
 
     return (
         <>
             <Card className="w-full mx-auto">
-                <CardContent className="p-6">
+                <CardContent className="p-6 space-y-6 ">
+                    <div className="flex justify-between items-center">
+                        <h4 className="mb-0 responsive-text-28 font-semibold">Kinh nghiệm làm việc</h4>
+
+                        <div className="">
+                            <Button
+                                type="button"
+                                variant="dark-outline"
+                                size="sm"
+                                onClick={() => setIsOpenCreate(true)}
+                            >
+                                <CirclePlus/>
+                                Thêm lĩnh vực
+                            </Button>
+                            <CustomDialog className="w-3/4 h-7/8" isOpen={isOpenCreate}
+                                          onClose={() => setIsOpenCreate(false)}>
+                                <div className="py-6 px-4 h-full">
+                                    <ScrollArea className="h-full">
+                                        <ProfileWorkExperienceDialog setIsOpen={setIsOpenCreate}
+                                                                           setMessage={setMessage}
+                                                                           triggerNotice={triggerNotice}
+                                                                           setTriggerNotice={setTriggerNotice}
+                                                                           experience={undefined}/>
+                                    </ScrollArea>
+                                </div>
+                            </CustomDialog>
+                        </div>
+                    </div>
+
                     <div className="space-y-6">
                         {
                             draftProfile.profileWorkExperiences.map((pwe, index) => {
                                 return <div key={index}
-                                            className={`space-y-4 pb-4 ${index > 0 && "border-t border-black pt-8"}`}>
+                                            className={`space-y-4 pb-4 ${index > 0 && "border-t border-black pt-8"}`}
+                                >
                                     <div className="gap-6">
                                         {/* Position Field */}
                                         <div className="space-y-2">
@@ -294,41 +251,37 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                     </div>
 
 
-                                    <div className="flex justify-end gap-3">
-                                        <Button variant="danger-outline" type="button" size="sm" onClick={() => {
-                                            handleDeleteWorkExperience(pwe.id)
-                                        }}> Xóa lĩnh vực </Button>
-                                        <Button variant="primary-outline" type="button" size="sm" onClick={() => {
-                                            handleUpdateWorkExperience(pwe)
-                                        }}> Lưu lĩnh vực </Button>
+                                    <div className="flex justify-end">
+                                        <Button
+                                            type="button"
+                                            variant="primary-outline"
+                                            size="sm"
+                                            onClick={() => handleOpenUpdateDialog(index)}
+                                        >
+                                            <Pencil/>
+                                            Chỉnh sửa
+                                        </Button>
+                                        <CustomDialog className="w-3/4 h-7/8" isOpen={isOpenUpdate[index]}
+                                                      onClose={() => handleCloseUpdateDialog(index)}>
+                                            <div className="py-6 px-4 h-full">
+                                                <ScrollArea className="h-full">
+                                                    <ProfileWorkExperienceDialog
+                                                        setIsOpen={() => handleCloseUpdateDialog(index)}
+                                                        setMessage={setMessage}
+                                                        triggerNotice={triggerNotice}
+                                                        setTriggerNotice={setTriggerNotice}
+                                                        experience={pwe}/>
+                                                </ScrollArea>
+                                            </div>
+                                        </CustomDialog>
                                     </div>
                                 </div>
                             })
                         }
-                        <div className="">
-                            <Button
-                                type="button"
-                                variant="dark-outline"
-                                size="sm"
-                                onClick={() => setIsOpen(true)}
-                            >
-                                Thêm lĩnh vực
-                            </Button>
-                            <CustomDialog className="w-3/4 h-5/6" isOpen={isOpen} onClose={() => setIsOpen(false)}>
-                                <div className="py-6 px-4 h-full">
-                                    <ScrollArea className="h-full">
-                                        <ProfileWorkExperienceCreateDialog setIsOpen={setIsOpen} setMessage={setMessage} triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice}/>
-                                    </ScrollArea>
-                                </div>
-                            </CustomDialog>
-                        </div>
                     </div>
+
                 </CardContent>
             </Card>
-            <div className="flex justify-end gap-4 mt-6">
-                {/*<Button variant="dark" size="sm">Lưu thay đổi</Button>*/}
-                <Button variant="dark-outline" size="sm" onClick={resetDraftProfile}>Hủy</Button>
-            </div>
         </>
 
     )

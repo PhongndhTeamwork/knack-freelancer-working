@@ -14,8 +14,8 @@ export type BasicProfileForm = {
     youtubeLink?: string;
     tiktokLink?: string;
     profileWorkExperiences : ProfileWorkExperienceForm[],
-    profileAchievements : ProfileAchievement[],
-    profileProminentWorks : ProfileProminentWork[]
+    profileAchievements : ProfileAchievementForm[],
+    profileProminentWorks : ProfileProminentWorkForm[]
 };
 
 export type ProfileWorkExperienceForm = {
@@ -31,7 +31,7 @@ export type ProfileWorkExperienceForm = {
     isCurrent ?: boolean;
 }
 
-export type ProfileAchievement = {
+export type ProfileAchievementForm = {
     id ?: number
     name?: string;
     description?: string;
@@ -44,7 +44,7 @@ export type ProfileAchievement = {
     isCurrent ?: boolean;
 }
 
-export type ProfileProminentWork = {
+export type ProfileProminentWorkForm = {
     id ?: number;
     name?: string;
     description?: string;

@@ -15,7 +15,7 @@ const buttonVariants = cva(
             white:
                 "bg-white text-black hover:bg-gray-200 active:bg-gray-100",
             danger:
-                "bg-gradient-to-br from-red-600 to-red-700 text-destructive-foreground hover:from-red-700 hover:to-red-700 active:from-red-600 active:to-red-700",
+                "bg-gradient-to-br from-red-500 to-red-600 text-destructive-foreground hover:from-red-600 hover:to-red-600 active:from-red-500 active:to-red-600",
             dark:
                 "bg-gradient-to-br from-gray-800 to-gray-900 text-primary-foreground hover:from-gray-900 hover:to-gray-900 active:from-gray-800 active:to-gray-900",
             "dark-outline":

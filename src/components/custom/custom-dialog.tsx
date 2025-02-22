@@ -35,7 +35,7 @@ const CustomDialog = ({isOpen, onClose, children, className}: CustomDialogProps)
     if (!isOpen) return null;
 
     return (
-        <div onClick={handleBackdropClick} className="fixed inset-0 h-screen w-screen flex items-center justify-center bg-black bg-opacity-60 z-[60]">
+        <div onClick={handleBackdropClick} className="fixed left-0 top-0 h-screen w-screen flex items-center justify-center bg-black bg-opacity-60 z-[60]">
             <div ref={modalRef}  className={cn("bg-white p-0 rounded-lg shadow-lg animate-fade-in", className && className)} >
                 <div className="relative h-full">
                     <button
