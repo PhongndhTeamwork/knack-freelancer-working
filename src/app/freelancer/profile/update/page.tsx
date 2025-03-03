@@ -6,7 +6,7 @@ import {useState} from "react";
 import {PrivateInfo} from "@/app/freelancer/profile/update/private-info";
 import {WorkExperience} from "@/app/freelancer/profile/update/work-experience";
 import {Achievement} from "@/app/freelancer/profile/update/achievement";
-import {Work} from "@/app/freelancer/profile/update/work";
+import {ProminentWork} from "@/app/freelancer/profile/update/prominent-work";
 import {PricingDisplayForm} from "@/app/freelancer/profile/update/pricing-display";
 import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
 import {MessagePayloadForm} from "@/lib/types/error.type";
@@ -39,7 +39,7 @@ export default function Component() {
                 {activeBar === 1 && <PrivateInfo triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice} setMessage={setMessage}/>}
                 {activeBar === 2 &&<WorkExperience triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice} setMessage={setMessage}/> }
                 { activeBar ===3 && <Achievement triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice} setMessage={setMessage}/> }
-                { activeBar ===4 && <Work triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice} setMessage={setMessage}/> }
+                { activeBar ===4 && <ProminentWork triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice} setMessage={setMessage}/> }
                 { activeBar ===5 && <PricingDisplayForm/> }
             </div>
         </div>

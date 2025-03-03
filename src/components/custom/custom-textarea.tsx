@@ -10,9 +10,10 @@ type Props = {
     placeholder ?: string,
     id ?: string,
     style ?: CSSProperties
+    readOnly?:boolean
 }
 
-export const CustomTextarea = ({style,id,className, onChange, value, placeholder} : Props) => {
+export const CustomTextarea = ({readOnly,style,id,className, onChange, value, placeholder} : Props) => {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
     useEffect(() => {
@@ -25,9 +26,15 @@ export const CustomTextarea = ({style,id,className, onChange, value, placeholder
         <Textarea
             id={id}
             placeholder={placeholder}
-            value={value}
+            value={value?.replace("####", "\n\n")}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault(); // Prevents unintended form submission
+                }
+            }}
+            readOnly={readOnly}
             ref={textareaRef}
-            className={cn("min-h-[80px] responsive-text-16 max-h-[120px]", className && className)}
+            className={cn("min-h-[80px] responsive-text-16", className && className)}
             onChange={(e) => onChange && onChange(e.target.value)}
             style={{...style}}
         />    )

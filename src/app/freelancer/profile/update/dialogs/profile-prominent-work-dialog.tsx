@@ -15,9 +15,10 @@ import {ValidateHelper} from "@/lib/helpers/validate.helper";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
 import {ProfileProminentWorkForm} from "@/lib/types/basic-profile.type";
 import {FormatHelper} from "@/lib/helpers/format.helper";
+import {CustomSpinner} from "@/components/custom/custom-spinner";
 
 type Props = {
-    setIsOpen: (value: boolean) => void;
+    setOpen: (value: boolean) => void;
     setMessage: Dispatch<SetStateAction<MessagePayloadForm>>;
     setTriggerNotice: Dispatch<SetStateAction<boolean>>;
     triggerNotice: boolean;
@@ -26,7 +27,7 @@ type Props = {
 
 export const ProfileProminentWorkDialog = ({
                                                prominentWork,
-                                               setIsOpen,
+                                               setOpen,
                                                setMessage,
                                                setTriggerNotice,
                                                triggerNotice
@@ -34,13 +35,19 @@ export const ProfileProminentWorkDialog = ({
     const [prominentWorkInfo, setProminentWorkInfo] = useState<ProfileProminentWorkForm>({});
     const {token} = useAuthStore();
     const {fetchProfile} = useProfileStore();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoadingDeleteProcess, setIsLoadingDeleteProcess] = useState<boolean>(false);
 
     useEffect(() => {
         if (prominentWork) setProminentWorkInfo(prominentWork);
     }, [prominentWork]);
 
     const handleCreateProminentWork = () => {
-        if (!validateBeforeAdding()) return;
+        setIsLoading(true);
+        if (!validateBeforeCreating()) {
+            setIsLoading(false);
+            return;
+        }
         // setIsCloseDialog(true);
         const from = new Date(Number(prominentWorkInfo?.fromYear), Number(prominentWorkInfo?.fromMonth), 1);
         let to: Date = new Date();
@@ -62,49 +69,19 @@ export const ProfileProminentWorkDialog = ({
             setProminentWorkInfo({});
             fetchProfile(token || "")
             setTimeout(() => {
-                setIsOpen(false)
+                setOpen(false)
                 window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
             }, 500)
         }).catch(() => {
             // console.error(error)
+        }).finally(() => {
+            setIsLoading(false);
         })
+
     };
 
-    const validateBeforeAdding = (): boolean => {
-        if (!prominentWorkInfo.name) {
-            setMessage({content: "Vui lòng nhập lĩnh vực.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-        if (!prominentWorkInfo.description) {
-            setMessage({content: "Vui lòng nhập mô tả.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-        if (!prominentWorkInfo.fromMonth || !prominentWorkInfo.fromYear) {
-            setMessage({content: "Vui lòng chọn tháng và năm bắt đầu.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-        if (!prominentWorkInfo.isCurrent && (!prominentWorkInfo.toMonth || !prominentWorkInfo.toYear)) {
-            setMessage({content: "Vui lòng chọn tháng và năm kết thúc.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-        if (Number(prominentWorkInfo.wage) <= 0) {
-            setMessage({content: "Chi phí/Hoa hồng phải lớn hơn 0.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-        if (prominentWorkInfo.fromMonth && prominentWorkInfo.fromYear && prominentWorkInfo.toMonth && prominentWorkInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+prominentWorkInfo.fromMonth, +prominentWorkInfo.fromYear, +prominentWorkInfo.toMonth, +prominentWorkInfo.toYear))) {
-            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-        return true
-    }
-
     const handleDeleteProminentWork = () => {
+        setIsLoadingDeleteProcess(true);
         if (!token) {
             setMessage({content: "Vui lòng đăng nhập lại", type: "error"})
             setTriggerNotice(!triggerNotice)
@@ -122,19 +99,24 @@ export const ProfileProminentWorkDialog = ({
             setTriggerNotice(!triggerNotice)
             fetchProfile(token || "")
             setTimeout(() => {
-                setIsOpen(false)
+                setOpen(false)
                 window.scrollTo({top: 0, behavior: "smooth"});
             }, 500)
         }).catch(() => {
+        }).finally(() => {
         })
+        setIsLoadingDeleteProcess(false);
     }
 
     const handleUpdateProminentWork = () => {
-        if (!validateBeforeUpdating()) return;
+        setIsLoading(true);
+        if (!validateBeforeUpdating()) {
+            setIsLoading(false);
+            return;
+        }
         const from = new Date(Number(prominentWorkInfo?.fromYear), Number(prominentWorkInfo?.fromMonth), 1);
         let to: Date = new Date();
         if (!prominentWorkInfo.isCurrent) to = new Date(Number(prominentWorkInfo?.toYear), Number(prominentWorkInfo?.toMonth), 1);
-        console.log(from);
         // console.log(newWorkExperience);
         axios.put(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/update-prominent-work/${prominentWorkInfo?.id}`, {
             name: prominentWorkInfo.name,
@@ -151,11 +133,13 @@ export const ProfileProminentWorkDialog = ({
             setTriggerNotice(!triggerNotice)
             fetchProfile(token || "")
             setTimeout(() => {
-                setIsOpen(false)
+                setOpen(false)
                 window.scrollTo({top: 0, behavior: "smooth"});
             }, 500)
         }).catch(() => {
             // console.error(error)
+        }).finally(() => {
+            setIsLoading(false);
         })
     }
 
@@ -200,11 +184,45 @@ export const ProfileProminentWorkDialog = ({
         return true
     }
 
+    const validateBeforeCreating = (): boolean => {
+        if (!prominentWorkInfo.name) {
+            setMessage({content: "Vui lòng nhập lĩnh vực.", type: "error"})
+            setTriggerNotice(!triggerNotice)
+            return false
+        }
+        if (!prominentWorkInfo.description) {
+            setMessage({content: "Vui lòng nhập mô tả.", type: "error"})
+            setTriggerNotice(!triggerNotice)
+            return false
+        }
+        if (!prominentWorkInfo.fromMonth || !prominentWorkInfo.fromYear) {
+            setMessage({content: "Vui lòng chọn tháng và năm bắt đầu.", type: "error"})
+            setTriggerNotice(!triggerNotice)
+            return false
+        }
+        if (!prominentWorkInfo.isCurrent && (!prominentWorkInfo.toMonth || !prominentWorkInfo.toYear)) {
+            setMessage({content: "Vui lòng chọn tháng và năm kết thúc.", type: "error"})
+            setTriggerNotice(!triggerNotice)
+            return false
+        }
+        if (Number(prominentWorkInfo.wage) <= 0) {
+            setMessage({content: "Chi phí/Hoa hồng phải lớn hơn 0.", type: "error"})
+            setTriggerNotice(!triggerNotice)
+            return false
+        }
+        if (prominentWorkInfo.fromMonth && prominentWorkInfo.fromYear && prominentWorkInfo.toMonth && prominentWorkInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+prominentWorkInfo.fromMonth, +prominentWorkInfo.fromYear, +prominentWorkInfo.toMonth, +prominentWorkInfo.toYear))) {
+            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
+            setTriggerNotice(!triggerNotice)
+            return false
+        }
+        return true
+    }
 
     return (
         <div
             className="space-y-4 pb-4 px-3">
-            <h3 className="responsive-text-20 font-semibold">{prominentWork ?"Chỉnh sửa" : "Thêm"} “Công việc nổi bật”</h3>
+            <h3 className="responsive-text-20 font-semibold">{prominentWork ? "Chỉnh sửa" : "Thêm"} “Công việc nổi
+                bật”</h3>
 
             <div
                 className={`space-y-4 pb-4`}>
@@ -234,7 +252,9 @@ export const ProfileProminentWorkDialog = ({
                             id="tip"
                             placeholder=""
                             type="number"
+                            step="100000"
                             value={prominentWorkInfo.wage}
+                            // value={Number(prominentWorkInfo.wage).toLocaleString("vi-VN")}
                             className="responsive-text-16 h-11"
                             onChange={(e) => {
                                 setProminentWorkInfo((prev) => ({
@@ -338,9 +358,17 @@ export const ProfileProminentWorkDialog = ({
                 </div>
             </div>
             <div className="flex justify-end mt-6 gap-4">
-                {!prominentWork && <Button variant="dark" onClick={handleCreateProminentWork}>Thêm công việc</Button>}
-                {prominentWork && <Button variant="dark" onClick={handleUpdateProminentWork}>Lưu</Button>}
-                {prominentWork && <Button variant="danger" onClick={handleDeleteProminentWork}>Xóa</Button>}
+                {!prominentWork &&
+                    <Button variant="dark" disabled={isLoading} onClick={handleCreateProminentWork}>{isLoading &&
+                        <CustomSpinner size="sm"/>} Thêm lĩnh vực</Button>}
+                {prominentWork &&
+                    <Button variant="dark" disabled={isLoading || isLoadingDeleteProcess}
+                            onClick={handleUpdateProminentWork}>{isLoading &&
+                        <CustomSpinner size="sm"/>} Lưu</Button>}
+                {prominentWork &&
+                    <Button variant="danger" disabled={isLoading || isLoadingDeleteProcess}
+                            onClick={handleDeleteProminentWork}>{isLoadingDeleteProcess &&
+                        <CustomSpinner size="sm"/>} Xóa</Button>}
             </div>
         </div>
     )

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.2",
+    "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-aspect-ratio": "^1.1.0",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.1.2",
@@ -45,6 +46,7 @@
     "react-fast-marquee": "^1.6.5",
     "react-hot-toast": "^2.5.1",
     "react-slick": "^0.30.3",
+    "react-to-print": "^3.0.5",
     "recharts": "^2.13.3",
     "shadcn": "^2.1.8",
     "slick-carousel": "^1.8.1",

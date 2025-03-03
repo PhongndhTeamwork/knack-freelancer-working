@@ -16,8 +16,8 @@ import {FormatHelper} from "@/lib/helpers/format.helper";
 import {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
 import {MessagePayloadForm} from "@/lib/types/error.type";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
-import CustomDialog from "@/components/custom/custom-dialog";
 import {CirclePlus, Pencil} from "lucide-react";
+import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 
 interface Props {
     setMessage: Dispatch<SetStateAction<MessagePayloadForm>>;
@@ -27,8 +27,8 @@ interface Props {
 
 export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Props) => {
     const {draftProfile, setProfileUpdate, profile} = useProfileStore();
-    const [isOpenCreate, setIsOpenCreate] = useState(false);
-    const [isOpenUpdate, setIsOpenUpdate] = useState<boolean[]>([]);
+    const [openCreate, setOpenCreate] = useState<boolean>(false);
+    const [openUpdate, setOpenUpdate] = useState<boolean[]>([]);
 
     const updateIsCurrentStatus = useCallback(() => {
         setProfileUpdate((prev) => ({
@@ -44,20 +44,15 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
     }, [updateIsCurrentStatus, profile]);
 
     useEffect(() => {
-        setIsOpenUpdate(new Array(draftProfile.profileWorkExperiences.length).fill(false))
+        setOpenUpdate(new Array(draftProfile.profileWorkExperiences?.length).fill(false))
     }, [draftProfile.profileWorkExperiences.length]);
 
-    const handleOpenUpdateDialog = (index: number) => {
-        const updatedState: boolean[] = [...isOpenUpdate];
-        updatedState[index] = true;
-        setIsOpenUpdate(updatedState);
-    };
 
-    const handleCloseUpdateDialog = (index: number) => {
-        const updatedState: boolean[] = [...isOpenUpdate];
-        updatedState[index] = false;
-        setIsOpenUpdate(updatedState);
-    };
+    const handleControlUpdateDialog = (index: number, value: boolean) => {
+        const updatedState: boolean[] = [...openUpdate];
+        updatedState[index] = value;
+        setOpenUpdate(updatedState);
+    }
 
     return (
         <>
@@ -66,29 +61,28 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                     <div className="flex justify-between items-center">
                         <h4 className="mb-0 responsive-text-28 font-semibold">Kinh nghiệm làm việc</h4>
 
-                        <div className="">
-                            <Button
-                                type="button"
-                                variant="dark-outline"
-                                size="sm"
-                                onClick={() => setIsOpenCreate(true)}
-                            >
-                                <CirclePlus/>
-                                Thêm lĩnh vực
-                            </Button>
-                            <CustomDialog className="w-3/4 h-7/8" isOpen={isOpenCreate}
-                                          onClose={() => setIsOpenCreate(false)}>
-                                <div className="py-6 px-4 h-full">
-                                    <ScrollArea className="h-full">
-                                        <ProfileWorkExperienceDialog setIsOpen={setIsOpenCreate}
-                                                                           setMessage={setMessage}
-                                                                           triggerNotice={triggerNotice}
-                                                                           setTriggerNotice={setTriggerNotice}
-                                                                           experience={undefined}/>
-                                    </ScrollArea>
-                                </div>
-                            </CustomDialog>
-                        </div>
+                        <Dialog onOpenChange={setOpenCreate} open={openCreate}>
+                            <DialogTrigger asChild>
+                                <Button
+                                    type="button"
+                                    variant="dark-outline"
+                                    size="sm"
+                                >
+                                    <CirclePlus/>
+                                    Thêm lĩnh vực
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent
+                                className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
+                                <ScrollArea className="h-full px-4">
+                                    <ProfileWorkExperienceDialog setOpen={setOpenCreate}
+                                                                 setMessage={setMessage}
+                                                                 triggerNotice={triggerNotice}
+                                                                 setTriggerNotice={setTriggerNotice}
+                                                                 experience={undefined}/>
+                                </ScrollArea>
+                            </DialogContent>
+                        </Dialog>
                     </div>
 
                     <div className="space-y-6">
@@ -100,9 +94,10 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                     <div className="gap-6">
                                         {/* Position Field */}
                                         <div className="space-y-2">
-                                            <Label htmlFor="position" className="responsive-text-16">Lĩnh vực</Label>
+                                            <Label htmlFor="position"  className="responsive-text-16">Lĩnh vực</Label>
                                             <Input
                                                 id="position"
+                                                readOnly={true}
                                                 className="h-11 responsive-text-16"
                                                 value={pwe.name}
                                                 onChange={(e) => {
@@ -117,7 +112,7 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                                 }}
                                             />
                                         </div>
-                                        {/* Work Period Field */}
+                                        {/* ProminentWork Period Field */}
                                         {/*<div className="space-y-2">*/}
                                         {/*    <Label htmlFor="period" className="responsive-text-16">Thời gian làm*/}
                                         {/*        việc</Label>*/}
@@ -135,6 +130,7 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                         <CustomTextarea
                                             id="description"
                                             placeholder=""
+                                            readOnly={true}
                                             value={pwe.description}
                                             className="min-h-[100px] resize-none responsive-text-16"
                                             onChange={(value) => {
@@ -154,6 +150,7 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                         <div className="flex flex-col w-full responsive-text-16 space-y-2">
                                             <div className="responsive-text-16">Tháng bắt đầu</div>
                                             <CustomSelect items={months} className="bg-white h-11 w-full"
+                                                          readOnly={true}
                                                           ulClassname="bg-gray-100"
                                                           currentLabel={FormatHelper.formatMonth((new Date(pwe.from || "")).getMonth())}
                                                           onSelect={(value) => {
@@ -173,6 +170,7 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                             <CustomSelect items={years}
                                                           className="bg-white h-11 w-full responsive-text-16"
                                                           ulClassname="bg-gray-100"
+                                                          readOnly={true}
                                                           currentLabel={(new Date(pwe.from || "")).getFullYear().toString()}
                                                           onSelect={(value) => {
                                                               setProfileUpdate((prev) => ({
@@ -194,6 +192,7 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                                 currentLabel={pwe.to ? FormatHelper.formatMonth((new Date(pwe.to || "")).getMonth()) : undefined}
                                                 items={months} className={`h-11 w-full bg-white`}
                                                 disabled={pwe.isCurrent} ulClassname="bg-gray-100"
+                                                readOnly={true}
                                                 onSelect={(value) => {
                                                     setProfileUpdate((prev) => ({
                                                         ...prev,
@@ -213,6 +212,7 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                                           currentLabel={pwe.to ? (new Date(pwe.to || "")).getFullYear().toString() : undefined}
                                                           className={`h-11 w-full bg-white`} disabled={pwe.isCurrent}
                                                           ulClassname="bg-gray-100"
+                                                          readOnly={true}
                                                           onSelect={(value) => {
 
                                                               setProfileUpdate((prev) => ({
@@ -230,6 +230,7 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                         <div className="flex items-center space-x-2">
                                             <Checkbox id={`isCurrent-${index}`}
                                                       checked={pwe.isCurrent}
+                                                      disabled={true}
                                                       onClick={() => {
                                                           setProfileUpdate((prev) => ({
                                                               ...prev,
@@ -250,31 +251,30 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                         </div>
                                     </div>
 
-
-                                    <div className="flex justify-end">
-                                        <Button
-                                            type="button"
-                                            variant="primary-outline"
-                                            size="sm"
-                                            onClick={() => handleOpenUpdateDialog(index)}
-                                        >
-                                            <Pencil/>
-                                            Chỉnh sửa
-                                        </Button>
-                                        <CustomDialog className="w-3/4 h-7/8" isOpen={isOpenUpdate[index]}
-                                                      onClose={() => handleCloseUpdateDialog(index)}>
-                                            <div className="py-6 px-4 h-full">
-                                                <ScrollArea className="h-full">
-                                                    <ProfileWorkExperienceDialog
-                                                        setIsOpen={() => handleCloseUpdateDialog(index)}
-                                                        setMessage={setMessage}
-                                                        triggerNotice={triggerNotice}
-                                                        setTriggerNotice={setTriggerNotice}
-                                                        experience={pwe}/>
-                                                </ScrollArea>
-                                            </div>
-                                        </CustomDialog>
-                                    </div>
+                                    <Dialog onOpenChange={(value) => handleControlUpdateDialog(index, value)}
+                                            open={openUpdate[index]}>
+                                        <DialogTrigger asChild>
+                                            <Button
+                                                type="button"
+                                                variant="primary-outline"
+                                                size="sm"
+                                            >
+                                                <Pencil/>
+                                                Chỉnh sửa
+                                            </Button>
+                                        </DialogTrigger>
+                                        <DialogContent
+                                            className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
+                                            <ScrollArea className="h-full px-4">
+                                                <ProfileWorkExperienceDialog
+                                                    setOpen={(value) => handleControlUpdateDialog(index, value)}
+                                                    setMessage={setMessage}
+                                                    triggerNotice={triggerNotice}
+                                                    setTriggerNotice={setTriggerNotice}
+                                                    experience={pwe}/>
+                                            </ScrollArea>
+                                        </DialogContent>
+                                    </Dialog>
                                 </div>
                             })
                         }

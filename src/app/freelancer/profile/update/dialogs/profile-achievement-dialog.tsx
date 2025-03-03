@@ -15,9 +15,10 @@ import axios from "axios";
 import {ValidateHelper} from "@/lib/helpers/validate.helper";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
 import {FormatHelper} from "@/lib/helpers/format.helper";
+import {CustomSpinner} from "@/components/custom/custom-spinner";
 
 type Props = {
-    setIsOpen: (value: boolean) => void;
+    setOpen: (value: boolean) => void;
     setMessage: Dispatch<SetStateAction<MessagePayloadForm>>;
     setTriggerNotice: Dispatch<SetStateAction<boolean>>;
     triggerNotice: boolean;
@@ -26,7 +27,7 @@ type Props = {
 
 export const ProfileAchievementDialog = ({
                                              achievement,
-                                             setIsOpen,
+                                             setOpen,
                                              setMessage,
                                              setTriggerNotice,
                                              triggerNotice
@@ -34,12 +35,15 @@ export const ProfileAchievementDialog = ({
     const [achievementInfo, setAchievementInfo] = useState<ProfileWorkExperienceForm>({});
     const {token} = useAuthStore();
     const {fetchProfile} = useProfileStore();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoadingDeleteProcess, setIsLoadingDeleteProcess] = useState<boolean>(false);
 
     useEffect(() => {
         if (achievement) setAchievementInfo(achievement);
     }, [achievement]);
 
     const handleDeleteAchievement = () => {
+        setIsLoadingDeleteProcess(true);
         if (!token) {
             setMessage({content: "Vui lòng đăng nhập lại", type: "error"})
             setTriggerNotice(!triggerNotice)
@@ -57,70 +61,78 @@ export const ProfileAchievementDialog = ({
             setTriggerNotice(!triggerNotice)
             fetchProfile(token || "")
             setTimeout(() => {
-                setIsOpen(false)
+                setOpen(false)
                 window.scrollTo({top: 0, behavior: "smooth"});
             }, 500)
         }).catch(() => {
+        }).finally(() => {
+            setIsLoadingDeleteProcess(false);
         })
     }
 
     const handleUpdateAchievement = () => {
-        if(!validateBeforeUpdate()) return;
-        const from = new Date(Number(achievementInfo?.fromYear), Number(achievementInfo?.fromMonth),1);
-        let to : Date = new Date();
-        if(!achievementInfo.isCurrent) to = new Date(Number(achievementInfo?.toYear) , Number(achievementInfo?.toMonth),1);
+        setIsLoading(true);
+        if (!validateBeforeUpdating()) {
+            setIsLoading(false);
+            return;
+        }
+        const from = new Date(Number(achievementInfo?.fromYear), Number(achievementInfo?.fromMonth), 1);
+        let to: Date = new Date();
+        if (!achievementInfo.isCurrent) to = new Date(Number(achievementInfo?.toYear), Number(achievementInfo?.toMonth), 1);
         console.log(from);
         // console.log(newWorkExperience);
-        axios.put(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/update-achievement/${achievementInfo?.id}`,{
-            name : achievementInfo.name,
-            description : achievementInfo.description,
-            from : from.toISOString(),
-            to : !achievementInfo.isCurrent ? to?.toISOString() : "",
-        },{
-            headers : {
-                Authorization : "Bearer " + token
+        axios.put(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/update-achievement/${achievementInfo?.id}`, {
+            name: achievementInfo.name,
+            description: achievementInfo.description,
+            from: from.toISOString(),
+            to: !achievementInfo.isCurrent ? to?.toISOString() : "",
+        }, {
+            headers: {
+                Authorization: "Bearer " + token
             }
         }).then(() => {
-            setMessage({content : "Lưu thành tựu thành công!", type : "success"})
+            setMessage({content: "Lưu thành tựu thành công!", type: "success"})
             setTriggerNotice(!triggerNotice)
             fetchProfile(token || "")
             setTimeout(() => {
-                setIsOpen(false)
+                setOpen(false)
                 window.scrollTo({top: 0, behavior: "smooth"}); // Smoothly scroll to top
             }, 500)
         }).catch(() => {
             // console.error(error)
+        }).finally(() => {
+            setIsLoading(false);
         })
     }
 
-    const validateBeforeUpdate = () => {
-        if (!achievementInfo.name  || achievementInfo.name.trim() === "") {
-            setMessage({content : "Vui lòng nhập thành tựu .", type : "error"})
+    const validateBeforeUpdating = () => {
+        if (!achievementInfo.name || achievementInfo.name.trim() === "") {
+            setMessage({content: "Vui lòng nhập thành tựu .", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
         }
         if (!achievementInfo.description || achievementInfo.description.trim() === "") {
-            setMessage({content : "Vui lòng nhập mô tả.", type : "error"})
+            setMessage({content: "Vui lòng nhập mô tả.", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
         }
-        if(!achievementInfo.fromYear || +achievementInfo.fromYear < 2010) achievementInfo.fromYear =  (new Date(achievementInfo.from || "")).getFullYear().toString()
-        if(!achievementInfo.fromMonth) achievementInfo.fromMonth =  (new Date(achievementInfo.from || "")).getMonth().toString()
-        if(!achievementInfo.isCurrent && (!achievementInfo.toYear || !achievementInfo.toMonth) && !achievementInfo.to) {
-            setMessage({content : "Vui lòng chọn tháng và năm kết thúc.", type : "error"})
+        if (!achievementInfo.fromYear || +achievementInfo.fromYear < 2010) achievementInfo.fromYear = (new Date(achievementInfo.from || "")).getFullYear().toString()
+        if (!achievementInfo.fromMonth) achievementInfo.fromMonth = (new Date(achievementInfo.from || "")).getMonth().toString()
+        if (!achievementInfo.isCurrent && (!achievementInfo.toYear || !achievementInfo.toMonth) && !achievementInfo.to) {
+            setMessage({content: "Vui lòng chọn tháng và năm kết thúc.", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
         }
-        if(!achievementInfo.isCurrent && (!achievementInfo.toYear || !achievementInfo.toMonth) && achievementInfo.to){
-            achievementInfo.toYear =  (new Date(achievementInfo.to || "")).getFullYear().toString()
-            achievementInfo.toMonth =  (new Date(achievementInfo.to || "")).getMonth().toString()
+        if (!achievementInfo.isCurrent && (!achievementInfo.toYear || !achievementInfo.toMonth) && achievementInfo.to) {
+            achievementInfo.toYear = (new Date(achievementInfo.to || "")).getFullYear().toString()
+            achievementInfo.toMonth = (new Date(achievementInfo.to || "")).getMonth().toString()
         }
         // if(achievementInfo.isCurrent && achievementInfo.to) {
         //     achievementInfo.toYear =  (new Date(achievementInfo.to || "")).getFullYear().toString()
         //     achievementInfo.toMonth =  (new Date(achievementInfo.to || "")).getMonth().toString()
         // }
-        if(achievementInfo.fromMonth && achievementInfo.fromYear && achievementInfo.toMonth && achievementInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+achievementInfo.fromMonth, +achievementInfo.fromYear, +achievementInfo.toMonth, +achievementInfo.toYear ))){
-            setMessage({content : "Thời gian kết thúc phải sau thời gian bắt đầu.", type : "error"})
+        if (achievementInfo.fromMonth && achievementInfo.fromYear && achievementInfo.toMonth && achievementInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+achievementInfo.fromMonth, +achievementInfo.fromYear, +achievementInfo.toMonth, +achievementInfo.toYear))) {
+            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
         }
@@ -128,7 +140,11 @@ export const ProfileAchievementDialog = ({
     }
 
     const handleCreateAchievement = () => {
-        if (!validateBeforeAdding()) return;
+        setIsLoading(true);
+        if (!validateBeforeCreating()) {
+            setIsLoading(false);
+            return;
+        }
         // setIsCloseDialog(true);
         const from = new Date(Number(achievementInfo?.fromYear), Number(achievementInfo?.fromMonth), 1);
         let to: Date = new Date();
@@ -149,15 +165,17 @@ export const ProfileAchievementDialog = ({
             setAchievementInfo({});
             fetchProfile(token || "")
             setTimeout(() => {
-                setIsOpen(false)
+                setOpen(false)
                 window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
             }, 500)
         }).catch(() => {
             // console.error(error)
+        }).finally(() => {
+            setIsLoading(false);
         })
     };
 
-    const validateBeforeAdding = (): boolean => {
+    const validateBeforeCreating = (): boolean => {
         if (!achievementInfo.name) {
             setMessage({content: "Vui lòng nhập thành tựu.", type: "error"})
             setTriggerNotice(!triggerNotice)
@@ -301,9 +319,17 @@ export const ProfileAchievementDialog = ({
                 </div>
 
                 <div className="flex justify-end mt-6 gap-4">
-                    {!achievement && <Button variant="dark" onClick={handleCreateAchievement}>Thêm lĩnh vực</Button>}
-                    {achievement && <Button variant="dark" onClick={handleUpdateAchievement}>Lưu</Button>}
-                    {achievement && <Button variant="danger" onClick={handleDeleteAchievement}>Xóa</Button>}
+                    {!achievement &&
+                        <Button variant="dark" disabled={isLoading} onClick={handleCreateAchievement}>{isLoading &&
+                            <CustomSpinner size="sm"/>} Thêm lĩnh vực</Button>}
+                    {achievement &&
+                        <Button variant="dark" disabled={isLoading || isLoadingDeleteProcess}
+                                onClick={handleUpdateAchievement}>{isLoading &&
+                            <CustomSpinner size="sm"/>} Lưu</Button>}
+                    {achievement &&
+                        <Button variant="danger" disabled={isLoading || isLoadingDeleteProcess}
+                                onClick={handleDeleteAchievement}>{isLoadingDeleteProcess &&
+                            <CustomSpinner size="sm"/>} Xóa</Button>}
                 </div>
             </div>
         </div>

@@ -12,6 +12,8 @@ import useProfileStore from "@/lib/store/profile.modal";
 import useAuthStore from "@/lib/store/user.modal";
 import {MessagePayloadForm} from "@/lib/types/error.type";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
+import {CustomSpinner} from "@/components/custom/custom-spinner";
+import * as React from "react";
 
 interface Props {
     setMessage: Dispatch<SetStateAction<MessagePayloadForm>>;
@@ -24,6 +26,8 @@ export const PrivateInfo = ({setMessage, setTriggerNotice, triggerNotice}: Props
     const {draftProfile, setProfileUpdate, updateProfile, resetDraftProfile, fetchProfile} = useProfileStore();
     const {token} = useAuthStore();
     const [avatarImage, setAvatarImage] = useState<string>("");
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]
@@ -41,6 +45,7 @@ export const PrivateInfo = ({setMessage, setTriggerNotice, triggerNotice}: Props
     }
 
     const handleSubmit = async () => {
+        setIsLoading(true);
         const result = await updateProfile(token || "");
         if (result) {
             fetchProfile(token || "");
@@ -50,6 +55,7 @@ export const PrivateInfo = ({setMessage, setTriggerNotice, triggerNotice}: Props
             setMessage({content: "Cập nhật thông tin cá nhân thất bại", type: "error"});
             setTriggerNotice(!triggerNotice);
         }
+        setIsLoading(false);
     }
 
     return (
@@ -211,8 +217,9 @@ export const PrivateInfo = ({setMessage, setTriggerNotice, triggerNotice}: Props
             </form>
         </Card>
             <div className="flex justify-end gap-4 mt-6">
-                <Button variant="dark" size="sm" onClick={handleSubmit}>Lưu thay đổi</Button>
-                <Button variant="dark-outline" size="sm" onClick={resetDraftProfile}>Hủy</Button>
+                <Button variant="dark" size="sm" disabled={isLoading} onClick={handleSubmit}>{isLoading &&
+                    <CustomSpinner size="sm"/>} Lưu thay đổi</Button>
+                <Button disabled={isLoading} variant="dark-outline" size="sm" onClick={resetDraftProfile}>Hủy</Button>
             </div>
         </>
 

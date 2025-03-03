@@ -1,18 +1,20 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {PortfolioBanner} from "@/app/freelancer/portfolio/components/portfolio-banner";
 import * as React from "react";
+import useProfileStore from "@/lib/store/profile.modal";
 
 export const PortfolioHeader = () => {
+    const {profile} = useProfileStore();
     return (
         <div className="mx-auto">
             <div className="space-y-8">
                 <div className="flex items-center gap-3">
                     <Avatar className="h-14 w-14">
-                        <AvatarImage src="/placeholder.svg?height=48&width=48" alt="Nguyễn Hồng Bé"/>
+                        <AvatarImage src={String(profile?.avatar) || ""} alt={profile?.name}/>
                         <AvatarFallback>NB</AvatarFallback>
                     </Avatar>
                     <div className="space-y-2">
-                        <h2 className="responsive-text-20 font-semibold">Nguyễn Hồng Bé</h2>
+                        <h2 className="responsive-text-20 font-semibold">{profile?.name}</h2>
                         {/*<Badge variant="secondary" className="font-normal">*/}
                         {/*    Sẵn sàng nhận dự án mới*/}
                         {/*</Badge>*/}

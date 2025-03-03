@@ -11,7 +11,6 @@ import {CustomSelect} from "@/components/custom/custom-select";
 import months from "@/lib/json/month.json";
 import years from "@/lib/json/year.json";
 import {Checkbox} from "@/components/ui/checkbox";
-import { FileUploader} from "@/components/constitution/file-uploader";
 import * as React from "react";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
 
@@ -124,11 +123,11 @@ export const FooterUpdateDialog = () => {
                                     </div>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <Label className="responsive-text-16">Ảnh dự án</Label>
-                                    <FileUploader/>
+                                {/*<div className="space-y-2">*/}
+                                {/*    <Label className="responsive-text-16">Ảnh dự án</Label>*/}
+                                {/*    <FileUploader/>*/}
 
-                                </div>
+                                {/*</div>*/}
                             </div>
                         </CollapsibleContent>
                     </Collapsible>

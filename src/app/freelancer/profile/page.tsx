@@ -1,9 +1,22 @@
+"use client"
+
 import {FreelancerProgress} from "@/app/freelancer/profile/freelancer-progress";
 import {ProfileInfo} from "@/app/freelancer/profile/profile-info";
 import {WorkSection} from "@/app/freelancer/profile/work-section";
+import usePortfolioStore from "@/lib/store/portfolio.modal";
+import useAuthStore from "@/lib/store/user.modal";
+import {useEffect} from "react";
 
 
 export default function Component() {
+    const {fetchBasicPortfolios} =usePortfolioStore();
+    const {token} = useAuthStore();
+    
+    useEffect(() => {
+        if(!token) return;
+        fetchBasicPortfolios(token || "");
+    }, [fetchBasicPortfolios, token]);
+    
     return (
         <div className="mt-15">
             <FreelancerProgress userName={""}

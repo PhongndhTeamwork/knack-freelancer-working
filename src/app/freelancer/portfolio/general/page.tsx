@@ -1,25 +1,17 @@
 "use client"
-
-import Image from "next/image"
-// import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardFooter} from "@/components/ui/card"
 import {Illustration} from "@/components/custom/illustration";
 import * as React from "react";
-import { Plus, Search} from "lucide-react";
+import {Plus, Search} from "lucide-react";
 import {Input} from "@/components/ui/input";
 import {CustomSelect} from "@/components/custom/custom-select";
 import {useRouter} from "next/navigation";
+import usePortfolioStore from "@/lib/store/portfolio.modal";
+import useAuthStore from "@/lib/store/user.modal";
+import {useEffect} from "react";
 
-interface PortfolioItem {
-    title: string
-    image: string
-}
 
 export default function Component() {
-    const portfolioItems: PortfolioItem[] = [
-        {title: "Elegant 1", image: "/placeholder.svg?height=200&width=300"},
-    ]
-
     const styles = [
         {
             value: "1",
@@ -34,6 +26,16 @@ export default function Component() {
             label: "Portfolio type 3",
         }
     ]
+
+    const {basicPortfolios, fetchBasicPortfolios, setIsChooseNewPortfolio} = usePortfolioStore();
+    const {token} = useAuthStore();
+
+    useEffect(() => {
+        if(!token) return;
+        if(basicPortfolios && basicPortfolios?.length > 0) return;
+        fetchBasicPortfolios(token || "")
+    }, [basicPortfolios, fetchBasicPortfolios, token]);
+
 
     const router = useRouter();
 
@@ -93,32 +95,29 @@ export default function Component() {
 
                     {/* Portfolio Grid */}
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                        {portfolioItems.map((item, index) => (
+                        {basicPortfolios.map((item, index) => (
                             <Card key={index} className="overflow-hidden col-span-1 cursor-pointer" onClick={() => {
-                                router.push("/freelancer/portfolio")
+                                router.push("/freelancer/portfolio?id="+item.id);
                             }}>
-                                <CardContent className="p-0 bg-gray-800">
+                                <CardContent className="p-0 bg-gray-800 border-b-2">
                                     <div className="aspect-[6/5] relative">
-                                        <Image
-                                            src={item.image}
-                                            alt={item.title}
-                                            fill
-                                            className="object-cover"
-                                        />
+                                        <Illustration className="w-full object-cover aspect-[6/5]"
+                                                      url="/freelancer/portfolio/portfolio1.png"/>
                                     </div>
                                 </CardContent>
                                 <CardFooter className="p-4">
-                                    <h3 className="text-xl font-medium">{item.title}</h3>
+                                    <h3 className="text-xl font-medium">{item?.name || "Portfolio"}</h3>
                                 </CardFooter>
                             </Card>
                         ))}
-                        <Card className="overflow-hidden col-span-1 flex items-center justify-center cursor-pointer " onClick={() => {
-                            router.push("/freelancer/portfolio/template")
-                        }}>
-                            <div className="w-full flex justify-center flex-col items-center">
+                        <Card className="overflow-hidden col-span-1 flex items-center justify-center cursor-pointer "
+                              onClick={() => {
+                                  setIsChooseNewPortfolio(true);
+                                  router.push("/freelancer/portfolio/template")
+                              }}>
+                            <div className="w-full aspect-[6/5] flex justify-center flex-col items-center">
                                 <Plus className="w-2/3 h-2/3 text-[#D8D8D8]"/>
-                                <h3 className="w-full text-xl font-medium text-muted-foreground flex justify-center" >Thêm
-                                    Portfolio mới</h3>
+                                <h3 className="w-full text-xl h-[60px] items-center font-medium text-muted-foreground flex justify-center">Thêm Portfolio mới</h3>
 
                             </div>
                             {/*<CardContent className="flex justify-center">*/}

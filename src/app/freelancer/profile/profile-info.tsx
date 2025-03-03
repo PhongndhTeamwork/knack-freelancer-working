@@ -28,7 +28,7 @@ export const ProfileInfo = () => {
 
             </Card>
 
-            {/* Work Experience */}
+            {/* ProminentWork Experience */}
             <Card className="py-6 space-y-4">
                 <CardHeader className="px-6 py-0  flex flex-row items-center gap-2">
                     <Illustration className="w-8 object-cover aspect-[1/1]"

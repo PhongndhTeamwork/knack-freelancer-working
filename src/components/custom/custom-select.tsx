@@ -13,16 +13,17 @@ type Props = {
     disabled?: boolean,
     onSelect ?: (value : string) => void,
     currentLabel ?: string
+    readOnly ?: boolean
 }
 
-export const CustomSelect = ({currentLabel, onSelect ,disabled = false,items, className, ulClassname, liClassname}: Props) => {
+export const CustomSelect = ({readOnly,currentLabel, onSelect ,disabled = false,items, className, ulClassname, liClassname}: Props) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLUListElement | null>(null);
     const selectRef = useRef<HTMLDivElement | null>(null);
     const [active, setActive] = useState<number>(-1);
 
     const toggleDropdown = () => {
-        setIsOpen(!isOpen);
+        if(!readOnly) setIsOpen(!isOpen);
     };
 
     const handleClickOutside = (event: MouseEvent) => {

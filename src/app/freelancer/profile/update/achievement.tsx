@@ -13,9 +13,9 @@ import {FormatHelper} from "@/lib/helpers/format.helper";
 import {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
 import {MessagePayloadForm} from "@/lib/types/error.type";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
-import CustomDialog from "@/components/custom/custom-dialog";
 import {CirclePlus, Pencil} from "lucide-react";
 import {ProfileAchievementDialog} from "@/app/freelancer/profile/update/dialogs/profile-achievement-dialog";
+import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 
 interface Props {
     setMessage: Dispatch<SetStateAction<MessagePayloadForm>>;
@@ -26,8 +26,8 @@ interface Props {
 
 export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props) => {
     const {draftProfile, setProfileUpdate, profile} = useProfileStore();
-    const [isOpenCreate, setIsOpenCreate] = useState(false);
-    const [isOpenUpdate, setIsOpenUpdate] = useState<boolean[]>([]);
+    const [openCreate, setOpenCreate] = useState<boolean>(false);
+    const [openUpdate, setOpenUpdate] = useState<boolean[]>([]);
 
     const updateIsCurrentStatus = useCallback(() => {
         setProfileUpdate((prev) => ({
@@ -42,18 +42,12 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
         updateIsCurrentStatus()
     }, [updateIsCurrentStatus, profile]);
 
+    const handleControlUpdateDialog = (index: number, value: boolean) => {
+        const updatedState: boolean[] = [...openUpdate];
+        updatedState[index] = value;
+        setOpenUpdate(updatedState);
+    }
 
-    const handleOpenUpdateDialog = (index: number) => {
-        const updatedState: boolean[] = [...isOpenUpdate];
-        updatedState[index] = true;
-        setIsOpenUpdate(updatedState);
-    };
-
-    const handleCloseUpdateDialog = (index: number) => {
-        const updatedState: boolean[] = [...isOpenUpdate];
-        updatedState[index] = false;
-        setIsOpenUpdate(updatedState);
-    };
 
     return (
         <>
@@ -62,29 +56,29 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                     <div className="flex justify-between items-center">
                         <h4 className="mb-0 responsive-text-28 font-semibold">Thành tựu cá nhân</h4>
 
-                        <div className="">
-                            <Button
-                                type="button"
-                                variant="dark-outline"
-                                size="sm"
-                                onClick={() => setIsOpenCreate(true)}
-                            >
-                                <CirclePlus/>
-                                Thêm thành tựu
-                            </Button>
-                            <CustomDialog className="w-3/4 h-7/8" isOpen={isOpenCreate}
-                                          onClose={() => setIsOpenCreate(false)}>
-                                <div className="py-6 px-4 h-full">
-                                    <ScrollArea className="h-full">
-                                        <ProfileAchievementDialog setIsOpen={setIsOpenCreate}
-                                                                     setMessage={setMessage}
-                                                                     triggerNotice={triggerNotice}
-                                                                     setTriggerNotice={setTriggerNotice}
-                                                                     achievement={undefined}/>
-                                    </ScrollArea>
-                                </div>
-                            </CustomDialog>
-                        </div>
+                        <Dialog onOpenChange={setOpenCreate} open={openCreate}>
+                            <DialogTrigger asChild>
+                                <Button
+                                    type="button"
+                                    variant="dark-outline"
+                                    size="sm"
+                                >
+                                    <CirclePlus/>
+                                    Thêm thành tựu
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent
+                                className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
+                                <ScrollArea className="h-full px-4">
+
+                                    <ProfileAchievementDialog setOpen={setOpenCreate}
+                                                              setMessage={setMessage}
+                                                              triggerNotice={triggerNotice}
+                                                              setTriggerNotice={setTriggerNotice}
+                                                              achievement={undefined}/>
+                                </ScrollArea>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                     <div className="space-y-6">
                         {
@@ -93,12 +87,13 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                             className={`space-y-4 pb-4 ${index > 0 && "border-t border-black pt-8"}`}>
                                     <div className="">
                                         <div className="space-y-2">
-                                            <Label htmlFor="achievement" className="responsive-text-16">Công việc/dự
+                                            <Label  htmlFor="achievement" className="responsive-text-16">Công việc/dự
                                                 án</Label>
                                             <Input
                                                 id="achievement"
                                                 placeholder=""
                                                 value={pwe.name}
+                                                readOnly={true}
                                                 className="responsive-text-16 h-11"
                                                 onChange={(e) => {
                                                     setProfileUpdate((prev) => ({
@@ -121,6 +116,7 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                             id="description"
                                             placeholder=""
                                             className="min-h-[100px] resize-none responsive-text-16"
+                                            readOnly={true}
                                             value={pwe.description}
                                             onChange={(value) => {
                                                 setProfileUpdate((prev) => ({
@@ -141,6 +137,7 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                             <div className="responsive-text-16">Tháng bắt đầu</div>
                                             <CustomSelect items={months} className="bg-white h-11 w-full"
                                                           ulClassname="bg-gray-100"
+                                                          readOnly={true}
                                                           currentLabel={FormatHelper.formatMonth((new Date(pwe.from || "")).getMonth())}
                                                           onSelect={(value) => {
                                                               setProfileUpdate((prev) => ({
@@ -159,6 +156,7 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                             <CustomSelect items={years}
                                                           className="bg-white h-11 w-full responsive-text-16"
                                                           ulClassname="bg-gray-100"
+                                                          readOnly={true}
                                                           currentLabel={(new Date(pwe.from || "")).getFullYear().toString()}
                                                           onSelect={(value) => {
                                                               setProfileUpdate((prev) => ({
@@ -180,6 +178,7 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                                 currentLabel={pwe.to ? FormatHelper.formatMonth((new Date(pwe.to || "")).getMonth()) : undefined}
                                                 items={months} className={`h-11 w-full bg-white`}
                                                 disabled={pwe.isCurrent} ulClassname="bg-gray-100"
+                                                readOnly={true}
                                                 onSelect={(value) => {
                                                     setProfileUpdate((prev) => ({
                                                         ...prev,
@@ -199,6 +198,7 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                                           currentLabel={pwe.to ? (new Date(pwe.to || "")).getFullYear().toString() : undefined}
                                                           className={`h-11 w-full bg-white`} disabled={pwe.isCurrent}
                                                           ulClassname="bg-gray-100"
+                                                          readOnly={true}
                                                           onSelect={(value) =>
                                                               setProfileUpdate((prev) => ({
                                                                   ...prev,
@@ -211,10 +211,12 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                                           }
                                             />
                                         </div>
+
                                         <div>
                                             <div className="flex items-center space-x-2">
                                                 <Checkbox id={`isCurrent-${index}`}
                                                           checked={pwe.isCurrent}
+                                                          disabled={true}
                                                           onClick={() => {
                                                               setProfileUpdate((prev) => ({
                                                                   ...prev,
@@ -236,31 +238,30 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                         </div>
                                     </div>
 
-
-                                    <div className="flex justify-end">
-                                        <Button
-                                            type="button"
-                                            variant="primary-outline"
-                                            size="sm"
-                                            onClick={() => handleOpenUpdateDialog(index)}
-                                        >
-                                            <Pencil/>
-                                            Chỉnh sửa
-                                        </Button>
-                                        <CustomDialog className="w-3/4 h-7/8" isOpen={isOpenUpdate[index]}
-                                                      onClose={() => handleCloseUpdateDialog(index)}>
-                                            <div className="py-6 px-4 h-full">
-                                                <ScrollArea className="h-full">
-                                                    <ProfileAchievementDialog
-                                                        setIsOpen={() => handleCloseUpdateDialog(index)}
-                                                        setMessage={setMessage}
-                                                        triggerNotice={triggerNotice}
-                                                        setTriggerNotice={setTriggerNotice}
-                                                        achievement={pwe}/>
-                                                </ScrollArea>
-                                            </div>
-                                        </CustomDialog>
-                                    </div>
+                                    <Dialog onOpenChange={(value) => handleControlUpdateDialog(index, value)}
+                                            open={openUpdate[index]}>
+                                        <DialogTrigger asChild>
+                                            <Button
+                                                type="button"
+                                                variant="primary-outline"
+                                                size="sm"
+                                            >
+                                                <Pencil/>
+                                                Chỉnh sửa
+                                            </Button>
+                                        </DialogTrigger>
+                                        <DialogContent
+                                            className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
+                                            <ScrollArea className="h-full px-4">
+                                                <ProfileAchievementDialog
+                                                    setOpen={(value) => handleControlUpdateDialog(index, value)}
+                                                    setMessage={setMessage}
+                                                    triggerNotice={triggerNotice}
+                                                    setTriggerNotice={setTriggerNotice}
+                                                    achievement={pwe}/>
+                                            </ScrollArea>
+                                        </DialogContent>
+                                    </Dialog>
                                 </div>
                             })
                         }

@@ -1,16 +1,20 @@
 "use client"
 
-import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
+import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
 import {Illustration} from "@/components/custom/illustration";
 import {Separator} from "@/components/ui/separator";
 import useProfileStore from "@/lib/store/profile.modal";
 import {cn} from "@/lib/utils";
 import {FormatHelper} from "@/lib/helpers/format.helper";
+import usePortfolioStore from "@/lib/store/portfolio.modal";
+import * as React from "react";
+import {useRouter} from "next/navigation";
 
 
 export const WorkSection = () => {
     const {profile} = useProfileStore();
-
+    const {basicPortfolios} =usePortfolioStore();
+    const router = useRouter();
 
 
     return (
@@ -61,6 +65,23 @@ export const WorkSection = () => {
                                   url="/freelancer/profile/Briefcase.png"/>
                     <CardTitle style={{marginTop: 0}} className="responsive-text-20">Portfolio của bạn</CardTitle>
                 </CardHeader>
+                <CardContent className="grid grid-cols-3">
+                    {basicPortfolios.map((item, index) => (
+                        <Card key={index} className="overflow-hidden col-span-1 cursor-pointer" onClick={() => {
+                            router.push("/freelancer/portfolio?id="+item.id);
+                        }}>
+                            <CardContent className="p-0 bg-gray-800 border-b-2">
+                                <div className="aspect-[6/5] relative">
+                                    <Illustration className="w-full object-cover aspect-[6/5]"
+                                                  url="/freelancer/portfolio/portfolio1.png"/>
+                                </div>
+                            </CardContent>
+                            <CardFooter className="p-4">
+                                <h3 className="text-xl font-medium">{item?.name || "Portfolio"}</h3>
+                            </CardFooter>
+                        </Card>
+                    ))}
+                </CardContent>
             </Card>
         </div>
 
