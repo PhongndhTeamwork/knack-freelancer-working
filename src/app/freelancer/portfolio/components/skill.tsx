@@ -91,8 +91,8 @@ export const Skill = ({triggerNotice, setMessage, setTriggerNotice}: Props) => {
                                         </Button>
                                     </DialogTrigger>
                                     <DialogContent
-                                        className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                                        <ScrollArea className="h-full px-4">
+                                        className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
+                                        <ScrollArea className="max-h-[80vh] px-4">
                                             <SkillDialog setTriggerNotice={setTriggerNotice} setMessage={setMessage} triggerNotice={triggerNotice} setOpen={(value) => {
                                                 handleOpenChange(skillIndex, value)
                                             }} skill={currentPortfolio.portfolioSkills[skillIndex]}/>

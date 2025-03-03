@@ -90,7 +90,7 @@ export const CustomerFeedback = ({setMessage, setTriggerNotice, triggerNotice}: 
         });
     }
 
-
+    if(currentPortfolio?.portfolioCustomerFeedbacks?.length === 0 ) return;
     return (
         <div className="container mx-auto max-w-none" ref={containerRef}>
             <div className="relative flex items-center">
@@ -139,7 +139,7 @@ export const CustomerFeedback = ({setMessage, setTriggerNotice, triggerNotice}: 
                                                             </Button>
                                                         </DialogTrigger>
                                                         <DialogContent
-                                                            className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
+                                                            className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6 max-h-fit">
                                                             <ScrollArea className="h-full px-4">
                                                                 <FeedbackDialog
                                                                     setOpen={(value) => handleOpenChange(index, value)}

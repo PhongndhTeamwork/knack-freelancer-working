@@ -321,7 +321,7 @@ export const ProfileAchievementDialog = ({
                 <div className="flex justify-end mt-6 gap-4">
                     {!achievement &&
                         <Button variant="dark" disabled={isLoading} onClick={handleCreateAchievement}>{isLoading &&
-                            <CustomSpinner size="sm"/>} Thêm lĩnh vực</Button>}
+                            <CustomSpinner size="sm"/>} Thêm thành tựu</Button>}
                     {achievement &&
                         <Button variant="dark" disabled={isLoading || isLoadingDeleteProcess}
                                 onClick={handleUpdateAchievement}>{isLoading &&

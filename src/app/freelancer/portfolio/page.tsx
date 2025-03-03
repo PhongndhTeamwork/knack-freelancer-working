@@ -93,8 +93,8 @@ export default function Component() {
                                           url="/freelancer/portfolio/PencilLineBlack.svg"/>
                             Bạn đang ở chế độ chỉnh sửa
                         </Button>}
-                        {isInUpdateMode &&
-                            <Button variant="dark-outline" className="h-12 responsive-text-20">Xem trước</Button>}
+                        {/*{isInUpdateMode &&*/}
+                        {/*    <Button variant="dark-outline" className="h-12 responsive-text-20">Xem trước</Button>}*/}
                         {isInUpdateMode && <Button variant="dark" className="h-12 responsive-text-20" onClick={() => {
                             setIsInUpdateMode(false)
                         }}>Quay lại</Button>}
@@ -124,8 +124,9 @@ export default function Component() {
                                     Thêm dự án
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                                <ScrollArea className="h-full px-4">
+                            <DialogContent
+                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
+                                <ScrollArea className="max-h-[80vh] px-4">
                                     <ProminentProjectDialog setOpen={(value) => {
                                         handleControlDialog(1, value)
                                     }} setTriggerNotice={setTriggerNotice}
@@ -162,8 +163,9 @@ export default function Component() {
                                     Thêm feedback
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                                <ScrollArea className="h-full">
+                            <DialogContent
+                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
+                                <ScrollArea className="max-h-[80vh] px-4">
                                     <FeedbackDialog setOpen={(value) => {
                                         handleControlDialog(2, value)
                                     }} setTriggerNotice={setTriggerNotice} setMessage={setMessage}
@@ -193,8 +195,9 @@ export default function Component() {
                                     Chỉnh sửa
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                                <ScrollArea className="h-full">
+                            <DialogContent
+                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
+                                <ScrollArea className="max-h-[80vh] px-4">
                                     <AboutMeDialog setOpen={(value) => {
                                         handleControlDialog(3, value)
                                     }} setTriggerNotice={setTriggerNotice} setMessage={setMessage}
@@ -223,8 +226,9 @@ export default function Component() {
                                     Thêm kinh nghiệm
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                                <ScrollArea className="h-full">
+                            <DialogContent
+                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
+                                <ScrollArea className="max-h-[80vh] px-4">
                                     <WorkExperienceDialog setOpen={(value) => {
                                         handleControlDialog(4, value)
                                     }} setTriggerNotice={setTriggerNotice} triggerNotice={triggerNotice}
@@ -255,8 +259,9 @@ export default function Component() {
                                     Chỉnh sửa mô tả
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                                <ScrollArea className="h-full">
+                            <DialogContent
+                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
+                                <ScrollArea className="max-h-[80vh] px-4">
                                     <SkillDescriptionDialog setTriggerNotice={setTriggerNotice} setMessage={setMessage}
                                                             triggerNotice={triggerNotice} setOpen={(value) => {
                                         handleControlDialog(5, value)
@@ -273,8 +278,9 @@ export default function Component() {
                                     Thêm kỹ năng
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                                <ScrollArea className="h-full">
+                            <DialogContent
+                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
+                                <ScrollArea className="max-h-[80vh] px-4">
                                     <SkillDialog setOpen={(value) => {
                                         handleControlDialog(6, value)
                                     }} setTriggerNotice={setTriggerNotice} setMessage={setMessage} triggerNotice={triggerNotice}/>

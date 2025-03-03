@@ -63,9 +63,9 @@ export const AboutMeDialog = ({setOpen, setMessage, setTriggerNotice, triggerNot
         form.append("overview", aboutSectionInfo.overview || "");
         form.append("detail",  aboutSectionInfo?.detail?.replace(/\n+/g, "####") || "");
 
-        form.forEach((key, value) => {
-            console.log(key, value);
-        })
+        // form.forEach((key, value) => {
+        //     console.log(key, value);
+        // })
 
         axios.put(
             `${process.env.NEXT_PUBLIC_PREFIX_API}/portfolio/update-portfolio/${currentPortfolio.id}`, form,

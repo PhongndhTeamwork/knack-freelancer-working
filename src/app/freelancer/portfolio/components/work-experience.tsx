@@ -56,7 +56,7 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
         });
     }
 
-
+    if(currentPortfolio?.portfolioWorkExperiences?.length === 0) return;
     return (
         <div className="mx-auto p-4">
             {/*<div className="flex items-center gap-2 mb-6">*/}
@@ -93,8 +93,8 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                                 </Button>
                                             </DialogTrigger>
                                             <DialogContent
-                                                className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                                                <ScrollArea className="h-full px-4">
+                                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
+                                                <ScrollArea className="max-h-[80vh] px-4">
                                                     <WorkExperienceDialog setMessage={setMessage}
                                                                           triggerNotice={triggerNotice}
                                                                           setTriggerNotice={setTriggerNotice}

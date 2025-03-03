@@ -93,8 +93,8 @@ export const ProminentProject = ({prominentProject, setMessage, setTriggerNotice
                                             </Button>
                                         </DialogTrigger>
                                         <DialogContent
-                                            className="bg-white max-w-screen-xl w-full overflow-hidden h-5/6">
-                                            <ScrollArea className="h-full px-4">
+                                            className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
+                                            <ScrollArea className="max-h-[80vh] px-4">
                                                 <ProminentProjectDialog prominentWork={prominentProject} setOpen={setOpen} triggerNotice={triggerNotice} setTriggerNotice={setTriggerNotice} setMessage={setMessage}/>
                                             </ScrollArea>
                                         </DialogContent>

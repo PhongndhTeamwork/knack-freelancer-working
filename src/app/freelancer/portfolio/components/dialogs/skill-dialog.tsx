@@ -114,7 +114,7 @@ export const SkillDialog = ({setOpen, skill, setTriggerNotice, triggerNotice, se
                 <div className="flex justify-end mt-6 gap-4">
                     {!skill &&
                         <Button variant="dark" disabled={isLoading} onClick={handleCreate}>{isLoading &&
-                            <CustomSpinner size="sm"/>} Thêm kinh nghiệm </Button>}
+                            <CustomSpinner size="sm"/>} Thêm kỹ năng </Button>}
                     {skill && <Button variant="dark" disabled={isLoading} onClick={handleUpdate}>{isLoading &&
                         <CustomSpinner size="sm"/>} Lưu thay đổi </Button>}
 

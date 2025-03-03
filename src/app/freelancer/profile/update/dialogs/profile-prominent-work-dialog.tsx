@@ -360,7 +360,7 @@ export const ProfileProminentWorkDialog = ({
             <div className="flex justify-end mt-6 gap-4">
                 {!prominentWork &&
                     <Button variant="dark" disabled={isLoading} onClick={handleCreateProminentWork}>{isLoading &&
-                        <CustomSpinner size="sm"/>} Thêm lĩnh vực</Button>}
+                        <CustomSpinner size="sm"/>} Thêm công vệc</Button>}
                 {prominentWork &&
                     <Button variant="dark" disabled={isLoading || isLoadingDeleteProcess}
                             onClick={handleUpdateProminentWork}>{isLoading &&
