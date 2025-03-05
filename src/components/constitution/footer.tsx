@@ -17,8 +17,8 @@ export const Footer = () => {
             <div className="flex justify-between space-x-14 py-[30px]">
                 <div ref={infoRef} className="bg-black text-white border-none space-y-8 w-full">
                     <div className="space-y-4">
-                        <span className="responsive-text-40 font-bold">Liên hệ với chúng tôi</span>
-                        <p className="mt-4 responsive-text-24 text-[#D8D8D8]">
+                        <span className="responsive-text-36 font-bold">Liên hệ với chúng tôi</span>
+                        <p className="mt-4 responsive-text-20 text-[#D8D8D8]">
                             Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ, đừng ngần ngại liên hệ với chúng tôi quan
                             thông tin liên hệ phía dưới!
                         </p>
@@ -27,7 +27,7 @@ export const Footer = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <Button
                                 variant="secondary"
-                                className="rounded-xl font-semibold h-12 responsive-text-24"
+                                className="rounded-xl font-semibold h-12 responsive-text-20"
                                 size="lg"
                             >
                                 <Illustration className="w-7 object-cover aspect-[1/1]"
@@ -36,7 +36,7 @@ export const Footer = () => {
                             </Button>
                             <Button
                                 variant="secondary"
-                                className="rounded-xl font-semibold h-12 responsive-text-24"
+                                className="rounded-xl font-semibold h-12 responsive-text-20"
                                 size="lg"
                             >
                                 <Illustration className="w-7 object-cover aspect-[1/1]"
