@@ -22,7 +22,7 @@ export const BannerCarousel = () => {
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                     {/* Left Column - Text Content */}
                     <div className="space-y-6">
-                        <h1 className="responsive-text-64 font-semibold">
+                        <h1 className="responsive-text-56 font-semibold">
                             Phát huy tài năng,{" "}
                             <span className="block mt-3">Khám phá cơ hội.</span>
                         </h1>
@@ -46,7 +46,7 @@ export const BannerCarousel = () => {
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                     {/* Left Column - Text Content */}
                     <div className="space-y-6">
-                        <h1 className="responsive-text-64 font-semibold">
+                        <h1 className="responsive-text-56 font-semibold">
                             Phát huy tài năng,{" "}
                             <span className="block mt-3">Khám phá cơ hội.</span>
                         </h1>
@@ -70,7 +70,7 @@ export const BannerCarousel = () => {
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                     {/* Left Column - Text Content */}
                     <div className="space-y-5">
-                        <h1 className="responsive-text-64 font-semibold">
+                        <h1 className="responsive-text-56 font-semibold">
                             Phát huy tài năng,{" "}
                             <span className="block mt-3">Khám phá cơ hội.</span>
                         </h1>

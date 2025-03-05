@@ -197,6 +197,26 @@
     }
 }
 
+.responsive-text-56 {
+    font-size: 40px;
+    line-height: 48px;
+
+    @media (min-width: 768px) {
+        font-size: 48px;
+        line-height: 56px;
+    }
+
+    @media (min-width: 1280px) {
+        font-size: 56px;
+        line-height: 70px;
+    }
+
+    @media (min-width: 1536px) {
+        font-size: 56px;
+        line-height: 70px;
+    }
+}
+
 .responsive-text-64 {
     font-size: 40px;
     line-height: 48px;
