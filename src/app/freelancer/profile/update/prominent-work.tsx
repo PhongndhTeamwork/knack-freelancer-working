@@ -58,7 +58,7 @@ export const ProminentWork = ({setMessage, setTriggerNotice, triggerNotice}: Pro
             <Card className="w-full mx-auto">
                 <CardContent className="p-6 space-y-6">
                     <div className="flex justify-between items-center">
-                        <h4 className="mb-0 responsive-text-28 font-semibold">Kinh nghiệm làm việc</h4>
+                        <h4 className="mb-0 responsive-text-28 font-semibold">Công việc nổi bật</h4>
 
                         <Dialog onOpenChange={setOpenCreate} open={openCreate}>
                             <DialogTrigger asChild>

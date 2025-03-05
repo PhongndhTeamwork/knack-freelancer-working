@@ -92,28 +92,28 @@ export const ProfileCompletionProgress = () => {
                                     <Illustration className="w-5 h-5 object-cover cursor-pointer"
                                                   url="/freelancer/home/info/info2.svg"/>
                                 </div>
-                                {profile.occupation && profile.occupation?.trim() !== "" &&
-                                    <div className="flex responsive-text-16 gap-3 items-center text-[#DDDDDD]">
-                                        {profile.occupation}
-                                    </div>
-                                }
+
+                                <div className="flex responsive-text-16 gap-3 items-center text-[#DDDDDD]">
+                                    {profile.occupation || "Thông tin về nghề nghiệp của bạn"}
+                                </div>
+
 
                                 {/*<p className="text-gray-200 responsive-text-16">Người mẫu - Diễn viên Phim hành động</p>*/}
                                 <div className="text-[#DDDDDD] responsive-text-16 flex flex-col gap-2 mt-2">
-                                    {profile.address && profile.address?.trim() !== "" &&
-                                        <div className="flex gap-3 items-center">
-                                            <MapPin className="h-4 w-4"/>
-                                            {profile.address}
-                                        </div>
-                                    }
-                                    {
-                                        link && <div className="flex gap-3 items-center cursor-pointer hover:text-gray-300" onClick={() => {
-                                            window.open(link, "_blank");
-                                        }}>
-                                            <Link className="h-4 w-4 items-center"/>
-                                            {ExtractInformation.getUsernameFromURL(link) }
-                                        </div>
-                                    }
+                                    <div className="flex gap-3 items-center">
+                                        <MapPin className="h-4 w-4"/>
+                                        {profile.address || "Nơi sinh sống"}
+                                    </div>
+
+                                    <div className="flex gap-3 items-center cursor-pointer hover:text-gray-300"
+                                         onClick={() => {
+                                             if (!link) return;
+                                             window.open(link, "_blank");
+                                         }}>
+                                        <Link className="h-4 w-4 items-center"/>
+                                        {link && ExtractInformation.getUsernameFromURL(link) || "Đường link cá nhân"}
+                                    </div>
+
                                 </div>
                             </div>
 

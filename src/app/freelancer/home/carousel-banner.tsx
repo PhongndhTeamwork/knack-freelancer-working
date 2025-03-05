@@ -36,7 +36,7 @@ export const BannerCarousel = () => {
                         {/* Main Profile Image */}
                         <div className="w-full">
                             <Illustration className="w-full object-cover aspect-[2/1]"
-                                          url="/freelancer/home/banner/banner1.svg"/>
+                                          url="/freelancer/home/banner/banner2.svg"/>
                         </div>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ export const BannerCarousel = () => {
                         {/* Main Profile Image */}
                         <div className="w-full">
                             <Illustration className="w-full object-cover aspect-[2/1]"
-                                          url="/freelancer/home/banner/banner1.svg"/>
+                                          url="/freelancer/home/banner/banner3.svg"/>
                         </div>
                     </div>
                 </div>
@@ -84,7 +84,7 @@ export const BannerCarousel = () => {
                         {/* Main Profile Image */}
                         <div className="w-full">
                             <Illustration className="w-full object-cover aspect-[2/1]"
-                                          url="/freelancer/home/banner/banner1.svg"/>
+                                          url="/freelancer/home/banner/banner2.svg"/>
                         </div>
                     </div>
                 </div>
