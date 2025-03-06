@@ -4,16 +4,16 @@ import {CustomSelect} from "@/components/custom/custom-select";
 import months from "@/lib/json/month.json";
 import years from "@/lib/json/year.json";
 import {Checkbox} from "@/components/ui/checkbox";
-import {Button} from "@/components/ui/button";
-import * as React from "react";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
-import {ProfileAchievementForm, ProfileWorkExperienceForm} from "@/lib/types/basic-profile.type";
-import useAuthStore from "@/lib/store/user.modal";
-import useProfileStore from "@/lib/store/profile.modal";
-import {MessagePayloadForm} from "@/lib/types/error.type";
+import * as React from "react";
+import {Button} from "@/components/ui/button";
 import axios from "axios";
+import useAuthStore from "@/lib/store/user.modal";
+import {MessagePayloadForm} from "@/lib/types/error.type";
+import useProfileStore from "@/lib/store/profile.modal";
 import {ValidateHelper} from "@/lib/helpers/validate.helper";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
+import {ProfileAchievementForm} from "@/lib/types/basic-profile.type";
 import {FormatHelper} from "@/lib/helpers/format.helper";
 import {CustomSpinner} from "@/components/custom/custom-spinner";
 
@@ -26,13 +26,13 @@ type Props = {
 }
 
 export const ProfileAchievementDialog = ({
-                                             achievement,
-                                             setOpen,
-                                             setMessage,
-                                             setTriggerNotice,
-                                             triggerNotice
-                                         }: Props) => {
-    const [achievementInfo, setAchievementInfo] = useState<ProfileWorkExperienceForm>({});
+                                               achievement,
+                                               setOpen,
+                                               setMessage,
+                                               setTriggerNotice,
+                                               triggerNotice
+                                           }: Props) => {
+    const [achievementInfo, setAchievementInfo] = useState<ProfileAchievementForm>({});
     const {token} = useAuthStore();
     const {fetchProfile} = useProfileStore();
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -41,6 +41,44 @@ export const ProfileAchievementDialog = ({
     useEffect(() => {
         if (achievement) setAchievementInfo(achievement);
     }, [achievement]);
+
+    const handleCreateAchievement = () => {
+        setIsLoading(true);
+        if (!validateBeforeCreating()) {
+            setIsLoading(false);
+            return;
+        }
+        // setIsCloseDialog(true);
+        const from = new Date(Number(achievementInfo?.fromYear), Number(achievementInfo?.fromMonth), 1);
+        let to: Date = new Date();
+        if (!achievementInfo.isCurrent) to = new Date(Number(achievementInfo?.toYear), Number(achievementInfo?.toMonth), 1);
+        // console.log(newWorkExperience);
+        axios.post(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/create-achievement`, {
+            name: achievementInfo.name,
+            description: achievementInfo.description,
+            from: from.toISOString(),
+            to: !achievementInfo.isCurrent ? to?.toISOString() : "",
+            wage: Number(achievementInfo.wage)
+        }, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        }).then(() => {
+            setMessage({content: "Tạo thành tựu thành công!", type: "success"})
+            setTriggerNotice(!triggerNotice)
+            setAchievementInfo({});
+            fetchProfile(token || "")
+            setTimeout(() => {
+                setOpen(false)
+                window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
+            }, 500)
+        }).catch(() => {
+            // console.error(error)
+        }).finally(() => {
+            setIsLoading(false);
+        })
+
+    };
 
     const handleDeleteAchievement = () => {
         setIsLoadingDeleteProcess(true);
@@ -57,7 +95,7 @@ export const ProfileAchievementDialog = ({
                 Authorization: "Bearer " + token
             }
         }).then(() => {
-            setMessage({content: "Xóa thành tựu thành công!", type: "success"})
+            setMessage({content: "Xóa thành tựu làm việc thành công!", type: "success"})
             setTriggerNotice(!triggerNotice)
             fetchProfile(token || "")
             setTimeout(() => {
@@ -66,8 +104,8 @@ export const ProfileAchievementDialog = ({
             }, 500)
         }).catch(() => {
         }).finally(() => {
-            setIsLoadingDeleteProcess(false);
         })
+        setIsLoadingDeleteProcess(false);
     }
 
     const handleUpdateAchievement = () => {
@@ -79,13 +117,13 @@ export const ProfileAchievementDialog = ({
         const from = new Date(Number(achievementInfo?.fromYear), Number(achievementInfo?.fromMonth), 1);
         let to: Date = new Date();
         if (!achievementInfo.isCurrent) to = new Date(Number(achievementInfo?.toYear), Number(achievementInfo?.toMonth), 1);
-        console.log(from);
         // console.log(newWorkExperience);
         axios.put(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/update-achievement/${achievementInfo?.id}`, {
             name: achievementInfo.name,
             description: achievementInfo.description,
             from: from.toISOString(),
             to: !achievementInfo.isCurrent ? to?.toISOString() : "",
+            wage: Number(achievementInfo.wage)
         }, {
             headers: {
                 Authorization: "Bearer " + token
@@ -96,7 +134,7 @@ export const ProfileAchievementDialog = ({
             fetchProfile(token || "")
             setTimeout(() => {
                 setOpen(false)
-                window.scrollTo({top: 0, behavior: "smooth"}); // Smoothly scroll to top
+                window.scrollTo({top: 0, behavior: "smooth"});
             }, 500)
         }).catch(() => {
             // console.error(error)
@@ -107,7 +145,7 @@ export const ProfileAchievementDialog = ({
 
     const validateBeforeUpdating = () => {
         if (!achievementInfo.name || achievementInfo.name.trim() === "") {
-            setMessage({content: "Vui lòng nhập thành tựu .", type: "error"})
+            setMessage({content: "Vui lòng nhập lĩnh vực.", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
         }
@@ -131,53 +169,24 @@ export const ProfileAchievementDialog = ({
         //     achievementInfo.toYear =  (new Date(achievementInfo.to || "")).getFullYear().toString()
         //     achievementInfo.toMonth =  (new Date(achievementInfo.to || "")).getMonth().toString()
         // }
+        if (Number(achievementInfo.wage) <= 0) {
+            setMessage({content: "Chi phí/Hoa hồng phải lớn hơn 0.", type: "error"})
+            setTriggerNotice(!triggerNotice)
+            return false
+        }
         if (achievementInfo.fromMonth && achievementInfo.fromYear && achievementInfo.toMonth && achievementInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+achievementInfo.fromMonth, +achievementInfo.fromYear, +achievementInfo.toMonth, +achievementInfo.toYear))) {
             setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
         }
+
+
         return true
     }
 
-    const handleCreateAchievement = () => {
-        setIsLoading(true);
-        if (!validateBeforeCreating()) {
-            setIsLoading(false);
-            return;
-        }
-        // setIsCloseDialog(true);
-        const from = new Date(Number(achievementInfo?.fromYear), Number(achievementInfo?.fromMonth), 1);
-        let to: Date = new Date();
-        if (!achievementInfo.isCurrent) to = new Date(Number(achievementInfo?.toYear), Number(achievementInfo?.toMonth), 1);
-        // console.log(newWorkExperience);
-        axios.post(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/create-achievement`, {
-            name: achievementInfo.name,
-            description: achievementInfo.description,
-            from: from.toISOString(),
-            to: !achievementInfo.isCurrent ? to?.toISOString() : "",
-        }, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        }).then(() => {
-            setMessage({content: "Tạo thành tựu thành công!", type: "success"})
-            setTriggerNotice(!triggerNotice)
-            setAchievementInfo({});
-            fetchProfile(token || "")
-            setTimeout(() => {
-                setOpen(false)
-                window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
-            }, 500)
-        }).catch(() => {
-            // console.error(error)
-        }).finally(() => {
-            setIsLoading(false);
-        })
-    };
-
     const validateBeforeCreating = (): boolean => {
         if (!achievementInfo.name) {
-            setMessage({content: "Vui lòng nhập thành tựu.", type: "error"})
+            setMessage({content: "Vui lòng nhập lĩnh vực.", type: "error"})
             setTriggerNotice(!triggerNotice)
             return false
         }
@@ -196,6 +205,11 @@ export const ProfileAchievementDialog = ({
             setTriggerNotice(!triggerNotice)
             return false
         }
+        if (Number(achievementInfo.wage) <= 0) {
+            setMessage({content: "Chi phí/Hoa hồng phải lớn hơn 0.", type: "error"})
+            setTriggerNotice(!triggerNotice)
+            return false
+        }
         if (achievementInfo.fromMonth && achievementInfo.fromYear && achievementInfo.toMonth && achievementInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+achievementInfo.fromMonth, +achievementInfo.fromYear, +achievementInfo.toMonth, +achievementInfo.toYear))) {
             setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
             setTriggerNotice(!triggerNotice)
@@ -207,14 +221,14 @@ export const ProfileAchievementDialog = ({
     return (
         <div
             className="space-y-4 pb-4 px-3">
-            <h3 className="responsive-text-20 font-semibold">Thêm “Thành tựu”</h3>
+            <h3 className="responsive-text-20 font-semibold">{achievement ? "Chỉnh sửa" : "Thêm"} “Thành tựu”</h3>
 
             <div
                 className={`space-y-4 pb-4`}>
-                <div className="">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                        <Label htmlFor="achievement" className="responsive-text-16">Công việc/dự
-                            án</Label>
+                        <Label htmlFor="achievement" className="responsive-text-16">Thành
+                            tựu</Label>
                         <Input
                             id="achievement"
                             placeholder=""
@@ -222,7 +236,28 @@ export const ProfileAchievementDialog = ({
                             className="responsive-text-16 h-11"
                             onChange={(e) => {
                                 setAchievementInfo((prev) => ({
-                                    ...prev, name: e.target.value
+                                    ...prev,
+                                    name: e.target.value
+                                }))
+                            }}
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="tip" className="responsive-text-16">Chi phí/ Hoa
+                            hồng</Label>
+                        <Input
+                            id="tip"
+                            placeholder=""
+                            type="number"
+                            step="100000"
+                            value={achievementInfo.wage}
+                            // value={Number(achievementInfo.wage).toLocaleString("vi-VN")}
+                            className="responsive-text-16 h-11"
+                            onChange={(e) => {
+                                setAchievementInfo((prev) => ({
+                                    ...prev,
+                                    wage: +e.target.value
                                 }))
                             }}
                         />
@@ -235,11 +270,12 @@ export const ProfileAchievementDialog = ({
                     <CustomTextarea
                         id="description"
                         placeholder=""
-                        className="min-h-[100px] resize-none responsive-text-16"
                         value={achievementInfo.description}
+                        className="min-h-[100px] resize-none responsive-text-16"
                         onChange={(value) => {
                             setAchievementInfo((prev) => ({
-                                ...prev, description: value
+                                ...prev,
+                                description: value
                             }))
                         }}
                     />
@@ -256,15 +292,16 @@ export const ProfileAchievementDialog = ({
                                           setAchievementInfo((prev) => ({
                                               ...prev, fromMonth: value
                                           }))
-                                      }}/>
+                                      }}
+                        />
                     </div>
 
                     <div className="flex flex-col w-full responsive-text-16 space-y-2">
                         <div className="responsive-text-16">Năm bắt đầu</div>
                         <CustomSelect items={years}
                                       className="bg-white h-11 w-full responsive-text-16"
-                                      currentLabel={achievementInfo.from ? (new Date(achievementInfo.from || "")).getFullYear().toString() : undefined}
                                       ulClassname="bg-gray-100"
+                                      currentLabel={achievementInfo.from ? (new Date(achievementInfo.from || "")).getFullYear().toString() : undefined}
                                       onSelect={(value) => {
                                           setAchievementInfo((prev) => ({
                                               ...prev, fromYear: value
@@ -278,26 +315,26 @@ export const ProfileAchievementDialog = ({
                         <div className="responsive-text-16">Tháng kết thúc</div>
                         <CustomSelect items={months} className={`h-11 w-full bg-white`}
                                       disabled={achievementInfo.isCurrent}
-                                      currentLabel={achievementInfo.to ? FormatHelper.formatMonth((new Date(achievementInfo.to || "")).getMonth()) : undefined}
                                       ulClassname="bg-gray-100"
+                                      currentLabel={achievementInfo.to ? FormatHelper.formatMonth((new Date(achievementInfo.to || "")).getMonth()) : undefined}
                                       onSelect={(value) => {
                                           setAchievementInfo((prev) => ({
                                               ...prev, toMonth: value
                                           }))
-                                      }}
-                        />
+                                      }}/>
                     </div>
 
                     <div className="flex flex-col w-full responsive-text-16 space-y-2">
                         <div className="responsive-text-16">Năm kết thúc</div>
                         <CustomSelect items={years}
-                                      currentLabel={achievementInfo.to ? (new Date(achievementInfo.to || "")).getFullYear().toString() : undefined}
                                       className={`h-11 w-full bg-white`} disabled={achievementInfo.isCurrent}
-                                      ulClassname="bg-gray-100" onSelect={(value) => {
-                            setAchievementInfo((prev) => ({
-                                ...prev, toYear: value
-                            }))
-                        }}/>
+                                      ulClassname="bg-gray-100"
+                                      currentLabel={achievementInfo.to ? (new Date(achievementInfo.to || "")).getFullYear().toString() : undefined}
+                                      onSelect={(value) => {
+                                          setAchievementInfo((prev) => ({
+                                              ...prev, toYear: value
+                                          }))
+                                      }}/>
                     </div>
                 </div>
                 <div>
@@ -317,20 +354,19 @@ export const ProfileAchievementDialog = ({
                         </label>
                     </div>
                 </div>
-
-                <div className="flex justify-end mt-6 gap-4">
-                    {!achievement &&
-                        <Button variant="dark" disabled={isLoading} onClick={handleCreateAchievement}>{isLoading &&
-                            <CustomSpinner size="sm"/>} Thêm thành tựu</Button>}
-                    {achievement &&
-                        <Button variant="dark" disabled={isLoading || isLoadingDeleteProcess}
-                                onClick={handleUpdateAchievement}>{isLoading &&
-                            <CustomSpinner size="sm"/>} Lưu</Button>}
-                    {achievement &&
-                        <Button variant="danger" disabled={isLoading || isLoadingDeleteProcess}
-                                onClick={handleDeleteAchievement}>{isLoadingDeleteProcess &&
-                            <CustomSpinner size="sm"/>} Xóa</Button>}
-                </div>
+            </div>
+            <div className="flex justify-end mt-6 gap-4">
+                {!achievement &&
+                    <Button variant="dark" disabled={isLoading} onClick={handleCreateAchievement}>{isLoading &&
+                        <CustomSpinner size="sm"/>} Thêm thành tựu</Button>}
+                {achievement &&
+                    <Button variant="dark" disabled={isLoading || isLoadingDeleteProcess}
+                            onClick={handleUpdateAchievement}>{isLoading &&
+                        <CustomSpinner size="sm"/>} Lưu</Button>}
+                {achievement &&
+                    <Button variant="danger" disabled={isLoading || isLoadingDeleteProcess}
+                            onClick={handleDeleteAchievement}>{isLoadingDeleteProcess &&
+                        <CustomSpinner size="sm"/>} Xóa</Button>}
             </div>
         </div>
     )

@@ -14,7 +14,6 @@ import usePortfolioUpdateStore from "@/lib/store/portfolio-update.modal";
 import {cn} from "@/lib/utils";
 import {MessagePayloadForm} from "@/lib/types/error.type";
 import usePortfolioStore from "@/lib/store/portfolio.modal";
-import useProfileStore from "@/lib/store/profile.modal";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -44,7 +43,6 @@ export const CustomerFeedback = ({setMessage, setTriggerNotice, triggerNotice}: 
     const [isUseMarquee, setIsUseMarquee] = useState<boolean>(true);
 
     const {currentPortfolio, fetchCurrentPortfolio} = usePortfolioStore();
-    const {profile} = useProfileStore();
     const {token} = useAuthStore()
 
     useEffect(() => {
@@ -120,14 +118,16 @@ export const CustomerFeedback = ({setMessage, setTriggerNotice, triggerNotice}: 
                                             </p>
                                             <div
                                                 className={cn("flex items-center gap-3 mt-12", isInUpdateMode && "justify-between")}>
-                                                <Avatar className="w-12 h-12">
-                                                    <AvatarImage src={String(profile.avatar) || ""}
-                                                                 alt={profile.name}/>
-                                                    <AvatarFallback>{profile?.name?.charAt(0) || "U"}</AvatarFallback>
-                                                </Avatar>
-                                                <div className="space-y-2">
-                                                    <p className="font-semibold responsive-text-18 whitespace-normal">{profile.name}</p>
-                                                    <p className="text-muted-foreground responsive-text-16">{profile.occupation ? profile.occupation : profile.address ? profile.address : profile.email}</p>
+                                                <div className="flex gap-3 items-center">
+                                                    <Avatar className="w-12 h-12">
+                                                        <AvatarImage src={String(feedback.image) || ""}
+                                                                     alt={feedback.customerName}/>
+                                                        <AvatarFallback>{feedback?.customerName?.charAt(0) || "U"}</AvatarFallback>
+                                                    </Avatar>
+                                                    <div className="space-y-2">
+                                                        <p className="font-semibold responsive-text-18 whitespace-normal">{feedback.customerName}</p>
+                                                        <p className="text-muted-foreground responsive-text-16">{feedback.customerPosition} in {feedback.companyName}</p>
+                                                    </div>
                                                 </div>
                                                 {isInUpdateMode && <div className="flex gap-2 items-center">
                                                     <Dialog onOpenChange={(value) => handleOpenChange(index, value)}
@@ -210,13 +210,13 @@ export const CustomerFeedback = ({setMessage, setTriggerNotice, triggerNotice}: 
                                             <div
                                                 className={cn("flex items-center gap-3 mt-12", isInUpdateMode && "justify-between")}>
                                                 <Avatar className="w-12 h-12">
-                                                    <AvatarImage src={String(profile.avatar) || ""}
-                                                                 alt={profile.name}/>
-                                                    <AvatarFallback>{profile?.name?.charAt(0) || "U"}</AvatarFallback>
+                                                    <AvatarImage src={String(feedback.image) || ""}
+                                                                 alt={feedback.customerName}/>
+                                                    <AvatarFallback>{feedback?.customerName?.charAt(0) || "U"}</AvatarFallback>
                                                 </Avatar>
                                                 <div className="space-y-2">
-                                                    <p className="font-medium responsive-text-20">{profile.name}</p>
-                                                    <p className="text-muted-foreground responsive-text-16">{profile.address}</p>
+                                                    <p className="font-semibold responsive-text-18 whitespace-normal">{feedback.customerName}</p>
+                                                    <p className="text-muted-foreground responsive-text-16">{feedback.customerPosition} in {feedback.companyName}</p>
                                                 </div>
                                             </div>
                                         </div>

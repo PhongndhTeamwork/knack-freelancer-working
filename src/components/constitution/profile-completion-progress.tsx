@@ -76,52 +76,55 @@ export const ProfileCompletionProgress = () => {
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-900/70 z-0"/>
                     <div className="absolute inset-0 bg-[url('/placeholder.svg')] bg-cover bg-center opacity-50"/>
 
-                    <CardContent className="relative z-10 p-6 m-auto" style={{backdropFilter: 'blur(20px)'}}>
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
-                            <Avatar className="w-[136px] h-[136px] border-2 border-white">
-                                <AvatarImage alt="User 1" src={String(profile?.avatar) || ""}/>
-                                <AvatarFallback
-                                    className="text-3xl">{profile?.name?.substring(0, 1) || "P"}</AvatarFallback>
-                            </Avatar>
+                    <CardContent className="relative z-10 p-6 w-full h-full m-auto" style={{backdropFilter: 'blur(20px)'}}>
+                        <div className="flex flex-col justify-between  sm:flex-row items-start sm:items-center gap-8">
+                            <div className="flex gap-6">
+                                <Avatar className="w-[136px] h-[136px] border-2 border-white">
+                                    <AvatarImage alt="User 1" src={String(profile?.avatar) || ""}/>
+                                    <AvatarFallback
+                                        className="text-3xl">{profile?.name?.substring(0, 1) || "P"}</AvatarFallback>
+                                </Avatar>
 
-                            <div className="flex-1 text-white space-y-3">
-                                <div className="flex space-x-3 items-center">
-                                    <h2 className="responsive-text-28 font-bold">{profile?.name}</h2>
-                                    <Illustration className="w-5 h-5 object-cover cursor-pointer"
-                                                  url="/freelancer/home/info/info1.svg"/>
-                                    <Illustration className="w-5 h-5 object-cover cursor-pointer"
-                                                  url="/freelancer/home/info/info2.svg"/>
-                                </div>
-
-                                <div className="flex responsive-text-16 gap-3 items-center text-[#DDDDDD]">
-                                    {profile.occupation || "Thông tin về nghề nghiệp của bạn"}
-                                </div>
-
-
-                                {/*<p className="text-gray-200 responsive-text-16">Người mẫu - Diễn viên Phim hành động</p>*/}
-                                <div className="text-[#DDDDDD] responsive-text-16 flex flex-col gap-2 mt-2">
-                                    <div className="flex gap-3 items-center">
-                                        <MapPin className="h-4 w-4"/>
-                                        {profile.address || "Nơi sinh sống"}
+                                <div className="flex-1 text-white space-y-3">
+                                    <div className="flex space-x-3 items-center">
+                                        <h2 className="responsive-text-28 font-bold">{profile?.name}</h2>
+                                        <Illustration className="w-5 h-5 object-cover cursor-pointer"
+                                                      url="/freelancer/home/info/info1.svg"/>
+                                        <Illustration className="w-5 h-5 object-cover cursor-pointer"
+                                                      url="/freelancer/home/info/info2.svg"/>
                                     </div>
 
-                                    <div className="flex gap-3 items-center cursor-pointer hover:text-gray-300"
-                                         onClick={() => {
-                                             if (!link) return;
-                                             window.open(link, "_blank");
-                                         }}>
-                                        <Link className="h-4 w-4 items-center"/>
-                                        {link && ExtractInformation.getUsernameFromURL(link) || "Đường link cá nhân"}
+                                    <div className="flex responsive-text-16 gap-3 items-center text-[#DDDDDD]">
+                                        {profile.occupation || "Thông tin về nghề nghiệp của bạn"}
                                     </div>
 
+
+                                    {/*<p className="text-gray-200 responsive-text-16">Người mẫu - Diễn viên Phim hành động</p>*/}
+                                    <div className="text-[#DDDDDD] responsive-text-16 flex flex-col gap-2 mt-2">
+                                        <div className="flex gap-3 items-center">
+                                            <MapPin className="h-4 w-4"/>
+                                            {profile.address || "Nơi sinh sống"}
+                                        </div>
+
+                                        <div className="flex gap-3 items-center cursor-pointer hover:text-gray-300"
+                                             onClick={() => {
+                                                 if (!link) return;
+                                                 window.open(link, "_blank");
+                                             }}>
+                                            <Link className="h-4 w-4 items-center"/>
+                                            {link && ExtractInformation.getUsernameFromURL(link) || "Đường link cá nhân"}
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
+
 
                             <div className="flex flex-col gap-12 sm:self-start items-end">
                                 <div
                                     className="flex items-center text-red-500  hover:bg-white/20 rounded-xl border-2 border-white py-2 px-3 w-fit">
                                     <Heart className="h-4 w-4 mr-2 text-red-500 fill-red-500"/>
-                                    410
+                                    000
                                 </div>
                                 <div className="flex gap-4">
                                     <div

@@ -24,7 +24,7 @@ export const WorkSection = () => {
                     <div className="flex flex-row items-center gap-2">
                         <Illustration className="w-8 object-cover aspect-[1/1]"
                                       url="/freelancer/profile/Briefcase.png"/>
-                        <h3 className="font-bold responsive-text-20">Công việc nổi bật</h3>
+                        <h3 className="font-bold responsive-text-20 font-semibold">Công việc nổi bật</h3>
                     </div>
                     <div className="grid md:grid-cols-2 md:gap-4">
                         {
@@ -54,7 +54,7 @@ export const WorkSection = () => {
                     <div className="flex flex-row items-center gap-2">
                         <Illustration className="w-8 object-cover aspect-[1/1]"
                                       url="/freelancer/profile/Coins.svg"/>
-                        <h3 className="font-bold responsive-text-20">Bảng giá</h3>
+                        <h3 className="font-bold responsive-text-20 font-semibold">Bảng giá</h3>
                     </div>
                 </div>
             </Card>
@@ -63,9 +63,9 @@ export const WorkSection = () => {
                 <CardHeader className="px-6 py-0 flex flex-row items-center gap-2">
                     <Illustration className="w-8 object-cover aspect-[1/1]"
                                   url="/freelancer/profile/Briefcase.png"/>
-                    <CardTitle style={{marginTop: 0}} className="responsive-text-20">Portfolio của bạn</CardTitle>
+                    <CardTitle style={{marginTop: 0}} className="responsive-text-20 font-semibold">Portfolio của bạn</CardTitle>
                 </CardHeader>
-                <CardContent className="grid grid-cols-3">
+                {basicPortfolios?.length > 0 && <CardContent className="grid grid-cols-3">
                     {basicPortfolios.map((item, index) => (
                         <Card key={index} className="overflow-hidden col-span-1 cursor-pointer" onClick={() => {
                             router.push("/freelancer/portfolio?id="+item.id);
@@ -81,7 +81,7 @@ export const WorkSection = () => {
                             </CardFooter>
                         </Card>
                     ))}
-                </CardContent>
+                </CardContent>}
             </Card>
         </div>
 

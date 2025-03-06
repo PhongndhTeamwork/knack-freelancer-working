@@ -42,6 +42,7 @@ export type ProfileAchievementForm = {
     fromYear ?: string;
     toYear ?: string;
     isCurrent ?: boolean;
+    wage?: number;
 }
 
 export type ProfileProminentWorkForm = {
@@ -50,7 +51,6 @@ export type ProfileProminentWorkForm = {
     description?: string;
     from ?: string;
     to ?: string;
-    wage?: number;
     fromMonth ?: string;
     toMonth ?: string;
     fromYear ?: string;

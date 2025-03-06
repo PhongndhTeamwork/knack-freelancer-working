@@ -64,7 +64,7 @@ export const SkillDescriptionDialog = ({setOpen, setMessage, setTriggerNotice, t
                 <div className="space-y-6">
                     <div className="space-y-2">
                         <Label className="responsive-text-16">Mô tả</Label>
-                        <CustomTextarea placeholder="" value={currentPortfolio.skillDescription} onChange={(value) => {
+                        <CustomTextarea placeholder="" value={skillDescription.name} onChange={(value) => {
                             setSkillDescription((prev) => ({...prev, name: value}));
                         }} className="responsive-text-16 h-11"/>
                     </div>

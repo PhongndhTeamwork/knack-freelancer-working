@@ -97,7 +97,7 @@ export default function Component() {
                         {/*    <Button variant="dark-outline" className="h-12 responsive-text-20">Xem trước</Button>}*/}
                         {isInUpdateMode && <Button variant="dark" className="h-12 responsive-text-20" onClick={() => {
                             setIsInUpdateMode(false)
-                        }}>Quay lại</Button>}
+                        }}>Lưu chỉnh sửa</Button>}
                         {/*{!isInUpdateMode && <Button variant="dark-outline" className="h-12 responsive-text-20" onClick={() => reactToPrintFn()}>Tải portfolio</Button>}*/}
                         {!isInUpdateMode && <Button variant="dark" className="h-12 responsive-text-20" onClick={() => {
                             setIsInUpdateMode(true)

@@ -1,20 +1,23 @@
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import {Button} from "@/components/ui/button"
+import {Card, CardContent} from "@/components/ui/card"
+import {Input} from "@/components/ui/input"
+import {Label} from "@/components/ui/label"
+import useProfileStore from "@/lib/store/profile.modal";
 import {CustomSelect} from "@/components/custom/custom-select";
 import months from "@/lib/json/month.json";
 import years from "@/lib/json/year.json";
 import {Checkbox} from "@/components/ui/checkbox";
-import useProfileStore from "@/lib/store/profile.modal";
-import * as React from "react";
 import {ScrollArea} from "@/components/ui/scroll-area";
-import {FormatHelper} from "@/lib/helpers/format.helper";
+
+import * as React from "react";
+import {
+    ProfileAchievementDialog,
+} from "@/app/freelancer/profile/update/dialogs/profile-achievement-dialog";
 import {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
 import {MessagePayloadForm} from "@/lib/types/error.type";
+import {FormatHelper} from "@/lib/helpers/format.helper";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
 import {CirclePlus, Pencil} from "lucide-react";
-import {ProfileAchievementDialog} from "@/app/freelancer/profile/update/dialogs/profile-achievement-dialog";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 
 interface Props {
@@ -29,6 +32,7 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
     const [openCreate, setOpenCreate] = useState<boolean>(false);
     const [openUpdate, setOpenUpdate] = useState<boolean[]>([]);
 
+
     const updateIsCurrentStatus = useCallback(() => {
         setProfileUpdate((prev) => ({
             ...prev, profileAchievements: prev.profileAchievements.map((pwe) =>
@@ -36,7 +40,7 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
             )
         }))
 
-    },[setProfileUpdate])
+    }, [setProfileUpdate])
 
     useEffect(() => {
         updateIsCurrentStatus()
@@ -84,15 +88,15 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                             draftProfile.profileAchievements.map((pwe, index) => {
                                 return <div key={index}
                                             className={`space-y-4 pb-4 ${index > 0 && "border-t border-black pt-8"}`}>
-                                    <div className="">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <Label  htmlFor="achievement" className="responsive-text-16">Công việc/dự
-                                                án</Label>
+                                            <Label htmlFor="achievement" className="responsive-text-16">Thành
+                                                tựu</Label>
                                             <Input
                                                 id="achievement"
+                                                readOnly={true}
                                                 placeholder=""
                                                 value={pwe.name}
-                                                readOnly={true}
                                                 className="responsive-text-16 h-11"
                                                 onChange={(e) => {
                                                     setProfileUpdate((prev) => ({
@@ -106,6 +110,28 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                                 }}
                                             />
                                         </div>
+
+                                        <div className="space-y-2">
+                                            <Label htmlFor="tip" className="responsive-text-16">Chi phí/ Hoa hồng</Label>
+                                            <Input
+                                                id="tip"
+                                                value={Number(pwe.wage).toLocaleString("vi-VN")}
+                                                placeholder=""
+                                                type="number"
+                                                readOnly={true}
+                                                className="responsive-text-16 h-11"
+                                                onChange={(e) => {
+                                                    setProfileUpdate((prev) => ({
+                                                        ...prev,
+                                                        profileAchievements: prev.profileAchievements.map((pwe, i) =>
+                                                            i === index
+                                                                ? {...pwe, wage: +e.target.value}
+                                                                : pwe
+                                                        )
+                                                    }))
+                                                }}
+                                            />
+                                        </div>
                                     </div>
 
                                     {/* Description Field */}
@@ -113,10 +139,10 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                         <Label htmlFor="description" className="responsive-text-16">Mô tả</Label>
                                         <CustomTextarea
                                             id="description"
-                                            placeholder=""
-                                            className="min-h-[100px] resize-none responsive-text-16"
                                             readOnly={true}
+                                            placeholder=""
                                             value={pwe.description}
+                                            className="min-h-[100px] resize-none responsive-text-16"
                                             onChange={(value) => {
                                                 setProfileUpdate((prev) => ({
                                                     ...prev,
@@ -153,9 +179,9 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                         <div className="flex flex-col w-full responsive-text-16 space-y-2">
                                             <div className="responsive-text-16">Năm bắt đầu</div>
                                             <CustomSelect items={years}
+                                                          readOnly={true}
                                                           className="bg-white h-11 w-full responsive-text-16"
                                                           ulClassname="bg-gray-100"
-                                                          readOnly={true}
                                                           currentLabel={(new Date(pwe.from || "")).getFullYear().toString()}
                                                           onSelect={(value) => {
                                                               setProfileUpdate((prev) => ({
@@ -174,10 +200,10 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                         <div className="flex flex-col w-full responsive-text-16 space-y-2">
                                             <div className="responsive-text-16">Tháng kết thúc</div>
                                             <CustomSelect
+                                                readOnly={true}
                                                 currentLabel={pwe.to ? FormatHelper.formatMonth((new Date(pwe.to || "")).getMonth()) : undefined}
                                                 items={months} className={`h-11 w-full bg-white`}
                                                 disabled={pwe.isCurrent} ulClassname="bg-gray-100"
-                                                readOnly={true}
                                                 onSelect={(value) => {
                                                     setProfileUpdate((prev) => ({
                                                         ...prev,
@@ -194,11 +220,12 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                         <div className="flex flex-col w-full responsive-text-16 space-y-2">
                                             <div className="responsive-text-16">Năm kết thúc</div>
                                             <CustomSelect items={years}
+                                                          readOnly={true}
                                                           currentLabel={pwe.to ? (new Date(pwe.to || "")).getFullYear().toString() : undefined}
                                                           className={`h-11 w-full bg-white`} disabled={pwe.isCurrent}
                                                           ulClassname="bg-gray-100"
-                                                          readOnly={true}
-                                                          onSelect={(value) =>
+                                                          onSelect={(value) => {
+
                                                               setProfileUpdate((prev) => ({
                                                                   ...prev,
                                                                   profileAchievements: prev.profileAchievements.map((pwe, i) =>
@@ -207,33 +234,31 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                                                           : pwe
                                                                   )
                                                               }))
-                                                          }
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <div className="flex items-center space-x-2">
-                                                <Checkbox id={`isCurrent-${index}`}
-                                                          checked={pwe.isCurrent}
-                                                          disabled={true}
-                                                          onClick={() => {
-                                                              setProfileUpdate((prev) => ({
-                                                                  ...prev,
-                                                                  profileAchievements: prev.profileAchievements.map((pwe, i) =>
-                                                                      i === index ? {
-                                                                          ...pwe,
-                                                                          isCurrent: !pwe.isCurrent
-                                                                      } : pwe
-                                                                  ),
-                                                              }));
                                                           }}/>
-                                                <label
-                                                    htmlFor="terms"
-                                                    className="responsive-text-16 font-medium relative top-[1px] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                                                >
-                                                    Hiện tại tôi vẫn đang làm công việc này
-                                                </label>
-                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="flex items-center space-x-2">
+                                            <Checkbox id={`isCurrent-${index}`}
+                                                      checked={pwe.isCurrent}
+                                                      disabled={true}
+                                                      onClick={() => {
+                                                          setProfileUpdate((prev) => ({
+                                                              ...prev,
+                                                              profileAchievements: prev.profileAchievements.map((pwe, i) =>
+                                                                  i === index ? {
+                                                                      ...pwe,
+                                                                      isCurrent: !pwe.isCurrent
+                                                                  } : pwe
+                                                              ),
+                                                          }));
+                                                      }}/>
+                                            <label
+                                                htmlFor="terms"
+                                                className="responsive-text-16 font-medium relative top-[1px] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                            >
+                                                Hiện tại tôi vẫn đang làm công việc này
+                                            </label>
                                         </div>
                                     </div>
 
@@ -264,10 +289,13 @@ export const Achievement = ({setMessage, setTriggerNotice, triggerNotice}: Props
                                 </div>
                             })
                         }
+
+
                     </div>
                 </CardContent>
             </Card>
         </>
+
     )
 }
 

@@ -55,7 +55,7 @@ const HomeLayout = ({children}: Props) => {
                             components={components}
                     />}
             </div>
-            <div className={cn("min-h-screen mx-auto", !pathname.includes("chat") && "mt-[80px]")}>
+            <div className={cn("min-h-screen mx-auto", !pathname.includes("chat") && "mt-[100px]")}>
                 {children}
             </div>
             <div className="mt-24">

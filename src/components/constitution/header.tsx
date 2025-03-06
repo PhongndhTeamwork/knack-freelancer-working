@@ -71,9 +71,9 @@ export const Header = ({logoLink, components}: Props) => {
 
     return (
         <header className={cn(
-            "top-0 z-50 w-full responsive-text-16 fixed transition-all",isScrolled && "w-[920px] 2xl:w-[1000px]"
+            "top-6 z-50 w-full responsive-text-16 fixed transition-all",isScrolled && "w-[920px] 2xl:w-[1000px]"
         )}
-                style={{...(isScrolled ? {backgroundColor: 'rgba(255, 255, 255, 0.4)', top : "10px", borderRadius : "10px"} : {width : "100%"}), transition: 'background-color 0.5s ease, top 0.5s ease, width 0.5s ease',}}
+                style={{...(isScrolled ? {backgroundColor: 'rgba(255, 255, 255, 0.4)', top : "24px", borderRadius : "10px"} : {width : "100%"}), transition: 'background-color 0.5s ease, top 0.5s ease, width 0.5s ease',}}
         >
             <div className="container mx-auto max-width-suitable px-[60px]" >
                 <div className={cn("flex h-16 items-center justify-between")}>
@@ -106,7 +106,7 @@ export const Header = ({logoLink, components}: Props) => {
                                     <AvatarFallback
                                         className="text-[20px]">{profile?.name?.substring(0, 1) || "P"}</AvatarFallback>
                                 </Avatar>
-                                <p className="ml-3 text-[16px] font-bold">{profile?.name}</p>
+                                <p className="ml-3 text-[16px] font-semibold">{profile?.name}</p>
                                 {isOpen && <div
                                     className="absolute bg-white border border-gray-300 w-32 top-12 right-1/2 rounded-md">
                                     <ul ref={dropdownRef} className="w-full rounded-xl">

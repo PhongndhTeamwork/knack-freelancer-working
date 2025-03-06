@@ -85,26 +85,58 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 @font-face {
   font-family: 'sf-pro';
-  src: url('../app/fonts/SFPRODISPLAYREGULAR.OTF') format('truetype');
+  font-weight: 100; /* Thin */
+  src: url('../app/fonts/SF-Pro-Display-Thin.otf') format('opentype');
 }
 
 @font-face {
-  font-family: 'sf-black-italic';
-  src: url('../app/fonts/SFPRODISPLAYBLACKITALIC.OTF') format('opentype');
-  font-style: normal;
+  font-family: 'sf-pro';
+  font-weight: 200; /* Extra Light */
+  src: url('../app/fonts/SF-Pro-Display-Ultralight.otf') format('opentype');
 }
 
 @font-face {
-  font-family: 'sf-bold';
-  src: url('../app/fonts/SFPRODISPLAYBOLD.OTF') format('opentype');
-  font-style: normal;
+  font-family: 'sf-pro';
+  font-weight: 300; /* Light */
+  src: url('../app/fonts/SF-Pro-Display-Light.otf') format('opentype');
 }
 
 @font-face {
-  font-family: 'sf-heavy-italic';
-  src: url('../app/fonts/SFPRODISPLAYHEAVYITALIC.OTF') format('opentype');
-  font-style: normal;
+  font-family: 'sf-pro';
+  font-weight: 400; /* Regular */
+  src: url('../app/fonts/SF-Pro-Display-Regular.otf') format('opentype');
 }
+
+@font-face {
+  font-family: 'sf-pro';
+  font-weight: 500; /* Medium */
+  src: url('../app/fonts/SF-Pro-Display-Medium.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'sf-pro';
+  font-weight: 600; /* SemiBold */
+  src: url('../app/fonts/SF-Pro-Display-Semibold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'sf-pro';
+  font-weight: 700; /* Bold */
+  src: url('../app/fonts/SF-Pro-Display-Bold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'sf-pro';
+  font-weight: 800; /* Extra Bold */
+  src: url('../app/fonts/SF-Pro-Display-Heavy.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'sf-pro';
+  font-weight: 900; /* Black */
+  src: url('../app/fonts/SF-Pro-Display-Black.otf') format('opentype');
+}
+
 
 .max-width-suitable{
   max-width: none;

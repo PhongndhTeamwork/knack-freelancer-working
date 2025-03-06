@@ -112,7 +112,7 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                                 }}
                                             />
                                         </div>
-                                        {/* ProminentWork Period Field */}
+                                        {/* Achievement Period Field */}
                                         {/*<div className="space-y-2">*/}
                                         {/*    <Label htmlFor="period" className="responsive-text-16">Thời gian làm*/}
                                         {/*        việc</Label>*/}

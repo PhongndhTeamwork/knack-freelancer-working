@@ -17,7 +17,7 @@ export const ProfileInfo = () => {
                     {/*<Info className="h-5 w-5 text-muted-foreground"/>*/}
                     <Illustration className="w-8 object-cover aspect-[1/1]"
                                   url="/freelancer/profile/UserCircle.svg"/>
-                    <CardTitle style={{marginTop: 0}} className="responsive-text-20">Giới thiệu</CardTitle>
+                    <CardTitle style={{marginTop: 0}} className="responsive-text-20 font-semibold">Giới thiệu</CardTitle>
                 </CardHeader>
                 {profile.biography && <CardContent className="py-0">
                     <p className="text-[#333333] text-justify responsive-text-16" style={{lineHeight: "24px"}}>
@@ -28,12 +28,12 @@ export const ProfileInfo = () => {
 
             </Card>
 
-            {/* ProminentWork Experience */}
+            {/* Achievement Experience */}
             <Card className="py-6 space-y-4">
                 <CardHeader className="px-6 py-0  flex flex-row items-center gap-2">
                     <Illustration className="w-8 object-cover aspect-[1/1]"
                                   url="/freelancer/profile/UserList.svg"/>
-                    <CardTitle style={{marginTop: 0}} className="responsive-text-20">Kinh nghiệm làm việc</CardTitle>
+                    <CardTitle style={{marginTop: 0}} className="responsive-text-20 font-semibold">Kinh nghiệm làm việc</CardTitle>
                 </CardHeader>
                 {profile.profileWorkExperiences?.length > 0 && <CardContent className="space-y-4 py-0">
                     {profile.profileWorkExperiences.map((experience, index) => (
@@ -54,7 +54,7 @@ export const ProfileInfo = () => {
                 <CardHeader className="px-6 py-0  flex flex-row items-center gap-2">
                     <Illustration className="w-8 object-cover aspect-[1/1]"
                                   url="/freelancer/profile/UserList.svg"/>
-                    <CardTitle style={{marginTop: 0}} className="responsive-text-20">Thành tích cá nhân</CardTitle>
+                    <CardTitle style={{marginTop: 0}} className="responsive-text-20 font-semibold">Thành tích cá nhân</CardTitle>
                 </CardHeader>
                 {profile.profileAchievements?.length > 0 && <CardContent className="space-y-4 py-0">
                     {profile.profileAchievements.map((experience, index) => (

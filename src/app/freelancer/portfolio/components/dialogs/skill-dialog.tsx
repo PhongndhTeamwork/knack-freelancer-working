@@ -50,7 +50,7 @@ export const SkillDialog = ({setOpen, skill, setTriggerNotice, triggerNotice, se
                 }
             }
         ).then(() => {
-            setMessage({content: "Tạo kinh nghiệm thành công", type: "success"});
+            setMessage({content: "Tạo kỹ năng thành công", type: "success"});
             setTriggerNotice(!triggerNotice);
             fetchCurrentPortfolio(token || "", currentPortfolio.id);
             setOpen(false);

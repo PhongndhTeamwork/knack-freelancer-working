@@ -73,7 +73,7 @@ export const Skill = ({triggerNotice, setMessage, setTriggerNotice}: Props) => {
                         {currentPortfolio.skillDescription}
                     </p>
                 </div>
-                <div className="col-span-1 flex gap-4 justify-end space-y-4 flex-wrap w-fit">
+                <div className="col-span-1 flex gap-4 ml-auto justify-end space-y-4 flex-wrap w-fit h-fit">
                     {currentPortfolio.portfolioSkills.map((skill, skillIndex) => (
                         <Badge key={skillIndex} variant="secondary"
                                style={{marginTop: 0}}
