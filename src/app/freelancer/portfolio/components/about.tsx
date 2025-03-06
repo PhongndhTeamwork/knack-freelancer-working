@@ -36,7 +36,7 @@ export const About = () => {
                                 </Button>
                             </div>}
                         </div>
-                        <div className="flex justify-end space-y-4 responsive-text-20 ">
+                        <div className="flex flex-col items-end space-y-4 responsive-text-20 ">
                             {currentPortfolio.detail?.split("####").map((d, index) => (
                                 <p key={index} className="text-muted-foreground responsive-text-20 text-justify">
                                     {d}
