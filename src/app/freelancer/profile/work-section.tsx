@@ -5,7 +5,7 @@ import {Illustration} from "@/components/custom/illustration";
 import {Separator} from "@/components/ui/separator";
 import useProfileStore from "@/lib/store/profile.modal";
 import {cn} from "@/lib/utils";
-import {FormatHelper} from "@/lib/helpers/format.helper";
+// import {FormatHelper} from "@/lib/helpers/format.helper";
 import usePortfolioStore from "@/lib/store/portfolio.modal";
 import * as React from "react";
 import {useRouter} from "next/navigation";
@@ -37,10 +37,10 @@ export const WorkSection = () => {
                                                     <h3 className="= responsive-text-16 font-semibold">{work.name}</h3>
                                                     <p className="responsive-text-16 text-[#333333] text-justify">{work.description}</p>
                                                 </div>
-                                                <div className="text-right space-y-2">
-                                                    <p className="responsive-text-16 font-semibold">{work.wage?.toLocaleString('vi-VN')} VND</p>
-                                                    <p className="responsive-text-16 text-[#333333] text-justify">{FormatHelper.formatDateToMonthYear(work.from || "")} {work.to ? " - " +FormatHelper.formatDateToMonthYear(work.to || "") : " đến nay"}</p>
-                                                </div>
+                                                {/*<div className="text-right space-y-2">*/}
+                                                {/*    <p className="responsive-text-16 font-semibold">{work.wage?.toLocaleString('vi-VN')} VND</p>*/}
+                                                {/*    <p className="responsive-text-16 text-[#333333] text-justify">{FormatHelper.formatDateToMonthYear(work.from || "")} {work.to ? " - " +FormatHelper.formatDateToMonthYear(work.to || "") : " đến nay"}</p>*/}
+                                                {/*</div>*/}
                                             </div>
                                         </div>
                                     </CardContent>
