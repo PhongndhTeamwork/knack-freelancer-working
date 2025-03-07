@@ -74,9 +74,12 @@ export const ProfileCompletionProgress = () => {
                 {/* Profile Banner */}
                 <Card className="relative flex justify-center items-center overflow-hidden col-span-2 p-4 h-full">
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-900/70 z-0"/>
-                    <div className="absolute inset-0 bg-[url('/placeholder.svg')] bg-cover bg-center opacity-50"/>
+                    <div
+                        className="absolute inset-0 bg-[url('/freelancer/profile/Background.png')] bg-cover bg-center"/>
 
-                    <CardContent className="relative z-10 p-6 w-full h-full m-auto" style={{backdropFilter: 'blur(20px)'}}>
+                    <CardContent className="relative rounded-md  backdrop-blur-md z-10 p-6 w-full h-full m-auto bg-[#333333]/30"
+                                 // style={{backdropFilter: 'blur(20px)'}}
+                    >
                         <div className="flex flex-col justify-between  sm:flex-row items-start sm:items-center gap-8">
                             <div className="flex gap-6">
                                 <Avatar className="w-[136px] h-[136px] border-2 border-white">

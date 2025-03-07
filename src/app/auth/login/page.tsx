@@ -22,6 +22,8 @@ export default function Login() {
     const {setToken} = useAuthStore()
     const router = useRouter()
 
+    console.log(11111);
+
     const [message, setMessage] = useState<MessagePayloadForm>({content: ""});
     const [triggerNotice, setTriggerNotice] = useState<boolean>(false);
 

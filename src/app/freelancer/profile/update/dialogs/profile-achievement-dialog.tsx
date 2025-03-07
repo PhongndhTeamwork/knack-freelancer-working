@@ -26,17 +26,16 @@ type Props = {
 }
 
 export const ProfileAchievementDialog = ({
-                                               achievement,
-                                               setOpen,
-                                               setMessage,
-                                               setTriggerNotice,
-                                               triggerNotice
-                                           }: Props) => {
+                                             achievement,
+                                             setOpen,
+                                             setMessage,
+                                             setTriggerNotice,
+                                             triggerNotice
+                                         }: Props) => {
     const [achievementInfo, setAchievementInfo] = useState<ProfileAchievementForm>({});
     const {token} = useAuthStore();
     const {fetchProfile} = useProfileStore();
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isLoadingDeleteProcess, setIsLoadingDeleteProcess] = useState<boolean>(false);
 
     useEffect(() => {
         if (achievement) setAchievementInfo(achievement);
@@ -58,7 +57,6 @@ export const ProfileAchievementDialog = ({
             description: achievementInfo.description,
             from: from.toISOString(),
             to: !achievementInfo.isCurrent ? to?.toISOString() : "",
-            wage: Number(achievementInfo.wage)
         }, {
             headers: {
                 Authorization: "Bearer " + token
@@ -74,39 +72,13 @@ export const ProfileAchievementDialog = ({
             }, 500)
         }).catch(() => {
             // console.error(error)
+            setMessage({content: "Something went wrong", type: "error"})
+            setTriggerNotice(!triggerNotice)
         }).finally(() => {
             setIsLoading(false);
         })
 
     };
-
-    const handleDeleteAchievement = () => {
-        setIsLoadingDeleteProcess(true);
-        if (!token) {
-            setMessage({content: "Vui lòng đăng nhập lại", type: "error"})
-            setTriggerNotice(!triggerNotice)
-        }
-        if (!achievementInfo.id) {
-            setMessage({content: "Thành tựu này không tồn tại", type: "error"})
-            setTriggerNotice(!triggerNotice)
-        }
-        axios.delete(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/delete-achievement/${achievementInfo.id}`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        }).then(() => {
-            setMessage({content: "Xóa thành tựu làm việc thành công!", type: "success"})
-            setTriggerNotice(!triggerNotice)
-            fetchProfile(token || "")
-            setTimeout(() => {
-                setOpen(false)
-                window.scrollTo({top: 0, behavior: "smooth"});
-            }, 500)
-        }).catch(() => {
-        }).finally(() => {
-        })
-        setIsLoadingDeleteProcess(false);
-    }
 
     const handleUpdateAchievement = () => {
         setIsLoading(true);
@@ -123,7 +95,6 @@ export const ProfileAchievementDialog = ({
             description: achievementInfo.description,
             from: from.toISOString(),
             to: !achievementInfo.isCurrent ? to?.toISOString() : "",
-            wage: Number(achievementInfo.wage)
         }, {
             headers: {
                 Authorization: "Bearer " + token
@@ -138,6 +109,8 @@ export const ProfileAchievementDialog = ({
             }, 500)
         }).catch(() => {
             // console.error(error)
+            setMessage({content: "Something went wrong", type: "error"})
+            setTriggerNotice(!triggerNotice)
         }).finally(() => {
             setIsLoading(false);
         })
@@ -169,17 +142,19 @@ export const ProfileAchievementDialog = ({
         //     achievementInfo.toYear =  (new Date(achievementInfo.to || "")).getFullYear().toString()
         //     achievementInfo.toMonth =  (new Date(achievementInfo.to || "")).getMonth().toString()
         // }
-        if (Number(achievementInfo.wage) <= 0) {
-            setMessage({content: "Chi phí/Hoa hồng phải lớn hơn 0.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-        if (achievementInfo.fromMonth && achievementInfo.fromYear && achievementInfo.toMonth && achievementInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+achievementInfo.fromMonth, +achievementInfo.fromYear, +achievementInfo.toMonth, +achievementInfo.toYear))) {
-            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
 
+        if (!achievementInfo.isCurrent && achievementInfo.fromMonth && achievementInfo.fromYear && achievementInfo.toMonth && achievementInfo.toYear ) {
+            if(!(ValidateHelper.checkStartAndEndTime(+achievementInfo.fromMonth, +achievementInfo.fromYear, +achievementInfo.toMonth, +achievementInfo.toYear))){
+                setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
+            if(!(ValidateHelper.checkDateInThePast(+achievementInfo.fromMonth, +achievementInfo.fromYear, +achievementInfo.toMonth, +achievementInfo.toYear))){
+                setMessage({content: "Thời gian được chọn không được vượt quá hiện tại", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
+        }
 
         return true
     }
@@ -205,15 +180,17 @@ export const ProfileAchievementDialog = ({
             setTriggerNotice(!triggerNotice)
             return false
         }
-        if (Number(achievementInfo.wage) <= 0) {
-            setMessage({content: "Chi phí/Hoa hồng phải lớn hơn 0.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
-        }
-        if (achievementInfo.fromMonth && achievementInfo.fromYear && achievementInfo.toMonth && achievementInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+achievementInfo.fromMonth, +achievementInfo.fromYear, +achievementInfo.toMonth, +achievementInfo.toYear))) {
-            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
+        if (!achievementInfo.isCurrent && achievementInfo.fromMonth && achievementInfo.fromYear && achievementInfo.toMonth && achievementInfo.toYear ) {
+            if(!(ValidateHelper.checkStartAndEndTime(+achievementInfo.fromMonth, +achievementInfo.fromYear, +achievementInfo.toMonth, +achievementInfo.toYear))){
+                setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
+            if(!(ValidateHelper.checkDateInThePast(+achievementInfo.fromMonth, +achievementInfo.fromYear, +achievementInfo.toMonth, +achievementInfo.toYear))){
+                setMessage({content: "Thời gian được chọn không được vượt quá hiện tại", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
         }
         return true
     }
@@ -225,7 +202,7 @@ export const ProfileAchievementDialog = ({
 
             <div
                 className={`space-y-4 pb-4`}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="">
                     <div className="space-y-2">
                         <Label htmlFor="achievement" className="responsive-text-16">Thành
                             tựu</Label>
@@ -238,26 +215,6 @@ export const ProfileAchievementDialog = ({
                                 setAchievementInfo((prev) => ({
                                     ...prev,
                                     name: e.target.value
-                                }))
-                            }}
-                        />
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label htmlFor="tip" className="responsive-text-16">Chi phí/ Hoa
-                            hồng</Label>
-                        <Input
-                            id="tip"
-                            placeholder=""
-                            type="number"
-                            step="100000"
-                            value={achievementInfo.wage}
-                            // value={Number(achievementInfo.wage).toLocaleString("vi-VN")}
-                            className="responsive-text-16 h-11"
-                            onChange={(e) => {
-                                setAchievementInfo((prev) => ({
-                                    ...prev,
-                                    wage: +e.target.value
                                 }))
                             }}
                         />
@@ -360,13 +317,13 @@ export const ProfileAchievementDialog = ({
                     <Button variant="dark" disabled={isLoading} onClick={handleCreateAchievement}>{isLoading &&
                         <CustomSpinner size="sm"/>} Thêm thành tựu</Button>}
                 {achievement &&
-                    <Button variant="dark" disabled={isLoading || isLoadingDeleteProcess}
+                    <Button variant="dark" disabled={isLoading}
                             onClick={handleUpdateAchievement}>{isLoading &&
                         <CustomSpinner size="sm"/>} Lưu</Button>}
-                {achievement &&
-                    <Button variant="danger" disabled={isLoading || isLoadingDeleteProcess}
-                            onClick={handleDeleteAchievement}>{isLoadingDeleteProcess &&
-                        <CustomSpinner size="sm"/>} Xóa</Button>}
+                {/*{achievement &&*/}
+                {/*    <Button variant="danger" disabled={isLoading || isLoadingDeleteProcess}*/}
+                {/*            onClick={handleDeleteAchievement}>{isLoadingDeleteProcess &&*/}
+                {/*        <CustomSpinner size="sm"/>} Xóa</Button>}*/}
             </div>
         </div>
     )

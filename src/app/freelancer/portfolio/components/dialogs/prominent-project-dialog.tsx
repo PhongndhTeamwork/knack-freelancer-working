@@ -217,10 +217,17 @@ export const ProminentProjectDialog = ({
             return false
         }
 
-        if (prominentWorkInfo.fromMonth && prominentWorkInfo.fromYear && prominentWorkInfo.toMonth && prominentWorkInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+prominentWorkInfo.fromMonth, +prominentWorkInfo.fromYear, +prominentWorkInfo.toMonth, +prominentWorkInfo.toYear))) {
-            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
+        if (!prominentWorkInfo.isCurrent && prominentWorkInfo.fromMonth && prominentWorkInfo.fromYear && prominentWorkInfo.toMonth && prominentWorkInfo.toYear ) {
+            if(!(ValidateHelper.checkStartAndEndTime(+prominentWorkInfo.fromMonth, +prominentWorkInfo.fromYear, +prominentWorkInfo.toMonth, +prominentWorkInfo.toYear))){
+                setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
+            if(!(ValidateHelper.checkDateInThePast(+prominentWorkInfo.fromMonth, +prominentWorkInfo.fromYear, +prominentWorkInfo.toMonth, +prominentWorkInfo.toYear))){
+                setMessage({content: "Thời gian được chọn không được vượt quá hiện tại", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
         }
         return true
     }
@@ -260,10 +267,17 @@ export const ProminentProjectDialog = ({
             prominentWorkInfo.toYear = (new Date(prominentWorkInfo.to || "")).getFullYear().toString()
             prominentWorkInfo.toMonth = (new Date(prominentWorkInfo.to || "")).getMonth().toString()
         }
-        if (prominentWorkInfo.fromMonth && prominentWorkInfo.fromYear && prominentWorkInfo.toMonth && prominentWorkInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+prominentWorkInfo.fromMonth, +prominentWorkInfo.fromYear, +prominentWorkInfo.toMonth, +prominentWorkInfo.toYear))) {
-            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
+        if (!prominentWorkInfo.isCurrent && prominentWorkInfo.fromMonth && prominentWorkInfo.fromYear && prominentWorkInfo.toMonth && prominentWorkInfo.toYear ) {
+            if(!(ValidateHelper.checkStartAndEndTime(+prominentWorkInfo.fromMonth, +prominentWorkInfo.fromYear, +prominentWorkInfo.toMonth, +prominentWorkInfo.toYear))){
+                setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
+            if(!(ValidateHelper.checkDateInThePast(+prominentWorkInfo.fromMonth, +prominentWorkInfo.fromYear, +prominentWorkInfo.toMonth, +prominentWorkInfo.toYear))){
+                setMessage({content: "Thời gian được chọn không được vượt quá hiện tại", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
         }
         return true
     }

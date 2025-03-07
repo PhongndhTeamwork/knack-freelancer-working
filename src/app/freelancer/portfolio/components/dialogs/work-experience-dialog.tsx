@@ -129,10 +129,17 @@ export const WorkExperienceDialog = ({triggerNotice, setMessage, setTriggerNotic
             workExperienceInfo.toYear = (new Date(workExperienceInfo.to || "")).getFullYear().toString()
             workExperienceInfo.toMonth = (new Date(workExperienceInfo.to || "")).getMonth().toString()
         }
-        if (workExperienceInfo.fromMonth && workExperienceInfo.fromYear && workExperienceInfo.toMonth && workExperienceInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+workExperienceInfo.fromMonth, +workExperienceInfo.fromYear, +workExperienceInfo.toMonth, +workExperienceInfo.toYear))) {
-            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
+        if (!workExperienceInfo.isCurrent && workExperienceInfo.fromMonth && workExperienceInfo.fromYear && workExperienceInfo.toMonth && workExperienceInfo.toYear ) {
+            if(!(ValidateHelper.checkStartAndEndTime(+workExperienceInfo.fromMonth, +workExperienceInfo.fromYear, +workExperienceInfo.toMonth, +workExperienceInfo.toYear))){
+                setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
+            if(!(ValidateHelper.checkDateInThePast(+workExperienceInfo.fromMonth, +workExperienceInfo.fromYear, +workExperienceInfo.toMonth, +workExperienceInfo.toYear))){
+                setMessage({content: "Thời gian được chọn không được vượt quá hiện tại", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
         }
         return true
     }
@@ -158,10 +165,17 @@ export const WorkExperienceDialog = ({triggerNotice, setMessage, setTriggerNotic
             setTriggerNotice(!triggerNotice)
             return false
         }
-        if (workExperienceInfo.fromMonth && workExperienceInfo.fromYear && workExperienceInfo.toMonth && workExperienceInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+workExperienceInfo.fromMonth, +workExperienceInfo.fromYear, +workExperienceInfo.toMonth, +workExperienceInfo.toYear))) {
-            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
+        if (!workExperienceInfo.isCurrent && workExperienceInfo.fromMonth && workExperienceInfo.fromYear && workExperienceInfo.toMonth && workExperienceInfo.toYear ) {
+            if(!(ValidateHelper.checkStartAndEndTime(+workExperienceInfo.fromMonth, +workExperienceInfo.fromYear, +workExperienceInfo.toMonth, +workExperienceInfo.toYear))){
+                setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
+            if(!(ValidateHelper.checkDateInThePast(+workExperienceInfo.fromMonth, +workExperienceInfo.fromYear, +workExperienceInfo.toMonth, +workExperienceInfo.toYear))){
+                setMessage({content: "Thời gian được chọn không được vượt quá hiện tại", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
         }
         return true
     }

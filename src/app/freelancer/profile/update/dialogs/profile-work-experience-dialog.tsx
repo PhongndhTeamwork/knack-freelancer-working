@@ -36,7 +36,7 @@ export const ProfileWorkExperienceDialog = ({
     const {token} = useAuthStore();
     const {fetchProfile} = useProfileStore();
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isLoadingDeleteProcess, setIsLoadingDeleteProcess] = useState<boolean>(false);
+
 
     useEffect(() => {
         if (experience) setExperienceInfo(experience);
@@ -78,34 +78,6 @@ export const ProfileWorkExperienceDialog = ({
         })
     };
 
-    const handleDeleteWorkExperience = () => {
-        setIsLoadingDeleteProcess(true);
-        if (!token) {
-            setMessage({content: "Vui lòng đăng nhập lại", type: "error"})
-            setTriggerNotice(!triggerNotice)
-        }
-        if (!experienceInfo.id) {
-            setMessage({content: "Kinh nghiệm này không tồn tại", type: "error"})
-            setTriggerNotice(!triggerNotice)
-        }
-        axios.delete(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/delete-work-experience/${experienceInfo.id}`, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        }).then(() => {
-            setMessage({content: "Xóa kinh nghiệm làm việc thành công!", type: "success"})
-            setTriggerNotice(!triggerNotice)
-            fetchProfile(token || "")
-            setTimeout(() => {
-                setOpen(false)
-                window.scrollTo({top: 0, behavior: "smooth"}); // Smoothly scroll to top
-            }, 500)
-        }).catch(() => {
-        }).finally(() => {
-            setIsLoadingDeleteProcess(false);
-        })
-    }
-
     const handleUpdateWorkExperience = () => {
         setIsLoading(true);
         if (!validateBeforeUpdating()) {
@@ -136,6 +108,8 @@ export const ProfileWorkExperienceDialog = ({
             }, 500)
         }).catch(() => {
             // console.error(error)
+            setMessage({content: "Something went wrong", type: "error"})
+            setTriggerNotice(!triggerNotice)
         }).finally(() => {
             setIsLoading(false);
         })
@@ -163,10 +137,17 @@ export const ProfileWorkExperienceDialog = ({
             setTriggerNotice(!triggerNotice)
             return false
         }
-        if (experienceInfo.fromMonth && experienceInfo.fromYear && experienceInfo.toMonth && experienceInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+experienceInfo.fromMonth, +experienceInfo.fromYear, +experienceInfo.toMonth, +experienceInfo.toYear))) {
-            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
+        if (!experienceInfo.isCurrent && experienceInfo.fromMonth && experienceInfo.fromYear && experienceInfo.toMonth && experienceInfo.toYear ) {
+            if(!(ValidateHelper.checkStartAndEndTime(+experienceInfo.fromMonth, +experienceInfo.fromYear, +experienceInfo.toMonth, +experienceInfo.toYear))){
+                setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
+            if(!(ValidateHelper.checkDateInThePast(+experienceInfo.fromMonth, +experienceInfo.fromYear, +experienceInfo.toMonth, +experienceInfo.toYear))){
+                setMessage({content: "Thời gian được chọn không được vượt quá hiện tại", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
         }
         return true
     }
@@ -198,10 +179,17 @@ export const ProfileWorkExperienceDialog = ({
         //     work.toYear =  (new Date(work.to || "")).getFullYear().toString()
         //     work.toMonth =  (new Date(work.to || "")).getMonth().toString()
         // }
-        if (experienceInfo.fromMonth && experienceInfo.fromYear && experienceInfo.toMonth && experienceInfo.toYear && !(ValidateHelper.checkStartAndEndTime(+experienceInfo.fromMonth, +experienceInfo.fromYear, +experienceInfo.toMonth, +experienceInfo.toYear))) {
-            setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
-            setTriggerNotice(!triggerNotice)
-            return false
+        if (!experienceInfo.isCurrent && experienceInfo.fromMonth && experienceInfo.fromYear && experienceInfo.toMonth && experienceInfo.toYear ) {
+            if(!(ValidateHelper.checkStartAndEndTime(+experienceInfo.fromMonth, +experienceInfo.fromYear, +experienceInfo.toMonth, +experienceInfo.toYear))){
+                setMessage({content: "Thời gian kết thúc phải sau thời gian bắt đầu.", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
+            if(!(ValidateHelper.checkDateInThePast(+experienceInfo.fromMonth, +experienceInfo.fromYear, +experienceInfo.toMonth, +experienceInfo.toYear))){
+                setMessage({content: "Thời gian được chọn không được vượt quá hiện tại", type: "error"})
+                setTriggerNotice(!triggerNotice)
+                return false
+            }
         }
         return true
     }
@@ -323,13 +311,13 @@ export const ProfileWorkExperienceDialog = ({
                         <Button variant="dark" disabled={isLoading} onClick={handleCreateWorkExperience}>{isLoading &&
                             <CustomSpinner size="sm"/>} Thêm lĩnh vực</Button>}
                     {experience &&
-                        <Button variant="dark" disabled={isLoading || isLoadingDeleteProcess}
+                        <Button variant="dark" disabled={isLoading}
                                 onClick={handleUpdateWorkExperience}>{isLoading &&
                             <CustomSpinner size="sm"/>} Lưu</Button>}
-                    {experience &&
-                        <Button variant="danger" disabled={isLoading || isLoadingDeleteProcess}
-                                onClick={handleDeleteWorkExperience}>{isLoadingDeleteProcess &&
-                            <CustomSpinner size="sm"/>} Xóa</Button>}
+                    {/*{experience &&*/}
+                    {/*    <Button variant="danger" disabled={isLoading || isLoadingDeleteProcess}*/}
+                    {/*            onClick={handleDeleteWorkExperience}>{isLoadingDeleteProcess &&*/}
+                    {/*        <CustomSpinner size="sm"/>} Xóa</Button>}*/}
                 </div>
             </div>
 

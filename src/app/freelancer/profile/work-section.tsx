@@ -9,6 +9,7 @@ import {cn} from "@/lib/utils";
 import usePortfolioStore from "@/lib/store/portfolio.modal";
 import * as React from "react";
 import {useRouter} from "next/navigation";
+import {FormatHelper} from "@/lib/helpers/format.helper";
 
 
 export const WorkSection = () => {
@@ -37,10 +38,10 @@ export const WorkSection = () => {
                                                     <h3 className="= responsive-text-16 font-semibold">{work.name}</h3>
                                                     <p className="responsive-text-16 text-[#333333] text-justify">{work.description}</p>
                                                 </div>
-                                                {/*<div className="text-right space-y-2">*/}
-                                                {/*    <p className="responsive-text-16 font-semibold">{work.wage?.toLocaleString('vi-VN')} VND</p>*/}
-                                                {/*    <p className="responsive-text-16 text-[#333333] text-justify">{FormatHelper.formatDateToMonthYear(work.from || "")} {work.to ? " - " +FormatHelper.formatDateToMonthYear(work.to || "") : " đến nay"}</p>*/}
-                                                {/*</div>*/}
+                                                <div className="text-right space-y-2">
+                                                    <p className="responsive-text-16 font-semibold">{work.wage?.toLocaleString('vi-VN')} VND</p>
+                                                    <p className="responsive-text-16 text-[#333333] text-justify">{FormatHelper.formatDateToMonthYear(work.from || "")} {work.to ? " - " +FormatHelper.formatDateToMonthYear(work.to || "") : " đến nay"}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </CardContent>
@@ -54,7 +55,7 @@ export const WorkSection = () => {
                     <div className="flex flex-row items-center gap-2">
                         <Illustration className="w-8 object-cover aspect-[1/1]"
                                       url="/freelancer/profile/Coins.svg"/>
-                        <h3 className="font-bold responsive-text-20 font-semibold">Bảng giá</h3>
+                        <h3 className="responsive-text-20 font-semibold">Bảng giá</h3>
                     </div>
                 </div>
             </Card>
@@ -65,7 +66,7 @@ export const WorkSection = () => {
                                   url="/freelancer/profile/Briefcase.png"/>
                     <CardTitle style={{marginTop: 0}} className="responsive-text-20 font-semibold">Portfolio của bạn</CardTitle>
                 </CardHeader>
-                {basicPortfolios?.length > 0 && <CardContent className="grid grid-cols-3">
+                {basicPortfolios?.length > 0 && <CardContent className="grid grid-cols-3 gap-4">
                     {basicPortfolios.map((item, index) => (
                         <Card key={index} className="overflow-hidden col-span-1 cursor-pointer" onClick={() => {
                             router.push("/freelancer/portfolio?id="+item.id);

@@ -16,8 +16,21 @@ import {FormatHelper} from "@/lib/helpers/format.helper";
 import {Dispatch, SetStateAction, useCallback, useEffect, useState} from "react";
 import {MessagePayloadForm} from "@/lib/types/error.type";
 import {CustomTextarea} from "@/components/custom/custom-textarea";
-import {CirclePlus, Pencil} from "lucide-react";
+import {CirclePlus, Trash2} from "lucide-react";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
+import {Illustration} from "@/components/custom/illustration";
+import axios from "axios";
+import useAuthStore from "@/lib/store/user.modal";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
+import {CustomSpinner} from "@/components/custom/custom-spinner";
 
 interface Props {
     setMessage: Dispatch<SetStateAction<MessagePayloadForm>>;
@@ -29,6 +42,9 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
     const {draftProfile, setProfileUpdate, profile} = useProfileStore();
     const [openCreate, setOpenCreate] = useState<boolean>(false);
     const [openUpdate, setOpenUpdate] = useState<boolean[]>([]);
+    const [isLoadingDeleteProcess, setIsLoadingDeleteProcess] = useState<boolean>(false);
+    const {token} = useAuthStore();
+    const {fetchProfile} = useProfileStore();
 
     const updateIsCurrentStatus = useCallback(() => {
         setProfileUpdate((prev) => ({
@@ -43,6 +59,7 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
         updateIsCurrentStatus()
     }, [updateIsCurrentStatus, profile]);
 
+
     useEffect(() => {
         setOpenUpdate(new Array(draftProfile.profileWorkExperiences?.length).fill(false))
     }, [draftProfile.profileWorkExperiences.length]);
@@ -54,13 +71,41 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
         setOpenUpdate(updatedState);
     }
 
+    const handleDeleteWorkExperience = (id ?: number) => {
+        setIsLoadingDeleteProcess(true);
+        if (!token) {
+            setMessage({content: "Vui lòng đăng nhập lại", type: "error"})
+            setTriggerNotice(!triggerNotice)
+        }
+        if (!id) {
+            setMessage({content: "Kinh nghiệm này không tồn tại", type: "error"})
+            setTriggerNotice(!triggerNotice)
+        }
+        axios.delete(`${process.env.NEXT_PUBLIC_PREFIX_API}/user/delete-work-experience/${id}`, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        }).then(() => {
+            setMessage({content: "Xóa kinh nghiệm làm việc thành công!", type: "success"})
+            setTriggerNotice(!triggerNotice)
+            fetchProfile(token || "")
+            // setTimeout(() => {
+            //     window.scrollTo({top: 0, behavior: "smooth"}); // Smoothly scroll to top
+            // }, 500)
+        }).catch(() => {
+            setMessage({content: "Something went wrong", type: "error"})
+            setTriggerNotice(!triggerNotice)
+        }).finally(() => {
+            setIsLoadingDeleteProcess(false);
+        })
+    }
+
     return (
         <>
             <Card className="w-full mx-auto">
-                <CardContent className="p-6 space-y-6 ">
+                <CardContent className="p-6 space-y-6">
                     <div className="flex justify-between items-center">
                         <h4 className="mb-0 responsive-text-28 font-semibold">Kinh nghiệm làm việc</h4>
-
                         <Dialog onOpenChange={setOpenCreate} open={openCreate}>
                             <DialogTrigger asChild>
                                 <Button
@@ -69,7 +114,7 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                     size="sm"
                                 >
                                     <CirclePlus/>
-                                    Thêm lĩnh vực
+                                    Thêm kinh nghiệm
                                 </Button>
                             </DialogTrigger>
                             <DialogContent
@@ -85,43 +130,76 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                         </Dialog>
                     </div>
 
-                    <div className="space-y-6">
+                    {draftProfile.profileWorkExperiences?.length >0 && <div className="space-y-6">
                         {
                             draftProfile.profileWorkExperiences.map((pwe, index) => {
                                 return <div key={index}
                                             className={`space-y-4 pb-4 ${index > 0 && "border-t border-black pt-8"}`}
                                 >
+                                    <header
+                                        className="flex items-center justify-between bg-[#333333] text-white px-4 py-2 rounded-md">
+                                        <h2 className="responsive-text-16font-medium">Công việc {index +1}</h2>
+                                        <div className="flex items-center gap-2">
+                                            <Dialog onOpenChange={(value) => handleControlUpdateDialog(index, value)}
+                                                    open={openUpdate[index]}>
+                                                <DialogTrigger asChild>
+                                                    <Button
+                                                        variant="secondary"
+                                                        size="icon"
+                                                        className="h-8 w-8 rounded-full"
+                                                    >
+                                                        <Illustration className="w-5 h-5 object-cover"
+                                                                      url="/freelancer/portfolio/PencilLineBlack.svg"/>
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <DialogContent
+                                                    className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
+                                                    <ScrollArea className="max-h-[80vh] px-4">
+                                                        <ProfileWorkExperienceDialog
+                                                            setOpen={(value) => handleControlUpdateDialog(index, value)}
+                                                            setMessage={setMessage}
+                                                            triggerNotice={triggerNotice}
+                                                            setTriggerNotice={setTriggerNotice}
+                                                            experience={pwe}/>
+                                                    </ScrollArea>
+                                                </DialogContent>
+                                            </Dialog>
+                                            <AlertDialog>
+                                                <AlertDialogTrigger>
+                                                    <Button variant="danger" size="icon" className="h-8 w-8 rounded-full">
+
+                                                        {!isLoadingDeleteProcess ? <Trash2 className="h-5 w-5"/> : <CustomSpinner size="sm"/>}
+                                                    </Button>
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Bạn chắc chứ?</AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            Hành động nãy sẽ xóa kinh nghiệm của bạn khỏi profile
+                                                            này.
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Hủy</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={() => {
+                                                            handleDeleteWorkExperience(pwe?.id)
+                                                        }}>Xóa</AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                        </div>
+                                    </header>
                                     <div className="gap-6">
                                         {/* Position Field */}
                                         <div className="space-y-2">
-                                            <Label htmlFor="position"  className="responsive-text-16">Lĩnh vực</Label>
+                                            <Label htmlFor="position" className="responsive-text-16">Lĩnh vực</Label>
                                             <Input
                                                 id="position"
                                                 readOnly={true}
                                                 className="h-11 responsive-text-16"
                                                 value={pwe.name}
-                                                onChange={(e) => {
-                                                    setProfileUpdate((prev) => ({
-                                                        ...prev,
-                                                        profileWorkExperiences: prev.profileWorkExperiences.map((pwe, i) =>
-                                                            i === index
-                                                                ? {...pwe, name: e.target.value}
-                                                                : pwe
-                                                        )
-                                                    }))
-                                                }}
                                             />
                                         </div>
-                                        {/* Achievement Period Field */}
-                                        {/*<div className="space-y-2">*/}
-                                        {/*    <Label htmlFor="period" className="responsive-text-16">Thời gian làm*/}
-                                        {/*        việc</Label>*/}
-                                        {/*    <Input*/}
-                                        {/*        id="period"*/}
-                                        {/*        placeholder=""*/}
-                                        {/*        className="h-11 responsive-text-16"*/}
-                                        {/*    />*/}
-                                        {/*</div>*/}
                                     </div>
 
                                     {/* Description Field */}
@@ -133,16 +211,6 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                             readOnly={true}
                                             value={pwe.description}
                                             className="min-h-[100px] resize-none responsive-text-16"
-                                            onChange={(value) => {
-                                                setProfileUpdate((prev) => ({
-                                                    ...prev,
-                                                    profileWorkExperiences: prev.profileWorkExperiences.map((pwe, i) =>
-                                                        i === index
-                                                            ? {...pwe, description: value}
-                                                            : pwe
-                                                    )
-                                                }))
-                                            }}
                                         />
                                     </div>
 
@@ -250,35 +318,10 @@ export const WorkExperience = ({setMessage, setTriggerNotice, triggerNotice}: Pr
                                             </label>
                                         </div>
                                     </div>
-
-                                    <Dialog onOpenChange={(value) => handleControlUpdateDialog(index, value)}
-                                            open={openUpdate[index]}>
-                                        <DialogTrigger asChild>
-                                            <Button
-                                                type="button"
-                                                variant="primary-outline"
-                                                size="sm"
-                                            >
-                                                <Pencil/>
-                                                Chỉnh sửa
-                                            </Button>
-                                        </DialogTrigger>
-                                        <DialogContent
-                                            className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
-                                            <ScrollArea className="max-h-[80vh] px-4">
-                                                <ProfileWorkExperienceDialog
-                                                    setOpen={(value) => handleControlUpdateDialog(index, value)}
-                                                    setMessage={setMessage}
-                                                    triggerNotice={triggerNotice}
-                                                    setTriggerNotice={setTriggerNotice}
-                                                    experience={pwe}/>
-                                            </ScrollArea>
-                                        </DialogContent>
-                                    </Dialog>
                                 </div>
                             })
                         }
-                    </div>
+                    </div>}
 
                 </CardContent>
             </Card>
