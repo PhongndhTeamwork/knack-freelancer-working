@@ -83,6 +83,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
+nextjs-portal {
+  display: none;
+}
+
 @font-face {
   font-family: 'sf-pro';
   font-weight: 100; /* Thin */
