@@ -118,7 +118,7 @@ export const Header = ({logoLink, components}: Props) => {
                                         </li>
                                         <li className="px-2 py-2 w-full cursor-pointer hover:bg-gray-100"
                                             onClick={() => {
-                                                router.push("/freelancer/portfolio/general")
+                                                router.push("/freelancer/portfolio")
                                                 setIsOpen(false);
                                             }}>Portfolio
                                         </li>

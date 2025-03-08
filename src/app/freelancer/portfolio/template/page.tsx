@@ -43,7 +43,7 @@ export default function Component() {
     const { fetchBasicPortfolios} = usePortfolioStore();
 
     useEffect(() => {
-        if (!isChooseNewPortfolio) router.push("/freelancer/portfolio/general")
+        if (!isChooseNewPortfolio) router.push("/freelancer/portfolio")
     }, [isChooseNewPortfolio, router])
 
     const handleCreateNewPortfolio = async () => {
@@ -53,7 +53,7 @@ export default function Component() {
             return;
         }
         fetchBasicPortfolios(token || "")
-        router.push("/freelancer/portfolio?id="+result);
+        router.push("/freelancer/portfolio/"+result);
     }
 
 

@@ -1,300 +1,133 @@
-"use client";
-
-import {ProminentProject} from "@/app/freelancer/portfolio/components/prominent-project";
-import {CustomerFeedback} from "@/app/freelancer/portfolio/components/customer-feedback";
-import {About} from "@/app/freelancer/portfolio/components/about";
-import {WorkExperience} from "@/app/freelancer/portfolio/components/work-experience";
-import {Skill} from "@/app/freelancer/portfolio/components/skill";
-import {PortfolioHeader} from "@/app/freelancer/portfolio/components/portfolio-header";
-import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
-import {Button} from "@/components/ui/button";
-import * as React from "react";
-import {PortfolioFooter} from "@/app/freelancer/portfolio/components/portfolio-footer";
+"use client"
+import {Card, CardContent, CardFooter} from "@/components/ui/card"
 import {Illustration} from "@/components/custom/illustration";
-import {
-    Dialog,
-    DialogContent,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import {ScrollArea} from "@/components/ui/scroll-area";
-import {FeedbackDialog} from "@/app/freelancer/portfolio/components/dialogs/feedback-dialog";
-import {useEffect, useState} from "react";
-import {CirclePlus} from "lucide-react";
-import {ProminentProjectDialog} from "@/app/freelancer/portfolio/components/dialogs/prominent-project-dialog";
-import {AboutMeDialog} from "@/app/freelancer/portfolio/components/dialogs/about-me-dialog";
-import {WorkExperienceDialog} from "@/app/freelancer/portfolio/components/dialogs/work-experience-dialog";
-import {SkillDialog} from "@/app/freelancer/portfolio/components/dialogs/skill-dialog";
-import {SkillDescriptionDialog} from "@/app/freelancer/portfolio/components/dialogs/skill-description-dialog";
-import usePortfolioUpdateStore from "@/lib/store/portfolio-update.modal";
-import {useRouter, useSearchParams} from "next/navigation";
+import * as React from "react";
+import {Plus, Search} from "lucide-react";
+import {Input} from "@/components/ui/input";
+import {CustomSelect} from "@/components/custom/custom-select";
+import {useRouter} from "next/navigation";
 import usePortfolioStore from "@/lib/store/portfolio.modal";
 import useAuthStore from "@/lib/store/user.modal";
-import {MessagePayloadForm} from "@/lib/types/error.type";
-import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
-import {Toaster} from "react-hot-toast";
-// import { useReactToPrint } from "react-to-print";
+import {useEffect} from "react";
+
 
 export default function Component() {
-    const [open, setOpen] = useState<boolean[]>(Array(7).fill(false));
-    const {isInUpdateMode, setIsInUpdateMode} = usePortfolioUpdateStore();
-    const {fetchCurrentPortfolio, currentPortfolio} = usePortfolioStore();
+    const styles = [
+        {
+            value: "1",
+            label: "Portfolio type 1",
+        },
+        {
+            value: "2",
+            label: "Portfolio type 2",
+        },
+        {
+            value: "3",
+            label: "Portfolio type 3",
+        }
+    ]
+
+    const {basicPortfolios, fetchBasicPortfolios, setIsChooseNewPortfolio} = usePortfolioStore();
     const {token} = useAuthStore();
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    const id = searchParams.get("id");
-    const [message, setMessage] = useState<MessagePayloadForm>({content: ""});
-    const [triggerNotice, setTriggerNotice] = useState<boolean>(false);
-    // const contentRef = useRef<HTMLDivElement>(null);
-    // const reactToPrintFn = useReactToPrint({ contentRef });
-
-
-    ToastInitialisation({triggerMessage: triggerNotice, message: message})
 
     useEffect(() => {
-        if (!id) return;
-        if (!token) return;
-        fetchCurrentPortfolio(token || "", +id);
-    }, [fetchCurrentPortfolio, id, router, token]);
+        if(!token) return;
+        if(basicPortfolios && basicPortfolios?.length > 0) return;
+        fetchBasicPortfolios(token || "")
+    }, [basicPortfolios, fetchBasicPortfolios, token]);
 
-    const handleControlDialog = (index: number, value: boolean) => {
-        const array = [...open];
-        array[index] = value;
-        setOpen(array);
-    }
 
+    const router = useRouter();
 
     return (
-        <div className="space-y-[60px]"
-             // ref={contentRef}
-        >
-            <Toaster position="bottom-center"/>
-            <div className="max-width-suitable px-[60px] mx-auto">
-                <header className="flex items-center justify-between w-full py-0">
-                    <Breadcrumb className="flex gap-1">
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href="/freelancer/portfolio/general"
-                                            className="responsive-text-20 text-[#545454]">Quản lí
-                                Portfolio</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator/>
-                        {/*<ChevronRight />*/}
-                        <BreadcrumbItem>
-                            <BreadcrumbLink href="/freelancer/portfolio" className="font-medium responsive-text-20">
-                                Elegant 1
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                    </Breadcrumb>
+        <div className="max-w-[1800px] px-[60px] mx-auto mt-28">
+            {/* Banner Section */}
+            <div className="relative h-[200px] w-full overflow-hidden">
+                <Illustration url="/freelancer/portfolio/banner/1.svg" className="h-full rounded-xl"/>
+            </div>
 
-                    <div className="space-x-5 flex items-center">
-                        {isInUpdateMode && <Button
-                            className="border-dashed border-black rounded-xl responsive-text-16 font-semibold px-4 space-x-3"
-                            variant="dark-outline">
-                            <Illustration className="w-6 h-6 object-cover"
-                                          url="/freelancer/portfolio/PencilLineBlack.svg"/>
-                            Bạn đang ở chế độ chỉnh sửa
-                        </Button>}
-                        {/*{isInUpdateMode &&*/}
-                        {/*    <Button variant="dark-outline" className="h-12 responsive-text-20">Xem trước</Button>}*/}
-                        {isInUpdateMode && <Button variant="dark" className="h-12 responsive-text-20" onClick={() => {
-                            setIsInUpdateMode(false)
-                        }}>Lưu chỉnh sửa</Button>}
-                        {/*{!isInUpdateMode && <Button variant="dark-outline" className="h-12 responsive-text-20" onClick={() => reactToPrintFn()}>Tải portfolio</Button>}*/}
-                        {!isInUpdateMode && <Button variant="dark" className="h-12 responsive-text-20" onClick={() => {
-                            setIsInUpdateMode(true)
-                        }}>Cập nhật</Button>}
+            {/* Content Section */}
+            <div className="mx-auto py-8 mt-4">
+                <div className="space-y-6">
+                    {/* Header */}
+                    <div className="space-y-3">
+                        <h1 className="responsive-text-48 font-bold">Portfolio của bạn</h1>
+                        <p className="text-muted-foreground responsive-text-20">
+                            Khám phá những mẫu Hồ sơ năng lực hấp dẫn nhất từ chúng tôi
+                        </p>
                     </div>
-                </header>
-            </div>
-            <div className="max-width-suitable px-[60px] mx-auto">
-                <PortfolioHeader/>
-            </div>
-            <div className="max-width-suitable px-[60px] mx-auto ">
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex gap-6 items-center">
-                        <div className="w-5 h-5 bg-green-500 rounded-full"/>
-                        <h2 className="responsive-text-40 font-semibold">Dự án nổi bật</h2>
+
+                    {/* Filters */}
+                    <div className="flex flex-wrap gap-4">
+                        <div className="hidden md:flex relative">
+                            <Search
+                                className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4"/>
+                            <Input
+                                type="search"
+                                placeholder="Tìm kiếm..."
+                                className="pl-10 w-[200px] lg:w-[300px] bg-[#DDDDDD80] responsive-text-16"
+                            />
+                        </div>
+                        {/*<Badge variant="secondary" className="px-4 py-1">*/}
+                        {/*    Style*/}
+                        {/*</Badge>*/}
+                        <CustomSelect items={styles} className="w-52 responsive-text-16"/>
+                        {/*<Select>*/}
+                        {/*    <SelectTrigger className="w-[100px] bg-[#DDDDDD80] h-[40px]">*/}
+                        {/*        <SelectValue placeholder="Style"/>*/}
+                        {/*    </SelectTrigger>*/}
+                        {/*    <SelectContent className="bg-[#D8D8D8]">*/}
+                        {/*        <SelectGroup>*/}
+                        {/*            <SelectLabel>Style</SelectLabel>*/}
+                        {/*            <SelectItem value="1">1</SelectItem>*/}
+                        {/*            <SelectItem value="2">2</SelectItem>*/}
+                        {/*            <SelectItem value="3">3</SelectItem>*/}
+                        {/*        </SelectGroup>*/}
+                        {/*    </SelectContent>*/}
+                        {/*</Select>*/}
+
+                        {/*<div className="ml-auto">*/}
+                        {/*    <div>*/}
+                        {/*        <Button variant="dark" size="sm">Tìm kiếm</Button>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
-                    {isInUpdateMode &&
-                        <Dialog onOpenChange={(value) => {
-                            handleControlDialog(1, value)
-                        }} open={open[1]}>
-                            <DialogTrigger asChild>
-                                <Button className="" variant="dark">
-                                    <CirclePlus className="w-6 h-6"/>
-                                    Thêm dự án
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent
-                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
-                                <ScrollArea className="max-h-[80vh] px-4">
-                                    <ProminentProjectDialog setOpen={(value) => {
-                                        handleControlDialog(1, value)
-                                    }} setTriggerNotice={setTriggerNotice}
-                                                            setMessage={setMessage} triggerNotice={triggerNotice}/>
-                                </ScrollArea>
-                            </DialogContent>
-                        </Dialog>}
-                </div>
-                {
-                    currentPortfolio.portfolioProminentProjects?.map((prominentProject, i) => (
-                            <div key={i} className={i > 0 ? "mt-10" : "mt-5"}><ProminentProject setMessage={setMessage}
-                                                                                                triggerNotice={triggerNotice}
-                                                                                                setTriggerNotice={setTriggerNotice}
-                                                                                                prominentProject={prominentProject}/>
+
+                    {/* Portfolio Grid */}
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                        {basicPortfolios.map((item, index) => (
+                            <Card key={index} className="overflow-hidden col-span-1 cursor-pointer" onClick={() => {
+                                router.push("/freelancer/portfolio/"+item.id);
+                            }}>
+                                <CardContent className="p-0 bg-gray-800 border-b-2">
+                                    <div className="aspect-[6/5] relative">
+                                        <Illustration className="w-full object-cover aspect-[6/5]"
+                                                      url="/freelancer/portfolio/portfolio1.png"/>
+                                    </div>
+                                </CardContent>
+                                <CardFooter className="p-4">
+                                    <h3 className="text-xl font-medium">{item?.name || "Portfolio"}</h3>
+                                </CardFooter>
+                            </Card>
+                        ))}
+                        <Card className="overflow-hidden col-span-1 flex items-center justify-center cursor-pointer "
+                              onClick={() => {
+                                  setIsChooseNewPortfolio(true);
+                                  router.push("/freelancer/portfolio/template")
+                              }}>
+                            <div className="w-full aspect-[6/5] flex justify-center flex-col items-center">
+                                <Plus className="w-2/3 h-2/3 text-[#D8D8D8]"/>
+                                <h3 className="w-full text-xl h-[60px] items-center font-medium text-muted-foreground flex justify-center">Thêm Portfolio mới</h3>
+
                             </div>
-                        )
-                    )
-                }
-            </div>
+                            {/*<CardContent className="flex justify-center">*/}
 
-            <div className="mt-8">
-                <div className="flex items-center justify-between mb-8 max-width-suitable px-[60px] mx-auto">
-                    <div className="flex gap-6 items-center">
-                        <div className="w-5 h-5 bg-green-500 rounded-full"/>
-                        <h2 className="responsive-text-40 font-semibold">Feedback của Khách hàng</h2>
+                            {/*</CardContent>*/}
+                            {/*<CardFooter className="p-4">*/}
+                            {/*</CardFooter>*/}
+                        </Card>
                     </div>
-                    {isInUpdateMode &&
-                        <Dialog onOpenChange={(value) => {
-                            handleControlDialog(2, value)
-                        }} open={open[2]}>
-                            <DialogTrigger asChild>
-                                <Button className="" variant="dark">
-                                    <CirclePlus className="w-6 h-6"/>
-                                    Thêm feedback
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent
-                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
-                                <ScrollArea className="max-h-[80vh] px-4">
-                                    <FeedbackDialog setOpen={(value) => {
-                                        handleControlDialog(2, value)
-                                    }} setTriggerNotice={setTriggerNotice} setMessage={setMessage}
-                                                    triggerNotice={triggerNotice}/>
-                                </ScrollArea>
-                            </DialogContent>
-                        </Dialog>}
                 </div>
-                <CustomerFeedback setTriggerNotice={setTriggerNotice} setMessage={setMessage}
-                                  triggerNotice={triggerNotice}/>
-            </div>
-
-            <div className="max-width-suitable px-[60px] mx-auto">
-                <div className="flex items-center justify-between mb-8 max-width-suitable mx-auto">
-                    <div className="flex gap-6 items-center">
-                        <div className="w-5 h-5 bg-green-500 rounded-full"/>
-                        <h2 className="responsive-text-40 font-semibold">About</h2>
-                    </div>
-                    {isInUpdateMode &&
-                        <Dialog onOpenChange={(value) => {
-                            handleControlDialog(3, value)
-                        }} open={open[3]}>
-                            <DialogTrigger asChild>
-                                <Button className="" variant="dark">
-                                    <Illustration className="w-6 h-6"
-                                                  url="/freelancer/portfolio/PencilLine.svg"/>
-                                    Chỉnh sửa
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent
-                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
-                                <ScrollArea className="max-h-[80vh] px-4">
-                                    <AboutMeDialog setOpen={(value) => {
-                                        handleControlDialog(3, value)
-                                    }} setTriggerNotice={setTriggerNotice} setMessage={setMessage}
-                                                   triggerNotice={triggerNotice}/>
-                                </ScrollArea>
-                            </DialogContent>
-                        </Dialog>
-                    }
-                </div>
-                <About/>
-            </div>
-
-            <div className="max-width-suitable px-[60px] mx-auto">
-                <div className="flex items-center justify-between mb-8 max-width-suitable mx-auto">
-                    <div className="flex gap-6 items-center">
-                        <div className="w-5 h-5 bg-green-500 rounded-full"/>
-                        <h2 className="responsive-text-40 font-semibold">Kinh nghiệm làm việc</h2>
-                    </div>
-                    {isInUpdateMode &&
-                        <Dialog onOpenChange={(value) => {
-                            handleControlDialog(4, value)
-                        }} open={open[4]}>
-                            <DialogTrigger asChild>
-                                <Button className="" variant="dark">
-                                    <CirclePlus className="w-6 h-6"/>
-                                    Thêm kinh nghiệm
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent
-                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
-                                <ScrollArea className="max-h-[80vh] px-4">
-                                    <WorkExperienceDialog setOpen={(value) => {
-                                        handleControlDialog(4, value)
-                                    }} setTriggerNotice={setTriggerNotice} triggerNotice={triggerNotice}
-                                                          setMessage={setMessage}/>
-                                </ScrollArea>
-                            </DialogContent>
-                        </Dialog>
-                    }
-                </div>
-                <WorkExperience setMessage={setMessage} triggerNotice={triggerNotice}
-                                setTriggerNotice={setTriggerNotice}/>
-            </div>
-
-            <div className="max-width-suitable px-[60px] mx-auto">
-                <div className="flex items-center justify-between mb-8 max-width-suitable mx-auto">
-                    <div className="flex gap-6 items-center">
-                        <div className="w-5 h-5 bg-green-500 rounded-full"/>
-                        <h2 className="responsive-text-40 font-semibold">Kỹ năng</h2>
-                    </div>
-                    {isInUpdateMode && <div className="space-x-3 flex items-center">
-                        <Dialog onOpenChange={(value) => {
-                            handleControlDialog(5, value)
-                        }} open={open[5]}>
-                            <DialogTrigger asChild>
-                                <Button className="" variant="dark-outline">
-                                    <Illustration className="w-5 h-5 object-cover"
-                                                  url="/freelancer/portfolio/PencilLineBlack.svg"/>
-                                    Chỉnh sửa mô tả
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent
-                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
-                                <ScrollArea className="max-h-[80vh] px-4">
-                                    <SkillDescriptionDialog setTriggerNotice={setTriggerNotice} setMessage={setMessage}
-                                                            triggerNotice={triggerNotice} setOpen={(value) => {
-                                        handleControlDialog(5, value)
-                                    }}/>
-                                </ScrollArea>
-                            </DialogContent>
-                        </Dialog>
-                        <Dialog onOpenChange={(value) => {
-                            handleControlDialog(6, value)
-                        }} open={open[6]}>
-                            <DialogTrigger asChild>
-                                <Button className="" variant="dark">
-                                    <CirclePlus className="w-6 h-6"/>
-                                    Thêm kỹ năng
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent
-                                className="bg-white max-w-screen-xl w-[95%] overflow-hidden max-h-[85vh] h-auto">
-                                <ScrollArea className="max-h-[80vh] px-4">
-                                    <SkillDialog setOpen={(value) => {
-                                        handleControlDialog(6, value)
-                                    }} setTriggerNotice={setTriggerNotice} setMessage={setMessage} triggerNotice={triggerNotice}/>
-                                </ScrollArea>
-                            </DialogContent>
-                        </Dialog>
-                    </div>}
-
-                </div>
-                <Skill setTriggerNotice={setTriggerNotice} setMessage={setMessage} triggerNotice={triggerNotice} />
-            </div>
-
-            <div className="max-width-suitable px-[60px] mx-auto">
-                <PortfolioFooter/>
             </div>
         </div>
     )

@@ -69,7 +69,7 @@ export const WorkSection = () => {
                 {basicPortfolios?.length > 0 && <CardContent className="grid grid-cols-3 gap-4">
                     {basicPortfolios.map((item, index) => (
                         <Card key={index} className="overflow-hidden col-span-1 cursor-pointer" onClick={() => {
-                            router.push("/freelancer/portfolio?id="+item.id);
+                            router.push("/freelancer/portfolio/"+item.id);
                         }}>
                             <CardContent className="p-0 bg-gray-800 border-b-2">
                                 <div className="aspect-[6/5] relative">

@@ -25,7 +25,7 @@ const components: NavigationItem[] = [
         title: "Trang cá nhân"
     },
     {
-        href: "/freelancer/portfolio/general",
+        href: "/freelancer/portfolio",
         hrefCheck  :"/freelancer/portfolio",
         title: "Portfolio"
     },
