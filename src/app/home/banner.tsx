@@ -41,7 +41,7 @@ export const Banner = () => {
                         {/*    className="object-cover rounded-2xl"*/}
                         {/*    priority*/}
                         {/*/>*/}
-                        <Illustration width={300} height={394} url="/home/banner3.svg"/>
+                        <Illustration width={300} height={394} url="/home/banner1.svg"/>
                     </div>
 
                     {/* Van Nguyen Card */}
