@@ -35,10 +35,9 @@ export default function Component() {
         if(basicPortfolios && basicPortfolios?.length > 0) return;
         fetchBasicPortfolios(token || "")
     }, [basicPortfolios, fetchBasicPortfolios, token]);
-
-
     const router = useRouter();
 
+    if(!token) return
     return (
         <div className="max-w-[1800px] px-[60px] mx-auto mt-28">
             {/* Banner Section */}

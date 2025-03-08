@@ -5,7 +5,7 @@ import {Footer} from "@/components/constitution/footer";
 import {Header} from "@/components/constitution/header";
 import {NavigationItem} from "@/lib/types/nanigation-item.type";
 import {cn} from "@/lib/utils";
-import {usePathname} from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import useProfileStore from "@/lib/store/profile.modal";
 import useAuthStore from "@/lib/store/user.modal";
 
@@ -35,10 +35,12 @@ const HomeLayout = ({children}: Props) => {
     const pathname = usePathname();
     const {fetchProfile} = useProfileStore();
     const {token, setToken} = useAuthStore();
+    const router = useRouter();
     useEffect(() => {
         const storedToken = localStorage.getItem("knackToken");
+        if(!storedToken) router.push("/home")
         setToken(storedToken || "");
-    }, [setToken]);
+    }, [router, setToken]);
 
     useEffect(() => {
         // console.log(token);

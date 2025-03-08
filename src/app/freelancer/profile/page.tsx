@@ -17,6 +17,7 @@ export default function Component() {
         fetchBasicPortfolios(token || "");
     }, [fetchBasicPortfolios, token]);
 
+    if(!token) return
     return (
         <div className="mt-15">
             <FreelancerProgress userName={""}

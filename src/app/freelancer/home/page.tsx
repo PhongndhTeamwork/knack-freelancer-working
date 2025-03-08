@@ -8,10 +8,14 @@ import {ServiceSteps} from "@/app/freelancer/home/service-steps";
 import {CustomerFeedback} from "@/app/freelancer/home/customer-feedback";
 import {FreelancerProgress} from "@/app/freelancer/profile/freelancer-progress";
 import useProfileStore from "@/lib/store/profile.modal";
+import useAuthStore from "@/lib/store/user.modal";
 
 
 const HomePage = () => {
     const {profile} = useProfileStore()
+    const {token} = useAuthStore()
+
+    if(!token) return
     return <div className="mt-3 mb-10 space-y-20">
         <div className="max-width-suitable px-[60px] mx-auto pb-10 pt-8">
             <BannerCarousel/>

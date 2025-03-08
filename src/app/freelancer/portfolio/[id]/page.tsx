@@ -32,7 +32,18 @@ import useAuthStore from "@/lib/store/user.modal";
 import {MessagePayloadForm} from "@/lib/types/error.type";
 import ToastInitialisation from "@/lib/preprocessors/toast-initialisation";
 import {Toaster} from "react-hot-toast";
-// import { useReactToPrint } from "react-to-print";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
+import axios from "axios";
+import {CustomSpinner} from "@/components/custom/custom-spinner";
+
 
 export default function Component() {
     const [open, setOpen] = useState<boolean[]>(Array(7).fill(false));
@@ -44,8 +55,7 @@ export default function Component() {
     const id = params?.id || "";
     const [message, setMessage] = useState<MessagePayloadForm>({content: ""});
     const [triggerNotice, setTriggerNotice] = useState<boolean>(false);
-    // const contentRef = useRef<HTMLDivElement>(null);
-    // const reactToPrintFn = useReactToPrint({ contentRef });
+    const [isLoadingDeleteProcess, setIsLoadingDeleteProcess] = useState<boolean>(false);
 
 
     ToastInitialisation({triggerMessage: triggerNotice, message: message})
@@ -64,6 +74,32 @@ export default function Component() {
         const array = [...open];
         array[index] = value;
         setOpen(array);
+    }
+
+    const handleDeletePortfolio = () => {
+        setIsLoadingDeleteProcess(true);
+        if (!token) {
+            setMessage({content: "Vui lòng đăng nhập lại", type: "error"})
+            setTriggerNotice(!triggerNotice)
+        }
+        if (!id) {
+            setMessage({content: "Portfolio không tồn tại", type: "error"})
+            setTriggerNotice(!triggerNotice)
+        }
+        axios.delete(`${process.env.NEXT_PUBLIC_PREFIX_API}/portfolio/delete-portfolio/${id}`, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        }).then(() => {
+            setMessage({content: "Xóa portfolio thành công!", type: "success"})
+            setTriggerNotice(!triggerNotice)
+            setTimeout(() => {router.push("/freelancer/portfolio")}, 500)
+        }).catch(() => {
+            setMessage({content: "Something went wrong", type: "error"})
+            setTriggerNotice(!triggerNotice)
+        }).finally(() => {
+        })
+        setIsLoadingDeleteProcess(false);
     }
 
 
@@ -287,19 +323,43 @@ export default function Component() {
                                 <ScrollArea className="max-h-[80vh] px-4">
                                     <SkillDialog setOpen={(value) => {
                                         handleControlDialog(6, value)
-                                    }} setTriggerNotice={setTriggerNotice} setMessage={setMessage} triggerNotice={triggerNotice}/>
+                                    }} setTriggerNotice={setTriggerNotice} setMessage={setMessage}
+                                                 triggerNotice={triggerNotice}/>
                                 </ScrollArea>
                             </DialogContent>
                         </Dialog>
                     </div>}
 
                 </div>
-                <Skill setTriggerNotice={setTriggerNotice} setMessage={setMessage} triggerNotice={triggerNotice} />
+                <Skill setTriggerNotice={setTriggerNotice} setMessage={setMessage} triggerNotice={triggerNotice}/>
             </div>
 
             <div className="max-width-suitable px-[60px] mx-auto">
                 <PortfolioFooter/>
             </div>
+
+            {isInUpdateMode && <div className="max-width-suitable px-[60px] mx-auto">
+                <AlertDialog>
+                    <AlertDialogTrigger className="w-full">
+                        <Button variant="danger" className="w-full">{isLoadingDeleteProcess && <CustomSpinner size="sm"/>}Xóa portfolio</Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Bạn chắc chứ?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                Hành động nãy sẽ xóa công việc nổi bật của bạn khỏi profile
+                                này.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Hủy</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => {
+                                handleDeletePortfolio()
+                            }}>Xóa</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            </div>}
         </div>
     )
 }
